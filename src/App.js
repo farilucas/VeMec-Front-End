@@ -5,7 +5,7 @@ const inicialState = {
     id: '',
     marca: '',
     modelo: '',
-    ubicacion: 0,
+    ubicacion: '',
     pMax: 0,
     pMin: 0,
     VolGas: 0,
@@ -65,14 +65,7 @@ class App extends Component {
               id: this.state.user.id
             })
           })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count }))
-            })
-            .catch(console.log)
         }
-        console.log(response);
-        this.displayFaceBoxes(this.calculateFaceLocations(response))
       })
       .catch(err => console.log(err));
   }
