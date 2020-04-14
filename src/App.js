@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Alta from './componentes/Alta/Alta';
+import Navegacion from './componentes/Navigation/Navigation';
 
 const inicialState = {
   VeMec: {
@@ -6,6 +8,7 @@ const inicialState = {
     marca: '',
     modelo: '',
     ubicacion: '',
+    route: 'Alta',
     pMax: 0,
     pMin: 0,
     VolGas: 0,
@@ -46,9 +49,18 @@ class App extends Component {
     })
   }
 
+  onInputChange = (event) => {
+    this.setState({ input: event.target.value });
+  }
+
+
+  onRouteChange = (route) =>{
+    this.setState({ route: route });
+  }
+
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input })
-    fetch('http://localhost:3000/api/vemecs', {
+    fetch('http://localhost:3000/Alta', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -58,11 +70,11 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/api/vemecs/{$id}', {
+          fetch('http://localhost:3000/Alta', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              id: this.state.user.id
+              id: this.state.VeMec.id
             })
           })
         }
@@ -71,10 +83,11 @@ class App extends Component {
   }
 
   render(){
+    const{route} = this.state;
     return (
       <div className="App">
-        <h1>Bienvenidos</h1>
-        <input></input>
+        <Navegacion onRouteChange={this.onRouteChange}/> 
+        <Alta loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
       </div>
     );
   }
