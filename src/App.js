@@ -9,16 +9,20 @@ const inicialState = {
     modelo: '',
     ubicacion: '',
     route: 'Alta',
-    pMax: 0,
-    pMin: 0,
-    VolGas: 0,
-    FrecuenciaAporte: 0,
-    ComposicionO2: 0,
-    HumedadAire: 0,
-    tEntrada: 0,
-    tSalida: 0,
-    pEntrada: 0,
-    pSalida: 0
+    Estados: [
+      {
+        pMax: 0,
+        pMin: 0,
+        VolGas: 0,
+        FrecuenciaAporte: 0,
+        ComposicionO2: 0,
+        HumedadAire: 0,
+        tEntrada: 0,
+        tSalida: 0,
+        pEntrada: 0,
+        pSalida: 0
+      } 
+    ]
   }
 }
 
@@ -28,7 +32,7 @@ class App extends Component {
     this.state = inicialState;
   }
 
-  loadUser = (data) => {
+  loadVeMec = (data) => {
     this.setState({
       VeMec: {
         id: data.id,
@@ -87,7 +91,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navegacion onRouteChange={this.onRouteChange}/> 
-        <Alta loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+        <Alta loadVeMec={this.loadUser} onRouteChange={this.onRouteChange}/>
       </div>
     );
   }

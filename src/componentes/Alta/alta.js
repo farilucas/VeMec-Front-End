@@ -1,6 +1,6 @@
 import React from 'react';
 
-class alta extends React.Component{
+class Alta extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -8,7 +8,6 @@ class alta extends React.Component{
             altaMarca: '',
             altaModelo: '',
             altaUbicacion: '',
-
         }
     }
     onIdChange = (event) => {
@@ -38,7 +37,7 @@ class alta extends React.Component{
             .then(response => response.json())
             .then(VeMec => {
                 if (VeMec.id) {
-                    this.props.loadUser(VeMec);
+                    this.props.loadVeMec(VeMec);
                     this.props.onRouteChange('home');
                 }
             })
@@ -64,24 +63,24 @@ class alta extends React.Component{
                                 <input
                                     onChange={this.onMarcaChange}
                                     type="text"
-                                    name="Marca"
-                                    id="Marca" />
+                                    name="marca"
+                                    id="marca" />
                             </div>
                             <div>
                                 <label htmlFor="Modelo">Modelo</label>
                                 <input
                                     onChange={this.onModeloChange}
                                     type="text"
-                                    name="Modelo"
-                                    id="Modelo" />
+                                    name="modelo"
+                                    id="modelo" />
                             </div>
                             <div>
                                 <label htmlFor="Ubicacion">Ubicacion</label>
                                 <input
                                     onChange={this.onUbicacionChange}
                                     type="text"
-                                    name="Ubicacion"
-                                    id="Ubicacion" />
+                                    name="ubicacion"
+                                    id="ubicacion" />
                             </div>
                             
                         </fieldset>
@@ -100,4 +99,4 @@ class alta extends React.Component{
     
 }
 
-export default alta;
+export default Alta;
