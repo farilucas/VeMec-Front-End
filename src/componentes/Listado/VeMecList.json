@@ -1,0 +1,83 @@
+[
+  {
+    "id": "VEMEC1",
+    "marca": "Marca 1",
+    "modelo": "Modelo 1",
+    "ubicacion": "Nepelandia",
+    "estados": [
+      {
+        "timestamp": "2020-04-14T18:28:50.538",
+        "presionMaxima": 0,
+        "presionMinima": 0,
+        "volumenGasAportado": 0,
+        "frecuenciaDeAporte": 1,
+        "porcentajeOxigeno": 1,
+        "humedad": 1,
+        "temperaturaEntrada": 0,
+        "temperaturaSalida": 0,
+        "presionEntrada": 1,
+        "presionSalida": 1
+      },
+      {
+        "timestamp": "2020-04-15T18:28:50.538",
+        "presionMaxima": 0,
+        "presionMinima": 0,
+        "volumenGasAportado": 0,
+        "frecuenciaDeAporte": 1,
+        "porcentajeOxigeno": 1,
+        "humedad": 1,
+        "temperaturaEntrada": 0,
+        "temperaturaSalida": 0,
+        "presionEntrada": 1,
+        "presionSalida": 1
+      },
+      {
+        "timestamp": "2020-04-16T18:28:50.538",
+        "presionMaxima": 0,
+        "presionMinima": 0,
+        "volumenGasAportado": 0,
+        "frecuenciaDeAporte": 1,
+        "porcentajeOxigeno": 1,
+        "humedad": 1,
+        "temperaturaEntrada": 0,
+        "temperaturaSalida": 0,
+        "presionEntrada": 1,
+        "presionSalida": 1
+      }
+    ]
+  },
+  {
+    "id": "VEMEC2",
+    "marca": "Marca 2",
+    "modelo": "Modelo 2",
+    "ubicacion": "Nepelandia",
+    "estados": [
+      {
+        "timestamp": "2020-04-14T18:28:50.538",
+        "presionMaxima": 0,
+        "presionMinima": 0,
+        "volumenGasAportado": 0,
+        "frecuenciaDeAporte": 1,
+        "porcentajeOxigeno": 1,
+        "humedad": 1,
+        "temperaturaEntrada": 0,
+        "temperaturaSalida": 0,
+        "presionEntrada": 1,
+        "presionSalida": 1
+      },
+      {
+        "timestamp": "2020-04-15T18:28:50.538",
+        "presionMaxima": 0,
+        "presionMinima": 0,
+        "volumenGasAportado": 0,
+        "frecuenciaDeAporte": 1,
+        "porcentajeOxigeno": 1,
+        "humedad": 1,
+        "temperaturaEntrada": 0,
+        "temperaturaSalida": 0,
+        "presionEntrada": 1,
+        "presionSalida": 1
+      }
+    ]
+  }
+]
