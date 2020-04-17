@@ -18,23 +18,34 @@
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.name === 'isGoing' ? target.checked : target.value;
+        const value = target.value;
         const name = target.name;
     
         this.setState({
           [name]: value
         });
       }
+      
 
       handleSbmit(event) {
         event.preventDefault();
         console.log(JSON.stringify(this.state));
+        fetch('http://localhost:8080/api/v1/vemecs/'+ this.props.vemec, {
+        
+          method: 'put',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(
+            this.state
+          )
+        }).then(result => console.log('success====:', result))
+        .catch(error => console.log('error============:', error));
         
       }
 
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/v1/vemecs/VEMEC1')
+      console.log(this.state.vemec)
+        fetch('http://localhost:8080/api/v1/vemecs/'+ this.props.vemec)
         .then(response => response.json())
         .then(data =>
             

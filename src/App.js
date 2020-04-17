@@ -76,7 +76,7 @@ class App extends Component {
       <div className="App">
         <h1>Bienvenidos</h1>
         <input></input>
-        <Modificar/>
+        <Modificar vemec="VEMEC1"/>
       </div>
     );
   }
