@@ -56,15 +56,13 @@ class App extends Component {
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
   }
-
-
   onRouteChange = (route) =>{
     this.setState({ route: route });
   }
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input })
-    fetch('http://localhost:3000/Alta', {
+    fetch('http://localhost:8080/api/v1/vemecs/Alta', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -74,8 +72,8 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/Alta', {
-            method: 'put',
+          fetch('http://localhost:8080/api/v1/vemecs/VEMEC1', {
+            method: 'get',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               id: this.state.VeMec.id

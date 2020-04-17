@@ -4,43 +4,41 @@ class Alta extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            altaId: '',
-            altaMarca: '',
-            altaModelo: '',
-            altaUbicacion: '',
+            id: '',
+            marca: '',
+            modelo: '',
+            ubicacion: '',
         }
+        this.onIdChange = this.onIdChange.bind(this);
+        this.onMarcaChange = this.onMarcaChange.bind(this);
+        this.onModeloChange = this.onModeloChange.bind(this);
+        this.onUbicacionChange = this.onUbicacionChange.bind(this);
+        this.onSubmitAlta = this.onSubmitAlta.bind(this);
     }
     onIdChange = (event) => {
-		this.setState({altaId: event.target.value});
+		this.setState({id: event.target.value});
 	}
 	onMarcaChange = (event) => {
-		this.setState({altaMarca: event.target.value});
+		this.setState({marca: event.target.value});
     }
     onModeloChange = (event) => {
-        this.setState({ altaModelo: event.target.value });
+        this.setState({ modelo: event.target.value });
     }
     onUbicacionChange = (event) => {
-        this.setState({ altaUbicacion: event.target.value });
+        this.setState({ ubicacion: event.target.value });
     }
 
-    onSubmitAlta = () => {
-        fetch('http://localhost:3000/Alta', {
+
+    onSubmitAlta(event) {
+        event.preventDefault();
+        fetch('http://localhost:8080/api/v1/vemecs/', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                altaId: this.state.altaId,
-                altaMarca: this.state.altaMarca,
-                altaModelo: this.state.altaModelo,
-                altaUbicacion: this.state.altaUbicacion
-            })
-        })
-            .then(response => response.json())
-            .then(VeMec => {
-                if (VeMec.id) {
-                    this.props.loadVeMec(VeMec);
-                    this.props.onRouteChange('home');
-                }
-            })
+            body: JSON.stringify(
+                this.state
+            )
+        }).then(result => console.log('works', result))
+            .catch(error => console.log('wornksnt', error))
     }
 
     render(){
@@ -56,6 +54,7 @@ class Alta extends React.Component{
                                     onChange={this.onIdChange}
                                     type="text"
                                     name="altaId"
+                                    value={this.state.id}
                                     id="altaId" />
                             </div>
                             <div>
@@ -64,6 +63,7 @@ class Alta extends React.Component{
                                     onChange={this.onMarcaChange}
                                     type="text"
                                     name="marca"
+                                    value={this.state.marca}
                                     id="marca" />
                             </div>
                             <div>
@@ -72,6 +72,7 @@ class Alta extends React.Component{
                                     onChange={this.onModeloChange}
                                     type="text"
                                     name="modelo"
+                                    value={this.state.modelo}
                                     id="modelo" />
                             </div>
                             <div>
@@ -80,6 +81,7 @@ class Alta extends React.Component{
                                     onChange={this.onUbicacionChange}
                                     type="text"
                                     name="ubicacion"
+                                    value={this.state.ubicacion}
                                     id="ubicacion" />
                             </div>
                             
