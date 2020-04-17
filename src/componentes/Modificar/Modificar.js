@@ -34,18 +34,19 @@
 
 
     componentDidMount(){
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
+        fetch('http://localhost:8080/api/v1/vemecs/VEMEC1')
         .then(response => response.json())
         .then(data =>
+            
             this.setState({
                 id: data.id,
-                marca: data.title,
-                modelo : data.title,
-                ubicacion : data.title,
+                marca: data.marca,
+                modelo : data.modelo,
+                ubicacion : data.ubicacion,
             }
             ))
         .then(console.log(this.state))
-
+        console.log(this.state)
     }
      render() {
          return (
