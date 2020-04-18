@@ -24,11 +24,12 @@ class Baja extends React.Component{
     /* Cambiar a una lista de datos basicos del aparato con un boton para eliminar, despues, ... quizas ... */
     render() {
         return(
-            <div>
-                <form onSubmit={this.onBajaSubmit}>
-                    <label htmlFor="id">Id de VeMec a eliminar:</label>
-                    <input name="id" type="text" value={this.state.bajaId} onChange={this.onBajaIdChange}/>
-                    <button type="submit">Submit</button>
+            <div className="container">
+                <legend>Eliminar</legend>
+                <label htmlFor="id">Id de <abbr title="Ventilador Mecánico">VeMec</abbr> a eliminar:</label>
+                <form onSubmit={this.onBajaSubmit} className="form-inline">
+                  <input name="id" type="text" className="form-control" value={this.state.bajaId} onChange={this.onBajaIdChange}/>
+                    <button type="submit" className="btn btn-danger">Eliminar</button>
                 </form>
             </div>
         );
