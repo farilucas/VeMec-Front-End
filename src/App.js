@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import Modificar from "./componentes/Modificar/Modificar"
+import Modificar from "./componentes/Modificar/Modificar"; 
+import "bootstrap/dist/css/bootstrap.min.css";
+import Popper from 'popper.js';
+import $ from "jquery";
 
 const inicialState = {
   VeMec: {
@@ -73,6 +76,7 @@ class App extends Component {
 
   render(){
     return (
+      
       <div className="App">
         <h1>Bienvenidos</h1>
         <input></input>
