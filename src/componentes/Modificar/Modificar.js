@@ -73,6 +73,7 @@ class Modificar extends Component {
               id="id"
               name="id"
               type="text"
+              readOnly
               value={this.state.id}
               onChange={this.handleInputChange} />
 
@@ -108,7 +109,7 @@ class Modificar extends Component {
           </div>
           <div class="form-group lg-col-1">
             <label for="ubicacion">
-              Bbicacion:
+              Ubicacion:
               </label>
           <input
                 class="form-control"
