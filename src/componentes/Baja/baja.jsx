@@ -4,15 +4,16 @@ class Baja extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            bajaId = ''
+            bajaId : ''
         }
     }
     onBajaIdChange = (event) => {
         this.setState({bajaId: event.target.value});
     }
-    onBajaSubmit = () => {
+    onBajaSubmit = (event) => {
         event.preventDefault();
-        fetch('http://localhost:3000/api/vemecs/' + this.props.bajaId ,{
+        
+        fetch('http://localhost:8080/api/v1/vemecs/' + this.state.bajaId ,{
             method: 'delete',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -20,12 +21,12 @@ class Baja extends React.Component{
             .then(data => {console.log("Sucess VeMec Deleted")})
             .catch(error => {console.log("Error on onBajaSubmit")})
     }
-    /* Cambiar a una lista de datos basicos con boton para eliminar despues */
+    /* Cambiar a una lista de datos basicos del aparato con un boton para eliminar, despues, ... quizas ... */
     render() {
         return(
             <div>
                 <form onSubmit={this.onBajaSubmit}>
-                    <label for="id">Id de VeMec a eliminar:</label>
+                    <label htmlFor="id">Id de VeMec a eliminar:</label>
                     <input name="id" type="text" value={this.state.bajaId} onChange={this.onBajaIdChange}/>
                     <button type="submit">Submit</button>
                 </form>

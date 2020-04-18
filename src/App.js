@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Baja from "./componentes/Baja/baja"; 
 
 const inicialState = {
   VeMec: {
@@ -75,6 +76,7 @@ class App extends Component {
       <div className="App">
         <h1>Bienvenidos</h1>
         <input></input>
+        <Baja/>
       </div>
     );
   }
