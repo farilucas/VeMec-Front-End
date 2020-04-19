@@ -28,6 +28,7 @@ class Alta extends React.Component{
         this.setState({ ubicacion: event.target.value });
     }
 
+    
 
     onSubmitAlta(event) {
         event.preventDefault();
@@ -45,54 +46,73 @@ class Alta extends React.Component{
         return(
             <article>
                 <main>
-                    <div>
-                        <fieldset id="alta">
-                            <legend>Ingresar</legend>
-                            <div>
-                                <label htmlFor="altaId">Id</label>
+                    <div className="card border border-info">
+                        <h5 class="card-header info-color white-text text-center py-4 border border-info">
+                            <strong>Ingresar</strong>
+                        </h5>
+                        <div class="card-body px-lg-5 pt-0" id="alta">
+                            <form class="text-center" style={{color: "lightblue"}}>
+                                <div className="form-row">
+                                    <div className="col">
+                                        <div className="md-form">
+                                            <input
+                                                onChange={this.onIdChange}
+                                                className="form-control border border-info form-rounded"
+                                                type="text"
+                                                placeholder="ID"
+                                                name="altaId"
+                                                value={this.state.id}
+                                                id="altaId" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="md-form mt-0">
+                                    <input
+                                        onChange={this.onMarcaChange}
+                                        type="text"
+                                        className="form-control border border-info form-rounded"
+                                        name="marca"
+                                        placeholder="Marca"
+                                        value={this.state.marca}
+                                        id="marca" />
+                                </div>
+                                <div className="md-form">
+                                    
+                                    <input
+                                        onChange={this.onModeloChange}
+                                        type="text"
+                                        className="form-control border border-info form-rounded"
+                                        name="modelo"
+                                        placeholder="Modelo"
+                                        value={this.state.modelo}
+                                        id="modelo" />
+                                </div>
+                                <div className="md-form">
+                                    
+                                    <input
+                                        onChange={this.onUbicacionChange}
+                                        type="text"
+                                        className="form-control form-rounded border border-info "
+                                        name="ubicacion"
+                                        placeholder="Ubicacion"
+                                        value={this.state.ubicacion}
+                                        id="ubicacion" />
+                                </div>
                                 <input
-                                    onChange={this.onIdChange}
-                                    type="text"
-                                    name="altaId"
-                                    value={this.state.id}
-                                    id="altaId" />
-                            </div>
-                            <div>
-                                <label htmlFor="Marca">Marca</label>
-                                <input
-                                    onChange={this.onMarcaChange}
-                                    type="text"
-                                    name="marca"
-                                    value={this.state.marca}
-                                    id="marca" />
-                            </div>
-                            <div>
-                                <label htmlFor="Modelo">Modelo</label>
-                                <input
-                                    onChange={this.onModeloChange}
-                                    type="text"
-                                    name="modelo"
-                                    value={this.state.modelo}
-                                    id="modelo" />
-                            </div>
-                            <div>
-                                <label htmlFor="Ubicacion">Ubicacion</label>
-                                <input
-                                    onChange={this.onUbicacionChange}
-                                    type="text"
-                                    name="ubicacion"
-                                    value={this.state.ubicacion}
-                                    id="ubicacion" />
-                            </div>
-                            
-                        </fieldset>
-                        <div className="">
-                            <input
                                 onClick={this.onSubmitAlta}
-                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                                className="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
                                 type="submit"
                                 value="Ingresar" />
+                                <input
+                                    onClick={this.onSubmitAlta}
+                                    className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-outline-danger"
+                                    type="submit"
+                                    value="Cancelar" />
+                            </form>
                         </div>
+                        
+                            
+                        
                     </div>
                 </main>
             </article>

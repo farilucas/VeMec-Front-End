@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Alta from './componentes/Alta/Alta';
+import Inicio from './componentes/Listado/Inicio';
 import Navegacion from './componentes/Navigation/Navigation';
 
 const inicialState = {
@@ -8,7 +9,8 @@ const inicialState = {
     marca: '',
     modelo: '',
     ubicacion: '',
-    route: 'Alta',
+    route: 'Inicio',
+    dadoDeAlta: false,
     Estados: [
       {
         pMax: 0,
@@ -34,11 +36,7 @@ class App extends Component {
 
   loadVeMec = (data) => {
     this.setState({
-      VeMec: {
-        id: data.id,
-        marca: data.marca,
-        modelo: data.modelo,
-        ubicacion: data.ubicacion,
+      Estados: {
         pMax: data.pMax,
         pMin: data.pMin,
         VolGas: data.VolGas,
@@ -57,39 +55,35 @@ class App extends Component {
     this.setState({ input: event.target.value });
   }
   onRouteChange = (route) =>{
+    if(route === 'Alta'){
+      this.setState({ dadoDeAlta: true });
+    }
+    else{
+      this.setState({dadoDeAlta: false});
+    }
     this.setState({ route: route });
   }
 
-  onButtonSubmit = () => {
-    this.setState({ imageUrl: this.state.input })
-    fetch('http://localhost:8080/api/v1/vemecs/Alta', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        input: this.state.input
-      })
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:8080/api/v1/vemecs/VEMEC1', {
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: this.state.VeMec.id
-            })
-          })
-        }
-      })
-      .catch(err => console.log(err));
-  }
-
   render(){
-    const{route} = this.state;
+    const{route, dadoDeAlta} = this.state;
     return (
       <div className="App">
-        <Navegacion onRouteChange={this.onRouteChange}/> 
-        <Alta loadVeMec={this.loadUser} onRouteChange={this.onRouteChange}/>
+        <Navegacion dadoDeAlta={dadoDeAlta} onRouteChange={this.onRouteChange}/>
+        {route === 'Inicio'
+          ?<div>
+            <Inicio onRouteChange={this.onRouteChange}/>
+          </div>
+          :( 
+            route === 'Alta'
+            ?<div>
+              <Alta loadVeMec={this.loadVeMec} onRouteChange={this.onRouteChange}/>
+            </div>
+            :<div>
+
+            </div>           
+          )
+            }
+        
       </div>
     );
   }
