@@ -1,39 +1,60 @@
-import React from 'react';
+import React from 'react'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 
 class Baja extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            bajaId : ''
+            bajaId : '',
+            isOpen : false
         }
     }
-    onBajaIdChange = (event) => {
-        this.setState({bajaId: event.target.value});
+    toggleModal = () => {
+        this.setState({
+            isOpen : !this.state.isOpen
+        });
+        if(!this.state.isOpen){
+            this.setState({
+                bajaId : this.props.vemecId
+            });
+        }
     }
-    onBajaSubmit = (event) => {
-        event.preventDefault();
-        
+    toggleModalDelete = () => {
+        this.toggleModal();
+        this.BajaDelete();
+    }
+    BajaDelete = (props) =>{
+        /*console.log("Baja fetch delete alcanzado");*/
         fetch('http://localhost:8080/api/v1/vemecs/' + this.state.bajaId ,{
             method: 'delete',
             headers: { 'Content-Type': 'application/json' },
         })
             .then(response => response.json())
-            .then(data => {console.log("Sucess VeMec Deleted")})
-            .catch(error => {console.log("Error on onBajaSubmit")})
+            .then(data => {console.log("Baja VeMec")})
+            .catch(error => {console.log("Baja Error")})
     }
-    /* Cambiar a una lista de datos basicos del aparato con un boton para eliminar, despues, ... quizas ... */
     render() {
         return(
-            <div className="container">
-                <legend>Eliminar</legend>
-                <label htmlFor="id">Id de <abbr title="Ventilador Mecánico">VeMec</abbr> a eliminar:</label>
-                <form onSubmit={this.onBajaSubmit} className="form-inline">
-                  <input name="id" type="text" className="form-control" value={this.state.bajaId} onChange={this.onBajaIdChange}/>
-                    <button type="submit" className="btn btn-danger">Eliminar</button>
-                </form>
+            <div>
+                <Button onClick={this.toggleModal}>&times;</Button>
+                <Modal show={this.state.isOpen} onClose={this.toggleModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        Eliminar VeMec
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Se eliminara este <abbr title="Ventilador Mecánico">VeMec</abbr> para siempre</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.toggleModal}>Close</Button>
+                    <Button variant="danger" onClick={this.toggleModalDelete}>Eliminar</Button>
+                </Modal.Footer>
+            </Modal>
             </div>
         );
     }
 }
-/* <Baja/> */
+/* <Baja vemecId={VeMec.id}/> */
 export default Baja;
