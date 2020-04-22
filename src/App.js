@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import Alta from './componentes/Alta/Alta';
+import Inicio from './componentes/Listado/Inicio';
+import Modificar from './componentes/Modificar/Modificar';
+import Navegacion from './componentes/Navigation/Navigation';
 
 const inicialState = {
   VeMec: {
@@ -6,17 +10,23 @@ const inicialState = {
     marca: '',
     modelo: '',
     ubicacion: '',
-    pMax: 0,
-    pMin: 0,
-    VolGas: 0,
-    FrecuenciaAporte: 0,
-    ComposicionO2: 0,
-    HumedadAire: 0,
-    tEntrada: 0,
-    tSalida: 0,
-    pEntrada: 0,
-    pSalida: 0
-  }
+    Estados: [
+      {
+        pMax: 0,
+        pMin: 0,
+        VolGas: 0,
+        FrecuenciaAporte: 0,
+        ComposicionO2: 0,
+        HumedadAire: 0,
+        tEntrada: 0,
+        tSalida: 0,
+        pEntrada: 0,
+        pSalida: 0
+      } 
+    ]
+  },
+  route: 'Inicio',
+  pagina: 'inicio' 
 }
 
 class App extends Component {
@@ -25,13 +35,9 @@ class App extends Component {
     this.state = inicialState;
   }
 
-  loadUser = (data) => {
+  loadVeMec = (data) => {
     this.setState({
-      VeMec: {
-        id: data.id,
-        marca: data.marca,
-        modelo: data.modelo,
-        ubicacion: data.ubicacion,
+      Estados: {
         pMax: data.pMax,
         pMin: data.pMin,
         VolGas: data.VolGas,
@@ -46,35 +52,42 @@ class App extends Component {
     })
   }
 
-  onButtonSubmit = () => {
-    this.setState({ imageUrl: this.state.input })
-    fetch('http://localhost:3000/api/vemecs', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        input: this.state.input
-      })
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3000/api/vemecs/{$id}', {
-            method: 'put',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-        }
-      })
-      .catch(err => console.log(err));
+  onInputChange = (event) => {
+    this.setState({ input: event.target.value });
+  }
+  onRouteChange = (route) =>{
+    if(route === 'Alta'){
+      this.setState({ pagina: 'alta' });
+    }
+    else if(route === 'Inicio'){
+      this.setState({pagina: 'inicio'});
+    }
+    else if(route === 'Modificar'){
+      this.setState({pagina: 'modificar'})
+    }
+    this.setState({ route: route });
   }
 
   render(){
+    const{route, pagina} = this.state;
     return (
       <div className="App">
-        <h1>Bienvenidos</h1>
-        <input></input>
+        <Navegacion pagina={pagina} onRouteChange={this.onRouteChange}/>
+        {route === 'Inicio'
+          ?<div>
+            <Inicio onRouteChange={this.onRouteChange} id=""/>
+          </div>
+          :( 
+            route === 'Alta'
+            ?<div>
+              <Alta loadVeMec={this.loadVeMec} onRouteChange={this.onRouteChange}/>
+            </div>
+            :<div>
+              <Modificar vemec="VEMEC1" onRouteChange={this.onRouteChange}/>
+            </div>           
+          )
+            }
+        
       </div>
     );
   }
