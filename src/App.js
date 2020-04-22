@@ -9,8 +9,7 @@ const inicialState = {
     marca: '',
     modelo: '',
     ubicacion: '',
-    route: 'Inicio',
-    dadoDeAlta: false,
+
     Estados: [
       {
         pMax: 0,
@@ -25,7 +24,10 @@ const inicialState = {
         pSalida: 0
       } 
     ]
-  }
+  },
+  route: 'Inicio',
+  dadoDeAlta: false,
+  
 }
 
 class App extends Component {
