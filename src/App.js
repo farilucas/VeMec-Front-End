@@ -21,7 +21,7 @@ const inicialState = {
         tEntrada: 0,
         tSalida: 0,
         pEntrada: 0,
-        pSalida: 0
+        pSalida: 30
       } 
     ]
   },
