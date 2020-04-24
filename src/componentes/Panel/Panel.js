@@ -2,6 +2,7 @@ import React from "react";
 import VeMec from "../VeMec/VeMec";
 import CardDeck from "react-bootstrap/CardDeck";
 import Pagination from "react-js-pagination";
+import Form from "react-bootstrap/Form";
 require("bootstrap/dist/css/bootstrap.css");
 
 class Panel extends React.Component {
@@ -15,12 +16,17 @@ class Panel extends React.Component {
             size: 3,
             totalElements: 0,
             totalPages: 0,
-            isFetching: false
+            isFetching: false,
+            pressureUnit: 'Pa'
         };
     }
 
     componentDidMount() {
         this.fetchData();
+    }
+
+    onUnitSelect(event) {
+        this.setState({pressureUnit: event.target.value});
     }
 
     async fetchData() {
@@ -69,7 +75,9 @@ class Panel extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.vemecs !== nextState.vemecs) || (this.state.graphData !== nextState.graphData);
+        return (this.state.vemecs !== nextState.vemecs)
+            || (this.state.graphData !== nextState.graphData)
+            || (this.state.pressureUnit !== nextState.pressureUnit);
     }
 
     async onBaja(event, id) {
@@ -88,10 +96,6 @@ class Panel extends React.Component {
         }
     }
 
-    onRouteChange() {
-        this.props.onRouteChange('Modificar', );
-    }
-
     render() {
         if(this.state.vemecs.length === 0) {
             return (
@@ -105,11 +109,22 @@ class Panel extends React.Component {
             let veMecData = {...vemec};
             veMecData.graph = this.state.graphData[vemec.id];
 
-            return <VeMec data={veMecData} key={vemec.id} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
+            return <VeMec data={veMecData} key={vemec.id} pressureUnit={this.state.pressureUnit} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
         })
 
         return (
             <div className={"m-5"}>
+                <div style={{display: "flex", justifyContent: "flex-end"}}>
+                    <Form.Group>
+                        <Form.Label>Unidad de Presion</Form.Label>
+                        <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
+                            <option value={"Pa"}>Pascal</option>
+                            <option value={"mmHg"}>Milimetros de Mercurio</option>
+                            <option value={"mbar"}>Milibar</option>
+                        </Form.Control>
+                    </Form.Group>
+                </div>
+
                 <CardDeck style={{justifyContent: "center"}}>
                     {vemecs}
                 </CardDeck>

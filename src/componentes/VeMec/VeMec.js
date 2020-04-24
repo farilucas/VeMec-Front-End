@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
+import {unit} from "mathjs";
 
 class Field extends React.PureComponent {
     render() {
@@ -63,12 +64,12 @@ class VeMec extends React.PureComponent {
                         <Col><Field label={"Timestamp"}>{(new Date(currentState.timestamp)).toLocaleString()}</Field></Col>
                     </Row>
                     <Row>
-                        <Col><Field label={"Presion de Entrada"}>{currentState.presionEntrada}</Field></Col>
-                        <Col><Field label={"Presion de Salida"}>{currentState.presionSalida}</Field></Col>
+                        <Col><Field label={"Presion de Entrada"}>{unit(currentState.presionEntrada, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={"Presion de Salida"}>{unit(currentState.presionSalida, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
                     </Row>
                     <Row>
-                        <Col><Field label={"Presion Minima"}>{currentState.presionMinima}</Field></Col>
-                        <Col><Field label={"Presion Maxima"}>{currentState.presionMaxima}</Field></Col>
+                        <Col><Field label={"Presion Minima"}>{unit(currentState.presionMinima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={"Presion Maxima"}>{unit(currentState.presionMaxima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
                     </Row>
                     <Row>
                         <Col><Field label={"Volumen de Gas Aportado (cc)"}>{currentState.volumenGasAportado}</Field></Col>

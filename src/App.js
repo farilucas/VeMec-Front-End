@@ -30,6 +30,7 @@ const inicialState = {
     pagina: 'inicio'
 }
 
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -53,6 +54,8 @@ class App extends Component {
         })
     }
 
+
+
     onRouteChange = (route, vemec) => {
         if (route === 'Alta') {
             this.setState({pagina: 'alta', route});
@@ -73,7 +76,7 @@ class App extends Component {
         switch (route) {
             default:
             case 'Inicio':
-                currentComponent =(
+                currentComponent = (
                     <div>
                         <Panel onRouteChange={this.onRouteChange}/>
                     </div>
