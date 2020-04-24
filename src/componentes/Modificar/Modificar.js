@@ -12,6 +12,7 @@ class Modificar extends Component {
             ubicacion: '',
 
         };
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSbmit = this.handleSbmit.bind(this);
     }
@@ -37,9 +38,9 @@ class Modificar extends Component {
             body: JSON.stringify(
                 this.state
             )
-        }).then(result => console.log('success====:', result))
-            .catch(error => console.log('error============:', error));
-
+        })
+        .then(result => console.log('success====:', result))
+        .catch(error => console.log('error============:', error));
     }
 
 
@@ -59,16 +60,17 @@ class Modificar extends Component {
             .then(console.log(this.state))
         console.log(this.state)
     }
+
     render() {
         return (
-            <div class="row justify-content-center ">
+            <div className="row justify-content-center ">
                 <form onSubmit={this.handleSbmit} >
-                    <div class="form-group lg-col-1">
-                        <label for="id">
+                    <div className="form-group lg-col-1">
+                        <label htmlFor="id">
                             Id:
           </label>
                         <input
-                            class="form-control"
+                            className="form-control"
                             placeholder="Id Vemec"
                             id="id"
                             name="id"
@@ -78,13 +80,13 @@ class Modificar extends Component {
                             onChange={this.handleInputChange} />
 
                     </div>
-                    <div div class="form-group lg-col-1">
-                        <label for="marca">
+                    <div className="form-group lg-col-1">
+                        <label htmlFor="marca">
                             Marca:
           </label>
                         <input
 
-                            class="form-control"
+                            className="form-control"
                             placeholder="Ingrese Marca"
                             id="marca"
                             name="marca"
@@ -93,12 +95,12 @@ class Modificar extends Component {
                             onChange={this.handleInputChange} />
 
                     </div>
-                    <div class="form-group lg-col-1">
-                        <label for="modelo">
+                    <div className="form-group lg-col-1">
+                        <label htmlFor="modelo">
                             Modelo:
               </label>
                         <input
-                            class="form-control"
+                            className="form-control"
                             placeholder="Ingrese Modelo"
                             id="modelo"
                             name="modelo"
@@ -107,12 +109,12 @@ class Modificar extends Component {
                             onChange={this.handleInputChange} />
 
                     </div>
-                    <div class="form-group lg-col-1">
-                        <label for="ubicacion">
+                    <div className="form-group lg-col-1">
+                        <label htmlFor="ubicacion">
                             Ubicacion:
               </label>
                         <input
-                            class="form-control"
+                            className="form-control"
                             placeholder="Ingrese Ubicacion"
                             id="ubicacion"
                             name="ubicacion"
@@ -122,8 +124,8 @@ class Modificar extends Component {
 
 
                     </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary center">Enviar</button>
+                    <div className="col">
+                        <button type="submit" className="btn btn-primary center">Enviar</button>
                     </div>
 
                 </form>

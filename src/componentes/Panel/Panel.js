@@ -2,7 +2,6 @@ import React from "react";
 import VeMec from "../VeMec/VeMec";
 import CardDeck from "react-bootstrap/CardDeck";
 import Pagination from "react-js-pagination";
-import Button from "react-bootstrap/Button";
 require("bootstrap/dist/css/bootstrap.css");
 
 class Panel extends React.Component {
@@ -73,17 +72,45 @@ class Panel extends React.Component {
         return (this.state.vemecs !== nextState.vemecs) || (this.state.graphData !== nextState.graphData);
     }
 
+    async onBaja(event, id) {
+        event.preventDefault();
+        await fetch('http://localhost:8080/api/v1/vemecs/' + id, {
+            method: 'delete',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        //Si eliminamos el ultimo elemento en la pagina, hay que settear la pagina a la anterior
+        if(((this.state.totalElements - 1) / this.state.size) <= (this.state.page)) {
+            this.setState({page: this.state.page - 1}, this.fetchData.bind(this));
+        }
+        else {
+            this.fetchData();
+        }
+    }
+
+    onRouteChange() {
+        this.props.onRouteChange('Modificar', );
+    }
+
     render() {
+        if(this.state.vemecs.length === 0) {
+            return (
+                <div className={"m-5"}>
+                    <h1 style={{textAlign: "center"}}>No hay ventiladores registrados en el sistema.</h1>
+                </div>
+            );
+        }
+
         let vemecs = this.state.vemecs.map(vemec => {
             let veMecData = {...vemec};
             veMecData.graph = this.state.graphData[vemec.id];
 
-            return <VeMec data={veMecData} key={vemec.id}/>;
+            return <VeMec data={veMecData} key={vemec.id} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
         })
 
         return (
             <div className={"m-5"}>
-                <CardDeck>
+                <CardDeck style={{justifyContent: "center"}}>
                     {vemecs}
                 </CardDeck>
                 <div className={"d-flex justify-content-center mt-2"}>
@@ -97,7 +124,6 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-
             </div>
         );
     }

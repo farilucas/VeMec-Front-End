@@ -50,11 +50,11 @@ class Alta extends React.Component{
             <article>
                 <main>
                     <div className="card border border-info">
-                        <h5 class="card-header info-color white-text text-center py-4 border border-info">
+                        <h5 className="card-header info-color white-text text-center py-4 border border-info">
                             <strong>Ingresar</strong>
                         </h5>
-                        <div class="card-body px-lg-5 pt-0" id="alta">
-                            <form class="text-center" style={{color: "lightblue"}}>
+                        <div className="card-body px-lg-5 pt-0" id="alta">
+                            <form className="text-center" style={{color: "lightblue"}}>
                                 <div className="form-row">
                                     <div className="col">
                                         <div className="md-form">
@@ -113,15 +113,11 @@ class Alta extends React.Component{
                                     value="Cancelar" />
                             </form>
                         </div>
-                        
-                            
-                        
                     </div>
                 </main>
             </article>
         );   
     }
-    
 }
 
 export default Alta;

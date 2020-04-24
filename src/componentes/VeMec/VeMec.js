@@ -23,6 +23,26 @@ class Field extends React.PureComponent {
 }
 
 class VeMec extends React.PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.onModificar = this.onModificar.bind(this);
+        this.onBaja = this.onBaja.bind(this);
+        this.onDetalles = this.onDetalles.bind(this);
+    }
+
+    onModificar(e) {
+        this.props.onRouteChange('Modificar', this.props.data.id);
+    }
+
+    onBaja(e) {
+        this.props.onBaja(e, this.props.data.id);
+    }
+
+    onDetalles(e) {
+        this.props.onRouteChange('Detalles', this.props.data.id);
+    }
+
     render() {
         let currentState = this.props.data.estados[0];
         let estado = <h2>Este ventilador no tiene estados en el sistema.</h2>;
@@ -68,12 +88,12 @@ class VeMec extends React.PureComponent {
         }
 
         return (
-            <Card bg={"light"}>
+            <Card bg={"light"} style={{maxWidth: 600}}>
                 <Card.Header>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
-                        <Button className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>
-                        <Button variant={"danger"} size={"sm"}><FontAwesomeIcon icon={faTrash}/></Button>
+                        <Button onClick={this.onModificar} className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>
+                        <Button variant={"danger"} size={"sm"} onClick={this.onBaja}><FontAwesomeIcon icon={faTrash}/></Button>
                     </div>
                 </Card.Header>
                 <Card.Body>
@@ -89,7 +109,7 @@ class VeMec extends React.PureComponent {
                     </Container>
                 </Card.Body>
                 <Card.Footer className={"d-flex"}>
-                    <Button variant={"info"} size={"sm"} className={"mx-auto"}>Ver Detalles</Button>
+                    <Button onClick={this.onDetalles} variant={"info"} size={"sm"} className={"mx-auto"}>Ver Detalles</Button>
                 </Card.Footer>
             </Card>
         );
