@@ -49,53 +49,52 @@ class Alta extends React.Component{
         return(
             <article>
                 <main>
-                    <div className="card border border-info">
-                        <h5 className="card-header info-color white-text text-center py-4 border border-info">
-                            <strong>Ingresar</strong>
-                        </h5>
-                        <div className="card-body px-lg-5 pt-0" id="alta">
+                    <div className="row justify-content-center">
+                        
+                        <div className="form-group lg-col-1 border border-info" id="alta">
+                            <h5 className="card-header justify-content-center info-color white-text text-center py-4 border border-info">
+                                <strong>Ingresar</strong>
+                            </h5>
                             <form className="text-center" style={{color: "lightblue"}}>
-                                <div className="form-row">
-                                    <div className="col">
-                                        <div className="md-form">
+                                <div className="form-group lg-col-1">
+                                        <div className="form-group lg-col-1">
                                             <input
                                                 onChange={this.onIdChange}
-                                                className="form-control border border-info form-rounded"
+                                                className="form-control"
                                                 type="text"
                                                 placeholder="ID"
                                                 name="altaId"
                                                 value={this.state.id}
                                                 id="altaId" />
                                         </div>
-                                    </div>
                                 </div>
-                                <div className="md-form mt-0">
+                                <div className="form-group lg-col-1">
                                     <input
                                         onChange={this.onMarcaChange}
                                         type="text"
-                                        className="form-control border border-info form-rounded"
+                                        className="form-control"
                                         name="marca"
                                         placeholder="Marca"
                                         value={this.state.marca}
                                         id="marca" />
                                 </div>
-                                <div className="md-form">
+                                <div className="form-group lg-col-1">
                                     
                                     <input
                                         onChange={this.onModeloChange}
                                         type="text"
-                                        className="form-control border border-info form-rounded"
+                                        className="form-control"
                                         name="modelo"
                                         placeholder="Modelo"
                                         value={this.state.modelo}
                                         id="modelo" />
                                 </div>
-                                <div className="md-form">
+                                <div className="form-group lg-col-1">
                                     
                                     <input
                                         onChange={this.onUbicacionChange}
                                         type="text"
-                                        className="form-control form-rounded border border-info "
+                                        className="form-control"
                                         name="ubicacion"
                                         placeholder="Ubicacion"
                                         value={this.state.ubicacion}
