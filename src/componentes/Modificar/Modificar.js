@@ -62,73 +62,83 @@ class Modificar extends Component {
     }
 
     render() {
+        const styleAlta = {
+            backgroundColor: "lightgray",
+            height: "470px",
+            width: "350px"
+        }
         return (
-            <div className="row justify-content-center ">
-                <form onSubmit={this.handleSbmit} >
-                    <div className="form-group lg-col-1">
-                        <label htmlFor="id">
-                            Id:
+            <div className="row justify-content-center " >
+                <div className="form-group lg-col-1 border border-info" style={styleAlta} >
+                    <h5 className="card-header justify-content-center info-color white-text text-center py-4 border border-info">
+                        <strong>Modificar</strong>
+                    </h5>
+                    <form onSubmit={this.handleSbmit} >
+                        <div className="form-group lg-col-1">
+                            <label htmlFor="id">
+                                Id:
           </label>
-                        <input
-                            className="form-control"
-                            placeholder="Id Vemec"
-                            id="id"
-                            name="id"
-                            type="text"
-                            readOnly
-                            value={this.state.id}
-                            onChange={this.handleInputChange} />
+                            <input
+                                className="form-control"
+                                placeholder="Id Vemec"
+                                id="id"
+                                name="id"
+                                type="text"
+                                readOnly
+                                value={this.state.id}
+                                onChange={this.handleInputChange} />
 
-                    </div>
-                    <div className="form-group lg-col-1">
-                        <label htmlFor="marca">
-                            Marca:
+                        </div>
+                        <div className="form-group lg-col-1">
+                            <label htmlFor="marca">
+                                Marca:
           </label>
-                        <input
+                            <input
 
-                            className="form-control"
-                            placeholder="Ingrese Marca"
-                            id="marca"
-                            name="marca"
-                            type="text"
-                            value={this.state.marca}
-                            onChange={this.handleInputChange} />
+                                className="form-control"
+                                placeholder="Ingrese Marca"
+                                id="marca"
+                                name="marca"
+                                type="text"
+                                value={this.state.marca}
+                                onChange={this.handleInputChange} />
 
-                    </div>
-                    <div className="form-group lg-col-1">
-                        <label htmlFor="modelo">
-                            Modelo:
+                        </div>
+                        <div className="form-group lg-col-1">
+                            <label htmlFor="modelo">
+                                Modelo:
               </label>
-                        <input
-                            className="form-control"
-                            placeholder="Ingrese Modelo"
-                            id="modelo"
-                            name="modelo"
-                            type="text"
-                            value={this.state.modelo}
-                            onChange={this.handleInputChange} />
+                            <input
+                                className="form-control"
+                                placeholder="Ingrese Modelo"
+                                id="modelo"
+                                name="modelo"
+                                type="text"
+                                value={this.state.modelo}
+                                onChange={this.handleInputChange} />
 
-                    </div>
-                    <div className="form-group lg-col-1">
-                        <label htmlFor="ubicacion">
-                            Ubicacion:
+                        </div>
+                        <div className="form-group lg-col-1">
+                            <label htmlFor="ubicacion">
+                                Ubicacion:
               </label>
-                        <input
-                            className="form-control"
-                            placeholder="Ingrese Ubicacion"
-                            id="ubicacion"
-                            name="ubicacion"
-                            type="text"
-                            value={this.state.ubicacion}
-                            onChange={this.handleInputChange} />
+                            <input
+                                className="form-control"
+                                placeholder="Ingrese Ubicacion"
+                                id="ubicacion"
+                                name="ubicacion"
+                                type="text"
+                                value={this.state.ubicacion}
+                                onChange={this.handleInputChange} />
 
 
-                    </div>
-                    <div className="col">
-                        <button type="submit" className="btn btn-primary center">Enviar</button>
-                    </div>
+                        </div>
+                        <div className="col">
+                            <button type="submit" className="btn btn-primary center">Enviar</button>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         )
     }

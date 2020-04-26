@@ -109,6 +109,7 @@ class App extends Component {
         }
 
         return (
+            
             <div className="App">
                 <Navegacion pagina={pagina} onRouteChange={this.onRouteChange}/>
 

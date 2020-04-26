@@ -17,8 +17,7 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: false,
-            pressureUnit: 'Pa',
-            route: 'Inicio'
+            pressureUnit: 'Pa'
         };
     }
 
@@ -97,23 +96,16 @@ class Panel extends React.Component {
         }
     }
 
-    onRouteChange = (route) => {
-        this.setState({ route: 'Alta' });
-    }
-
     render() {
         if(this.state.vemecs.length === 0) {
             return (
-                <div className={"m-5"}>
+                <div className={"m-5"} style={{backgroundColor:"lightgray"}}>
                     <h1 style={{textAlign: "center"}}>No hay ventiladores registrados en el sistema.</h1>
-                    <form>
                         <input
-                        onClick={() => this.onRouteChange = ('Alta')}
-                        className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-outline-info"
-                        type="submit"
+                        onClick={() => this.props.onRouteChange('Alta')}
+                        className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-primary"
+                        type="button"
                         value="Dar de Alta un VeMec" />
-                    </form>
-                    
                 </div>
             );
         }
@@ -127,7 +119,7 @@ class Panel extends React.Component {
 
         return (
             <div className={"m-5"}>
-                <div style={{display: "flex", justifyContent: "flex-end"}}>
+                <div style={{display: "flex", justifyContent: "flex-end", backgroundColor: "lightgray", width: "170px"}}>
                     <Form.Group>
                         <Form.Label>Unidad de Presion</Form.Label>
                         <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>

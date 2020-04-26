@@ -1,4 +1,5 @@
 import React from 'react';
+import { height, width } from '@fortawesome/free-solid-svg-icons/faCog';
 
 class Alta extends React.Component{
     constructor(props){
@@ -28,9 +29,6 @@ class Alta extends React.Component{
     onUbicacionChange = (event) => {
         this.setState({ ubicacion: event.target.value });
     }
-    onRouteChange = (route) => {
-        this.setState({route: 'Inicio'});
-    }
     
 
     onSubmitAlta(event) {
@@ -46,12 +44,17 @@ class Alta extends React.Component{
     }
 
     render(){
-        return(
+        const styleAlta = {
+            backgroundColor: "lightgray",
+            height: "420px",
+            width: "350px"
+        }
+        return(   
             <article>
                 <main>
-                    <div className="row justify-content-center">
+                    <div className="row justify-content-center" >
                         
-                        <div className="form-group lg-col-1 border border-info" id="alta">
+                        <div className="form-group lg-col-1 border border-info" id="alta" style={styleAlta}>
                             <h5 className="card-header justify-content-center info-color white-text text-center py-4 border border-info">
                                 <strong>Ingresar</strong>
                             </h5>
@@ -106,9 +109,9 @@ class Alta extends React.Component{
                                 type="submit"
                                 value="Ingresar" />
                                 <input
-                                    onClick={() => this.onRouteChange=('Inicio')}
+                                    onClick={() => this.props.onRouteChange('Inicio')}
                                     className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-outline-danger"
-                                    type="submit"
+                                    type="button"
                                     value="Cancelar" />
                             </form>
                         </div>
