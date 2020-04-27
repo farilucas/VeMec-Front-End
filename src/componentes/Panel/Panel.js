@@ -3,7 +3,10 @@ import VeMec from "../VeMec/VeMec";
 import CardDeck from "react-bootstrap/CardDeck";
 import Pagination from "react-js-pagination";
 import Form from "react-bootstrap/Form";
-require("bootstrap/dist/css/bootstrap.css");
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+
 
 class Panel extends React.Component {
     constructor(props) {
@@ -16,7 +19,7 @@ class Panel extends React.Component {
             size: 3,
             totalElements: 0,
             totalPages: 0,
-            isFetching: false,
+            isFetching: true,
             pressureUnit: 'Pa'
         };
     }
@@ -97,15 +100,17 @@ class Panel extends React.Component {
     }
 
     render() {
-        if(this.state.vemecs.length === 0) {
+        if(this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
-                <div className={"m-5"} style={{backgroundColor:"lightgray"}}>
-                    <h1 style={{textAlign: "center"}}>No hay ventiladores registrados en el sistema.</h1>
-                        <input
-                        onClick={() => this.props.onRouteChange('Alta')}
-                        className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-primary"
-                        type="button"
-                        value="Dar de Alta un VeMec" />
+                <div className="d-flex justify-content-center">
+                    <Card className="mt-5">
+                        <Card.Body className="">
+                            <Alert variant="danger" className="h2 m-0">No hay ventiladores registrados en el sistema.</Alert>
+                        </Card.Body>
+                        <Card.Footer className={"d-flex"}>
+                            <Button className={"mx-auto"} onClick={() => this.props.onRouteChange('Alta')} >Dar de Alta un VeMec</Button>
+                        </Card.Footer>
+                    </Card>
                 </div>
             );
         }
@@ -118,22 +123,24 @@ class Panel extends React.Component {
         })
 
         return (
-            <div className={"m-5"}>
-                <div style={{display: "flex", justifyContent: "flex-end", backgroundColor: "lightgray", width: "170px"}}>
-                    <Form.Group>
-                        <Form.Label>Unidad de Presion</Form.Label>
-                        <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
-                            <option value={"Pa"}>Pascal</option>
-                            <option value={"mmHg"}>Milimetros de Mercurio</option>
-                            <option value={"mbar"}>Milibar</option>
-                        </Form.Control>
-                    </Form.Group>
-                </div>
+            <div className={"m-5 d-flex flex-column"}>
+                <Card className="align-self-start">
+                    <Card.Body className="px-2 py-1">
+                        <Form.Group>
+                            <Form.Label>Unidad de Presion</Form.Label>
+                            <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
+                                <option value={"Pa"}>Pascal</option>
+                                <option value={"mmHg"}>Milimetros de Mercurio</option>
+                                <option value={"mbar"}>Milibar</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Card.Body>
+                </Card>
 
-                <CardDeck style={{justifyContent: "center"}}>
+                <CardDeck className="justify-content-center my-2">
                     {vemecs}
                 </CardDeck>
-                <div className={"d-flex justify-content-center mt-2"}>
+                <div className={"d-flex justify-content-center"}>
                     <Pagination
                         itemClass="page-item"
                         linkClass="page-link"

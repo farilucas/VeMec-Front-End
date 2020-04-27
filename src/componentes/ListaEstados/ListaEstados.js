@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import {unit} from "mathjs";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 class ListaEstados extends React.Component {
     constructor(props) {
@@ -77,13 +78,13 @@ class ListaEstados extends React.Component {
         this.fetchData()
     }
 
-    onPageChange(page, totalRows) {
+    onPageChange(page) {
         this.setState(
             {page: page-1},
             this.fetchData.bind(this));
     }
 
-    onChangeRowsPerPage(currentRowsPerPage, currentPage) {
+    onChangeRowsPerPage(currentRowsPerPage) {
         this.setState(
             {size: currentRowsPerPage},
             this.fetchData.bind(this));
@@ -122,21 +123,30 @@ class ListaEstados extends React.Component {
 
     //Criet  teibl
     render() {
+        const unitSelector = (
+            <Form.Group className="m-0">
+                <Form.Row className="m-0">
+                    <Form.Label className="my-auto mr-2" style={{fontSize: "1rem"}}>Unidad de Presion</Form.Label>
+                    <Col>
+                        <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
+                            <option value={"Pa"}>Pascal</option>
+                            <option value={"mmHg"}>Milimetros de Mercurio</option>
+                            <option value={"mbar"}>Milibar</option>
+                        </Form.Control>
+                    </Col>
+                </Form.Row>
+            </Form.Group>
+        );
+
          return (
              <>
-                 <div style={{display: "flex", justifyContent: "flex-end"}}>
-                     <Form.Group>
-                         <Form.Label>Unidad de Presion</Form.Label>
-                         <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
-                             <option value={"Pa"}>Pascal</option>
-                             <option value={"mmHg"}>Milimetros de Mercurio</option>
-                             <option value={"mbar"}>Milibar</option>
-                         </Form.Control>
-                     </Form.Group>
-                 </div>
                  <DataTable
+                     className="mt-5"
                      progressPending={this.state.isFetching}
                      title={`Estados de ${this.props.id}`}
+                     subHeader={true}
+                     subHeaderAlign="right"
+                     subHeaderComponent={unitSelector}
                      columns={this.#columns}
                      data={this.state.estados.map(estado => {
                          return {

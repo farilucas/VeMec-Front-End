@@ -1,4 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import FormGroup from "react-bootstrap/FormGroup";
+import FormLabel from "react-bootstrap/FormLabel";
+import Button from "react-bootstrap/Button";
 
 class Modificar extends Component {
 
@@ -14,7 +20,7 @@ class Modificar extends Component {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSbmit = this.handleSbmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange(event) {
@@ -28,9 +34,8 @@ class Modificar extends Component {
     }
 
 
-    handleSbmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
-        console.log(JSON.stringify(this.state));
         fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec, {
 
             method: 'put',
@@ -39,108 +44,75 @@ class Modificar extends Component {
                 this.state
             )
         })
-        .then(result => console.log('success====:', result))
+        .then(() => this.props.onRouteChange('Inicio'))
         .catch(error => console.log('error============:', error));
     }
 
 
     componentDidMount() {
-        console.log(this.state.vemec)
         fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec)
-            .then(response => response.json())
-            .then(data =>
-
-                this.setState({
-                    id: data.id,
-                    marca: data.marca,
-                    modelo: data.modelo,
-                    ubicacion: data.ubicacion,
-                }
-                ))
-            .then(console.log(this.state))
-        console.log(this.state)
+        .then(response => response.json())
+        .then(data =>
+            this.setState({
+                id: data.id,
+                marca: data.marca,
+                modelo: data.modelo,
+                ubicacion: data.ubicacion,
+            })
+        );
     }
 
     render() {
-        const styleAlta = {
-            backgroundColor: "lightgray",
-            height: "470px",
-            width: "350px"
-        }
         return (
-            <div className="row justify-content-center " >
-                <div className="form-group lg-col-1 border border-info" style={styleAlta} >
-                    <h5 className="card-header justify-content-center info-color white-text text-center py-4 border border-info">
+            <div className="d-flex justify-content-center mt-5">
+                <Card style={{minWidth: 350}}>
+                    <Card.Header className="text-center">
                         <strong>Modificar</strong>
-                    </h5>
-                    <form onSubmit={this.handleSbmit} >
-                        <div className="form-group lg-col-1">
-                            <label htmlFor="id">
-                                Id:
-          </label>
-                            <input
-                                className="form-control"
-                                placeholder="Id Vemec"
-                                id="id"
-                                name="id"
-                                type="text"
-                                readOnly
-                                value={this.state.id}
-                                onChange={this.handleInputChange} />
-
-                        </div>
-                        <div className="form-group lg-col-1">
-                            <label htmlFor="marca">
-                                Marca:
-          </label>
-                            <input
-
-                                className="form-control"
-                                placeholder="Ingrese Marca"
-                                id="marca"
-                                name="marca"
-                                type="text"
-                                value={this.state.marca}
-                                onChange={this.handleInputChange} />
-
-                        </div>
-                        <div className="form-group lg-col-1">
-                            <label htmlFor="modelo">
-                                Modelo:
-              </label>
-                            <input
-                                className="form-control"
-                                placeholder="Ingrese Modelo"
-                                id="modelo"
-                                name="modelo"
-                                type="text"
-                                value={this.state.modelo}
-                                onChange={this.handleInputChange} />
-
-                        </div>
-                        <div className="form-group lg-col-1">
-                            <label htmlFor="ubicacion">
-                                Ubicacion:
-              </label>
-                            <input
-                                className="form-control"
-                                placeholder="Ingrese Ubicacion"
-                                id="ubicacion"
-                                name="ubicacion"
-                                type="text"
-                                value={this.state.ubicacion}
-                                onChange={this.handleInputChange} />
-
-
-                        </div>
-                        <div className="col">
-                            <button type="submit" className="btn btn-primary center">Enviar</button>
-                        </div>
-
-                    </form>
-                </div>
+                    </Card.Header>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Card.Body className="pb-1">
+                            <FormGroup controlId="id">
+                                <FormLabel>Id</FormLabel>
+                                <FormControl
+                                    type="text"
+                                    readOnly={true}
+                                    value={this.state.id}/>
+                            </FormGroup>
+                            <FormGroup controlId="marca">
+                                <FormLabel>Marca</FormLabel>
+                                <FormControl
+                                    name="marca"
+                                    type="text"
+                                    placeholder="Ingrese Marca"
+                                    value={this.state.marca}
+                                    onChange={this.handleInputChange}/>
+                            </FormGroup>
+                            <FormGroup controlId="modelo">
+                                <FormLabel>Modelo</FormLabel>
+                                <FormControl
+                                    name="modelo"
+                                    type="text"
+                                    placeholder="Ingrese Marca"
+                                    value={this.state.modelo}
+                                    onChange={this.handleInputChange}/>
+                            </FormGroup>
+                            <FormGroup controlId="ubicacion">
+                                <FormLabel>Ubicacion</FormLabel>
+                                <FormControl
+                                    name="ubicacion"
+                                    type="text"
+                                    placeholder="Ingrese Marca"
+                                    value={this.state.ubicacion}
+                                    onChange={this.handleInputChange}/>
+                            </FormGroup>
+                        </Card.Body>
+                        <Card.Footer>
+                            <Button variant="primary" type="submit">Enviar</Button>
+                        </Card.Footer>
+                    </Form>
+                </Card>
             </div>
-        )
+        );
     }
 }
 

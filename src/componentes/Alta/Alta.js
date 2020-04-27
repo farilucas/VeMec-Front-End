@@ -1,5 +1,4 @@
 import React from 'react';
-import { height, width } from '@fortawesome/free-solid-svg-icons/faCog';
 
 class Alta extends React.Component{
     constructor(props){
@@ -39,8 +38,8 @@ class Alta extends React.Component{
             body: JSON.stringify(
                 this.state
             )
-        }).then(result => console.log('works', result))
-            .catch(error => console.log('wornksnt', error))
+        })
+        .then(() => this.props.onRouteChange('Inicio'));
     }
 
     render(){

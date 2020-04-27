@@ -9,6 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
+import Alert from "react-bootstrap/Alert";
 
 class Field extends React.PureComponent {
     render() {
@@ -32,7 +33,7 @@ class VeMec extends React.PureComponent {
         this.onDetalles = this.onDetalles.bind(this);
     }
 
-    onModificar(e) {
+    onModificar() {
         this.props.onRouteChange('Modificar', this.props.data.id);
     }
 
@@ -40,13 +41,13 @@ class VeMec extends React.PureComponent {
         this.props.onBaja(e, this.props.data.id);
     }
 
-    onDetalles(e) {
+    onDetalles() {
         this.props.onRouteChange('Detalles', this.props.data.id);
     }
 
     render() {
         let currentState = this.props.data.estados[0];
-        let estado = <h2>Este ventilador no tiene estados en el sistema.</h2>;
+        let estado = <Alert variant="primary" className="h2 mt-3 mb-0 text-center">Este ventilador no tiene estados en el sistema.</Alert>;
 
         if(currentState !== undefined) {
 
