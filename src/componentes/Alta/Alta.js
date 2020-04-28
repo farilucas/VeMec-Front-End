@@ -1,4 +1,10 @@
 import React from 'react';
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import FormGroup from "react-bootstrap/FormGroup"; 
+import Button from "react-bootstrap/Button";
+
 
 class Alta extends React.Component{
     constructor(props){
@@ -53,67 +59,57 @@ class Alta extends React.Component{
                 <main>
                     <div className="row justify-content-center" >
                         
-                        <div className="form-group lg-col-1 border border-info" id="alta" style={styleAlta}>
-                            <h5 className="card-header justify-content-center info-color white-text text-center py-4 border border-info">
+                        <Card className="form-group lg-col-1 border border-info" id="alta" style={styleAlta}>
+                            <Card.Header className="text-center">
                                 <strong>Ingresar</strong>
-                            </h5>
-                            <form className="text-center" style={{color: "lightblue"}}>
-                                <div className="form-group lg-col-1">
-                                        <div className="form-group lg-col-1">
-                                            <input
-                                                onChange={this.onIdChange}
-                                                className="form-control"
-                                                type="text"
-                                                placeholder="ID"
-                                                name="altaId"
-                                                value={this.state.id}
-                                                id="altaId" />
-                                        </div>
-                                </div>
-                                <div className="form-group lg-col-1">
-                                    <input
-                                        onChange={this.onMarcaChange}
-                                        type="text"
-                                        className="form-control"
-                                        name="marca"
-                                        placeholder="Marca"
-                                        value={this.state.marca}
-                                        id="marca" />
-                                </div>
-                                <div className="form-group lg-col-1">
-                                    
-                                    <input
-                                        onChange={this.onModeloChange}
-                                        type="text"
-                                        className="form-control"
-                                        name="modelo"
-                                        placeholder="Modelo"
-                                        value={this.state.modelo}
-                                        id="modelo" />
-                                </div>
-                                <div className="form-group lg-col-1">
-                                    
-                                    <input
-                                        onChange={this.onUbicacionChange}
-                                        type="text"
-                                        className="form-control"
-                                        name="ubicacion"
-                                        placeholder="Ubicacion"
-                                        value={this.state.ubicacion}
-                                        id="ubicacion" />
-                                </div>
-                                <input
-                                onClick={this.onSubmitAlta}
-                                className="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-                                type="submit"
-                                value="Ingresar" />
-                                <input
-                                    onClick={() => this.props.onRouteChange('Inicio')}
-                                    className="btn btn-rounded btn-block my-4 waves-effect z-depth-0 btn-outline-danger"
-                                    type="button"
-                                    value="Cancelar" />
-                            </form>
-                        </div>
+                            </Card.Header>
+                            <Form>
+                                <Card.Body className="pb-1">
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onIdChange}
+                                            type="text"
+                                            placeholder="ID"
+                                            name="altaId"
+                                            value={this.state.id}
+                                            id="altaId" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onMarcaChange}
+                                            type="text"
+                                            name="marca"
+                                            placeholder="Marca"
+                                            value={this.state.marca}
+                                            id="marca" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onModeloChange}
+                                            type="text"
+                                            name="modelo"
+                                            placeholder="Modelo"
+                                            value={this.state.modelo}
+                                            id="modelo" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onUbicacionChange}
+                                            type="text"
+                                            name="ubicacion"
+                                            placeholder="Ubicacion"
+                                            value={this.state.ubicacion}
+                                            id="ubicacion" />
+                                    </FormGroup>
+                                    <Button
+                                        onClick={this.onSubmitAlta}
+                                        variant="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0">Agregar</Button>
+                                    <Button
+                                        onClick={() => this.props.onRouteChange('Inicio')}
+                                        variant="btn btn-outline-danger  btn-rounded btn-block my-4 waves-effect z-depth-0">Cancelar</Button> 
+                                </Card.Body>
+                            </Form>
+                        </Card>
                     </div>
                 </main>
             </article>
