@@ -65,12 +65,12 @@ class VeMec extends React.PureComponent {
                         <Col><Field label={"Timestamp"}>{(new Date(currentState.timestamp)).toLocaleString()}</Field></Col>
                     </Row>
                     <Row>
-                        <Col><Field label={"Presion de Entrada"}>{unit(currentState.presionEntrada, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
-                        <Col><Field label={"Presion de Salida"}>{unit(currentState.presionSalida, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={`Presion de Entrada (${this.props.pressureUnit})`}>{unit(currentState.presionEntrada, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={`Presion de Salida (${this.props.pressureUnit})`}>{unit(currentState.presionSalida, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
                     </Row>
                     <Row>
-                        <Col><Field label={"Presion Minima"}>{unit(currentState.presionMinima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
-                        <Col><Field label={"Presion Maxima"}>{unit(currentState.presionMaxima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={`Presion Minima (${this.props.pressureUnit})`}>{unit(currentState.presionMinima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
+                        <Col><Field label={`Presion Maxima (${this.props.pressureUnit})`}>{unit(currentState.presionMaxima, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
                     </Row>
                     <Row>
                         <Col><Field label={"Volumen de Gas Aportado (cc)"}>{currentState.volumenGasAportado}</Field></Col>
@@ -84,7 +84,7 @@ class VeMec extends React.PureComponent {
                         <Col><Field label={"Temperatura de Entrada (°C)"}>{currentState.temperaturaSalida}</Field></Col>
                         <Col><Field label={"Temperatura de Salida (°C)"}>{currentState.temperaturaEntrada}</Field></Col>
                     </Row>
-                    <Grafica presionEntrada={puntosPresionEntrada} presionSalida={puntosPresionSalida}/>
+                    <Grafica presionEntrada={puntosPresionEntrada} presionSalida={puntosPresionSalida} unit={this.props.pressureUnit}/>
                 </>
             );
         }

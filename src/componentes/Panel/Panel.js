@@ -23,6 +23,13 @@ class Panel extends React.Component {
             pressureUnit: 'Pa',
             segundos: 0
         };
+
+        this.fetchData = this.fetchData.bind(this);
+        this.updateVeMecData = this.updateVeMecData.bind(this);
+
+        this.isUpdating = false;
+
+        this.intervalHandle = setInterval(this.updateVeMecData, 2000);
     }
 
     componentDidMount() {
@@ -86,6 +93,10 @@ class Panel extends React.Component {
             || (this.state.pressureUnit !== nextState.pressureUnit);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.intervalHandle);
+    }
+
     async onBaja(event, id) {
         event.preventDefault();
         await fetch('http://localhost:8080/api/v1/vemecs/' + id, {
@@ -100,6 +111,13 @@ class Panel extends React.Component {
         else {
             this.fetchData();
         }
+    }
+
+    async updateVeMecData() {
+        if(this.isFetching)
+            return;
+
+        await this.fetchData();
     }
 
     render() {
