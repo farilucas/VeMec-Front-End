@@ -31,11 +31,31 @@ const inicialState = {
     pagina: 'inicio'
 }
 
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = inicialState;
     }
+
+    loadVeMec = (data) => {
+        this.setState({
+            Estados: {
+                pMax: data.pMax,
+                pMin: data.pMin,
+                VolGas: data.VolGas,
+                FrecuenciaAporte: data.FrecuenciaAporte,
+                ComposicionO2: data.ComposicionO2,
+                HumedadAire: data.HumedadAire,
+                tEntrada: data.tEntrada,
+                tSalida: data.tSalida,
+                pEntrada: data.pEntrada,
+                pSalida: data.pSalida
+            }
+        })
+    }
+
+
 
     onRouteChange = (route, vemec) => {
         if (route === 'Alta') {
@@ -51,7 +71,7 @@ class App extends Component {
 
     render() {
         const {route, pagina} = this.state;
-        let segundos;
+
         let currentComponent;
 
         switch (route) {
@@ -59,10 +79,7 @@ class App extends Component {
             case 'Inicio':
                 currentComponent = (
                     <div>
-                        {segundos = setTimeout(()=>{
-                            <Panel onRouteChange={this.onRouteChange}/>
-                        },4000)
-                        }
+                        <Panel onRouteChange={this.onRouteChange}/>
                     </div>
                 );
                 break;
@@ -70,7 +87,7 @@ class App extends Component {
             case 'Alta':
                 currentComponent = (
                     <div>
-                        <Alta onRouteChange={this.onRouteChange}/>
+                        <Alta loadVeMec={this.loadVeMec} onRouteChange={this.onRouteChange}/>
                     </div>
                 );
                 break;
