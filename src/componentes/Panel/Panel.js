@@ -20,7 +20,8 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
-            pressureUnit: 'Pa'
+            pressureUnit: 'Pa',
+            segundos: 0
         };
     }
 
@@ -31,46 +32,48 @@ class Panel extends React.Component {
     onUnitSelect(event) {
         this.setState({pressureUnit: event.target.value});
     }
+    // segundos = setTimeout(() => { 
+        async fetchData(){
+            this.setState({ isFetching: true });
 
-    async fetchData() {
-        this.setState({isFetching: true});
-
-        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id`, {
-            method: "get",
-            headers: {"Content-Type": "application/json"},
-        }).then(res => res.json());
-
-        this.setState({
-            vemecs: json.elements,
-            ...json.pageMetadata
-        });
-
-        let newGraphData = {};
-        let fetches = [];
-
-        json.elements.forEach((vemec) => {
-            //Para cada VeMec, se piden los datos para sus graficas
-            //Esto no es optimo ni jodiendo, pero por ahora queda asi
-            let promise = fetch(`http://localhost:8080/api/v1/vemecs/${vemec.id}/grafica`, {
+            let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id`, {
                 method: "get",
-                headers: {"Content-Type": "application/json"},
-            })
-            .then(res => res.json())
-            .then(puntos => {
-                newGraphData[vemec.id] = puntos;
+                headers: { "Content-Type": "application/json" },
+            }).then(res => res.json());
+
+            this.setState({
+                vemecs: json.elements,
+                ...json.pageMetadata
             });
 
-            fetches.push(promise);
-        });
+            let newGraphData = {};
+            let fetches = [];
 
-        //Luego de que se obtienen los datos de todas las graficas, se settea el nuevo estado
-        await Promise.all(fetches);
+            json.elements.forEach((vemec) => {
+                //Para cada VeMec, se piden los datos para sus graficas
+                //Esto no es optimo ni jodiendo, pero por ahora queda asi
+                let promise = fetch(`http://localhost:8080/api/v1/vemecs/${vemec.id}/grafica`, {
+                    method: "get",
+                    headers: { "Content-Type": "application/json" },
+                })
+                    .then(res => res.json())
+                    .then(puntos => {
+                        newGraphData[vemec.id] = puntos;
+                    });
 
-        this.setState({
-            isFetching: false,
-            graphData: newGraphData
-        });
-    }
+                fetches.push(promise);
+            });
+
+            //Luego de que se obtienen los datos de todas las graficas, se settea el nuevo estado
+            await Promise.all(fetches);
+
+            this.setState({
+                isFetching: false,
+                graphData: newGraphData
+            });
+        };
+    // }, 4000)
+    
 
     onPageChange(page) {
         //Page-1 porque las paginas empiezan en 0 en el API
