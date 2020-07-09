@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Alta from './componentes/Alta/Alta';
+import AltaPaciente from './componentes/Alta/AltaPaciente';
 import Modificar from './componentes/Modificar/Modificar';
 import Navegacion from './componentes/Navigation/Navigation';
 import Panel from "./componentes/Panel/Panel";
@@ -60,6 +61,8 @@ class App extends Component {
     onRouteChange = (route, vemec) => {
         if (route === 'Alta') {
             this.setState({pagina: 'alta', route});
+        }else if(route === 'AltaPaciente'){
+            this.setState({pagina: 'AltaPaciente', route});
         } else if (route === 'Inicio') {
             this.setState({pagina: 'inicio', route});
         } else if (route === 'Modificar') {
@@ -88,6 +91,14 @@ class App extends Component {
                 currentComponent = (
                     <div>
                         <Alta loadVeMec={this.loadVeMec} onRouteChange={this.onRouteChange}/>
+                    </div>
+                );
+                break;
+            
+            case 'AltaPaciente':
+                currentComponent = (
+                    <div>
+                        <AltaPaciente onRouteChange={this.onRouteChange} />
                     </div>
                 );
                 break;
