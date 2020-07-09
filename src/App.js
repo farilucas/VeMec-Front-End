@@ -4,6 +4,7 @@ import Modificar from './componentes/Modificar/Modificar';
 import Navegacion from './componentes/Navigation/Navigation';
 import Panel from "./componentes/Panel/Panel";
 import ListaEstados from "./componentes/ListaEstados/ListaEstados";
+import UserInfo from "./componentes/UserInfo/UserInfo";
 import "bootstrap/dist/css/bootstrap.css";
 
 const inicialState = {
@@ -28,7 +29,8 @@ const inicialState = {
         ]
     },
     route: 'Inicio',
-    pagina: 'inicio'
+    pagina: 'inicio',
+    see: false
 }
 
 
@@ -107,13 +109,15 @@ class App extends Component {
                     </div>
                 );
                 break;
+
         }
 
         return (
             
             <div className="App">
                 <Navegacion pagina={pagina} onRouteChange={this.onRouteChange}/>
-
+                <button onClick={()=>this.setState({see: true})}>Ola negro lindo</button>
+                
                 { currentComponent }
             </div>
         );
