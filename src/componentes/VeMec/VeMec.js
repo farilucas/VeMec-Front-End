@@ -10,6 +10,9 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
+import FormControl from "react-bootstrap/FormControl";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
 class Field extends React.PureComponent {
     render() {
@@ -27,10 +30,25 @@ class Field extends React.PureComponent {
 class VeMec extends React.PureComponent {
     constructor(props) {
         super(props);
-
+        this.state={
+            open: false,
+            pacientes: [],
+            selectedPaciente: ''
+        }
+        this.toggleModalOn = this.toggleModalOn.bind(this);
+        this.toggleModalOff = this.toggleModalOff.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onModificar = this.onModificar.bind(this);
         this.onBaja = this.onBaja.bind(this);
         this.onDetalles = this.onDetalles.bind(this);
+    }
+
+    toggleModalOn(){
+        this.setState({open: true})
+    }
+
+    toggleModalOff(){
+        this.setState({open: false})
     }
 
     onModificar() {
@@ -43,6 +61,24 @@ class VeMec extends React.PureComponent {
 
     onDetalles() {
         this.props.onRouteChange('Detalles', this.props.data.id);
+    }
+
+    onAsignPaciente(event) {
+        event.preventDefault();
+        fetch(``, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                id: this.state.selectedPaciente
+            })
+        }).catch((e) => console.log(e));
+    } 
+
+    onSelectChange(e) {
+        this.setState({ selectedPaciente: e.target.value })
     }
 
     render() {
@@ -89,11 +125,42 @@ class VeMec extends React.PureComponent {
             );
         }
 
+        //let pacientes = this.state.pacientes.map(paciente => <option value={paciente.nombre} key={paciente.id}>{paciente.nombre}</option>);
+        let batery = '100%'
+        let color
+        batery === "100%" ? color = "#FFDA94" : color = "light" 
         return (
-            <Card bg={"light"} style={{maxWidth: 600}}>
+            <Card style={{maxWidth: 600, backgroundColor: color}}>
                 <Card.Header>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
+                        <Button className={"ml-auto mr-2"} variant={"success"} onClick={this.toggleModalOn}>Asignar Paciente</Button>
+                        <Modal
+                            isOpen={this.state.open}
+                            size="lg"
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                        >
+                            <ModalHeader closebutton>
+                                Lista de Pacientes
+                            </ModalHeader>
+                            <ModalBody>
+                                <p>
+                                    <FormControl as="select" onChange={this.onSelectChange} value={this.state.selectedPaciente}>
+                                        {/* {pacientes} */}
+                                        <option>Juan Miguel</option>
+                                        <option>Nadiuska Muñoz</option>
+                                        <option>Lucas Farias</option>
+                                        <option>Kala Fabeiro</option>
+                                        {console.log('Paciente: ', this.state.selectedPaciente)}
+                                    </FormControl>
+                                    <Button size={"sm"} className={"ml-auto mr-2"} onClick={this.onAsignPaciente}><FontAwesomeIcon icon={faPlus} /></Button>
+                                </p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={this.toggleModalOff}>Close</Button>
+                            </ModalFooter>
+                        </Modal>
                         <Button onClick={this.onModificar} className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>
                         <Button variant={"danger"} size={"sm"} onClick={this.onBaja}><FontAwesomeIcon icon={faTrash}/></Button>
                     </div>
