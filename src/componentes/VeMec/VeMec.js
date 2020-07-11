@@ -10,9 +10,8 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
-import FormControl from "react-bootstrap/FormControl";
+import Select from 'react-select';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
 class Field extends React.PureComponent {
     render() {
@@ -33,7 +32,9 @@ class VeMec extends React.PureComponent {
         this.state={
             open: false,
             pacientes: [],
-            selectedPaciente: ''
+            selectedPaciente: '',
+            isClearable: true,
+            isSearchable: true
         }
         this.toggleModalOn = this.toggleModalOn.bind(this);
         this.toggleModalOff = this.toggleModalOff.bind(this);
@@ -72,13 +73,13 @@ class VeMec extends React.PureComponent {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                id: this.state.selectedPaciente
+                //id: this.state.selectedPaciente
             })
         }).catch((e) => console.log(e));
     } 
 
-    onSelectChange(e) {
-        this.setState({ selectedPaciente: e.target.value })
+    onSelectChange(selectedOption) {
+        this.setState({ selectedPaciente: selectedOption.value })
     }
 
     render() {
@@ -125,10 +126,11 @@ class VeMec extends React.PureComponent {
             );
         }
 
-        //let pacientes = this.state.pacientes.map(paciente => <option value={paciente.nombre} key={paciente.id}>{paciente.nombre}</option>);
-        let batery = '100%'
+        //let pacientes = this.state.pacientes.map(paciente => {value: paciente, label: `${paciente.nombre} [${paciente.documento}]`});
+        let hasBattery = true
         let color
-        batery === "100%" ? color = "#FFDA94" : color = "light" 
+        hasBattery ? color = "#FFDA94" : color = "light" 
+        const options = [{value:'john', label: 'John'}, {value:'coffee boy', label: 'Coffee boy'}, {value:'frederic', label:'Frederic'}, {value:'nikoni', label:'NikoNi'}]
         return (
             <Card style={{maxWidth: 600, backgroundColor: color}}>
                 <Card.Header>
@@ -145,17 +147,17 @@ class VeMec extends React.PureComponent {
                                 Lista de Pacientes
                             </ModalHeader>
                             <ModalBody>
-                                <p>
-                                    <FormControl as="select" onChange={this.onSelectChange} value={this.state.selectedPaciente}>
-                                        {/* {pacientes} */}
-                                        <option>Juan Miguel</option>
-                                        <option>Nadiuska Muñoz</option>
-                                        <option>Lucas Farias</option>
-                                        <option>Kala Fabeiro</option>
-                                        {console.log('Paciente: ', this.state.selectedPaciente)}
-                                    </FormControl>
-                                    <Button size={"sm"} className={"ml-auto mr-2"} onClick={this.onAsignPaciente}><FontAwesomeIcon icon={faPlus} /></Button>
-                                </p>
+                                <Select
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    isClearable={this.state.isClearable}
+                                    isSearchable={this.state.isSearchable}
+                                    name="paciente"
+                                    options={options}
+                                    value={{value: this.state.selectedPaciente, label: this.state.selectedPaciente}}
+                                    onChange={this.onSelectChange}
+                                />
+                                <Button size={"sm"} className={"ml-0 mt-1"} onClick={this.onAsignPaciente}>Confirmar</Button>
                             </ModalBody>
                             <ModalFooter>
                                 <Button onClick={this.toggleModalOff}>Close</Button>

@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
+import Collapse from "react-bootstrap/Collapse"
 import Button from "react-bootstrap/Button";
 
 export default class AltaPaciente extends React.Component{
@@ -23,7 +24,10 @@ export default class AltaPaciente extends React.Component{
             coordenadas: '',
             nombreFamiliar: '',
             telefonoFamiliar: '',
-            antecedentes: ''
+            nombreFamiliar1: '',
+            telefonoFamiliar1: '',
+            antecedentes: '',
+            open: false
         }
 
         this.onNombreChange = this.onNombreChange.bind(this)
@@ -40,7 +44,10 @@ export default class AltaPaciente extends React.Component{
         this.onCoordenadasChange = this.onCoordenadasChange.bind(this)
         this.onNombreFamiliarChange = this.onNombreFamiliarChange.bind(this)
         this.onTelefonoFamiliarChange = this.onTelefonoFamiliarChange.bind(this)
+        this.onNombreFamiliar1Change = this.onNombreFamiliar1Change.bind(this)
+        this.onTelefonoFamiliar1Change = this.onTelefonoFamiliar1Change.bind(this)
         this.onAntecedentesChange = this.onAntecedentesChange.bind(this)
+        this.toggleCollapseOnOff = this.toggleCollapseOnOff.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -86,8 +93,17 @@ export default class AltaPaciente extends React.Component{
     onTelefonoFamiliarChange = (event) => {
         this.setState({ telefonoFamiliar: event.target.value })
     }
+    onNombreFamiliar1Change = (event) => {
+        this.setState({ nombreFamiliar1: event.target.value })
+    }
+    onTelefonoFamiliar1Change = (event) => {
+        this.setState({ telefonoFamiliar1: event.target.value })
+    }
     onAntecedentesChange = (event) => {
         this.setState({ antecedentes: event.target.value })
+    }
+    toggleCollapseOnOff(){
+        this.setState({ open: !this.state.open})
     }
 
     onSubmit = (event) =>{
@@ -244,6 +260,35 @@ export default class AltaPaciente extends React.Component{
                                             placeholder="Telefono de Familiar de contacto"
                                             value={this.state.telefonoFamiliar}
                                             id="telefonoFamiliar" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Button 
+                                            onClick={this.toggleCollapseOnOff}
+                                            aria-controls="example-collapse-text"
+                                            aria-expanded={this.state.open}
+                                        >Add Familiar</Button>
+                                        <Collapse in={this.state.open}>
+                                            <div id="example-collapse-text">
+                                                <FormGroup>
+                                                    <FormControl
+                                                        onChange={this.onNombreFamiliar1Change}
+                                                        type="text"
+                                                        name="nombreFamiliar1"
+                                                        placeholder="Nombre de Familiar de contacto"
+                                                        value={this.state.nombreFamiliar1}
+                                                        id="nombreFamiliar1" />
+                                                </FormGroup>
+                                                <FormGroup>
+                                                    <FormControl
+                                                        onChange={this.onTelefonoFamiliar1Change}
+                                                        type="text"
+                                                        name="telefonoFamiliar1"
+                                                        placeholder="Telefono de Familiar de contacto"
+                                                        value={this.state.telefonoFamiliar1}
+                                                        id="telefonoFamiliar1" />
+                                                </FormGroup>.
+                                            </div>
+                                        </Collapse>
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl
