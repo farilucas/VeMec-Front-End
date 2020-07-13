@@ -1,8 +1,7 @@
-import React, {Component} from 'react'
-import Modal from "react-bootstrap/Button";
-import Button from "react-bootstrap/Button";
+import React from 'react'
+import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'react-bootstrap';
 
-class UserInfo extends Component{
+class UserInfo extends React.Component{
 
     constructor(props) {
         super(props)
@@ -17,20 +16,22 @@ class UserInfo extends Component{
     }
    // const [show, setShow] = useState(false);
 
-    handleClose() {this.setState({see:false})};
-    handleShow () {this.setState({see:true})};
+    handleClose() {
+      alert("ola")
+      this.setState({show:false})};
+    handleShow () {this.setState({show:true})};
     
     render(){
         return(
 
-            <>
+            <div>
 
             <Button variant="primary" onClick={this.handleShow}>
               Launch static backdrop modal
             </Button>
       
             <Modal
-              show={this.show}
+              show={this.state.show}
               onHide={this.handleClose}
               backdrop="static"
               keyboard={false}
@@ -49,7 +50,8 @@ class UserInfo extends Component{
                 <Button variant="primary">Understood</Button>
               </Modal.Footer>
             </Modal>
-          </>
+          </div>
+          
 
         );
 
