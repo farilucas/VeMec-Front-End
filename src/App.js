@@ -116,8 +116,7 @@ class App extends Component {
             
             <div className="App">
                 <Navegacion pagina={pagina} onRouteChange={this.onRouteChange}/>
-                <button onClick={()=>this.setState({see: this.state.see})}>Ola negro lindo</button>
-                <UserInfo see={true}/>
+                <UserInfo see={false}/>
                 { currentComponent }
             </div>
         );

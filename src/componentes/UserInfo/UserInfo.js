@@ -1,5 +1,6 @@
 import React from 'react'
-import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'react-bootstrap';
+import Seleccion from '../UserInfo/Tabs'
+import { Modal, Button} from 'react-bootstrap';
 
 class UserInfo extends React.Component{
 
@@ -17,14 +18,14 @@ class UserInfo extends React.Component{
    // const [show, setShow] = useState(false);
 
     handleClose() {
-      alert("ola")
+      //alert("ola")
       this.setState({show:false})};
     handleShow () {this.setState({show:true})};
     
     render(){
         return(
 
-            <div>
+            <div >
 
             <Button variant="primary" onClick={this.handleShow}>
               Launch static backdrop modal
@@ -35,19 +36,20 @@ class UserInfo extends React.Component{
               onHide={this.handleClose}
               backdrop="static"
               keyboard={false}
+              style={{maWidth: "90% !important"}}
+              size="xl"
             >
               <Modal.Header closeButton>
                 <Modal.Title>Modal title</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                I will not close if you click outside me. Don't even try to press
-                escape key.
+                <Seleccion/>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
                   Close
                 </Button>
-                <Button variant="primary">Understood</Button>
+                <Button variant="primary" onClick={this.handleClose}>Understood</Button>
               </Modal.Footer>
             </Modal>
           </div>
