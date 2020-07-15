@@ -5,7 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import Collapse from "react-bootstrap/Collapse"
 import Button from "react-bootstrap/Button";
-
+import Select from 'react-select';
 export default class AltaPaciente extends React.Component{
     constructor(props){
         super(props)
@@ -14,18 +14,23 @@ export default class AltaPaciente extends React.Component{
             sexo: '',
             edad: '',
             fechaDeIngreso: '',
-            localizacion: '',
+            localidad: '',
             ci:'',
             nacionalidad: '',
             telefono: '',
             mail: '',
-            lugarDeResidencia: '',
+            departamento: '',
             direccion: '',
-            coordenadas: '',
-            nombreFamiliar: '',
-            telefonoFamiliar: '',
-            nombreFamiliar1: '',
-            telefonoFamiliar1: '',
+            contactos: [
+                {
+                    nombre: '',
+                    telefono: ''
+                },
+                {
+                    nombre: '',
+                    telefono: ''
+                }
+            ],
             antecedentes: '',
             open: false
         }
@@ -34,18 +39,14 @@ export default class AltaPaciente extends React.Component{
         this.onSexoChange = this.onSexoChange.bind(this)
         this.onEdadChange = this.onEdadChange.bind(this)
         this.onIngresoChange = this.onIngresoChange.bind(this)
-        this.onLocalizacionChange = this.onLocalizacionChange.bind(this)
+        this.onLocalidadChange = this.onLocalidadChange.bind(this)
         this.onCiChange = this.onCiChange.bind(this)
         this.onNacionalidadChange = this.onNacionalidadChange.bind(this)
         this.onTelefonoChange = this.onTelefonoChange.bind(this)
-        this. onMailChange = this.onMailChange.bind(this)
-        this.onResidenciaChange = this.onResidenciaChange.bind(this)
+        this.onMailChange = this.onMailChange.bind(this)
+        this.onDepartamentoChange = this.onDepartamentoChange.bind(this)
         this.onDireccionChange = this.onDireccionChange.bind(this)
-        this.onCoordenadasChange = this.onCoordenadasChange.bind(this)
-        this.onNombreFamiliarChange = this.onNombreFamiliarChange.bind(this)
-        this.onTelefonoFamiliarChange = this.onTelefonoFamiliarChange.bind(this)
-        this.onNombreFamiliar1Change = this.onNombreFamiliar1Change.bind(this)
-        this.onTelefonoFamiliar1Change = this.onTelefonoFamiliar1Change.bind(this)
+        this.onContactosChange = this.onContactosChange.bind(this)
         this.onAntecedentesChange = this.onAntecedentesChange.bind(this)
         this.toggleCollapseOnOff = this.toggleCollapseOnOff.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -55,7 +56,7 @@ export default class AltaPaciente extends React.Component{
         this.setState({nombre: event.target.value})
     }
     onSexoChange = (event) => {
-        this.setState({ sexo: event.target.value })
+        this.setState({ sexo: event.currentTarget.value })
     }
     onEdadChange = (event) => {
         this.setState({ edad: event.target.value })
@@ -63,8 +64,8 @@ export default class AltaPaciente extends React.Component{
     onIngresoChange = (event) => {
         this.setState({ fechaDeIngreso: event.target.value })
     }
-    onLocalizacionChange = (event) => {
-        this.setState({ localizacion: event.target.value })
+    onLocalidadChange = (event) => {
+        this.setState({ localidad: event.target.value })
     }
     onCiChange = (event) => {
         this.setState({ ci: event.target.value })
@@ -78,26 +79,22 @@ export default class AltaPaciente extends React.Component{
     onMailChange = (event) => {
         this.setState({ mail: event.target.value })
     }
-    onResidenciaChange = (event) => {
-        this.setState({ lugarDeResidencia: event.target.value })
+    onDepartamentoChange = departamento => {
+        this.setState({ departamento: departamento })
     }
     onDireccionChange = (event) => {
         this.setState({ direccion: event.target.value })
     }
-    onCoordenadasChange = (event) => {
-        this.setState({ coordenadas: event.target.value })
-    }
-    onNombreFamiliarChange = (event) => {
-        this.setState({ nombreFamiliar: event.target.value })
-    }
-    onTelefonoFamiliarChange = (event) => {
-        this.setState({ telefonoFamiliar: event.target.value })
-    }
-    onNombreFamiliar1Change = (event) => {
-        this.setState({ nombreFamiliar1: event.target.value })
-    }
-    onTelefonoFamiliar1Change = (event) => {
-        this.setState({ telefonoFamiliar1: event.target.value })
+    onContactosChange = (event, index) => {
+        event.persist()
+
+        this.setState(
+            (prevState) => {
+                let contactos = prevState.contactos
+                contactos[index][event.target.name] = event.target.value
+                return {contactos: contactos}
+            }
+        )
     }
     onAntecedentesChange = (event) => {
         this.setState({ antecedentes: event.target.value })
@@ -111,15 +108,50 @@ export default class AltaPaciente extends React.Component{
         fetch('', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(
-                this.state
-            )
+            body: JSON.stringify({
+                nombre: this.state.nombre,
+                sexo: this.state.sexo,
+                edad: this.state.edad,
+                fechaDeIngreso: (new Date(this.state.fechaDeIngreso).toISOString()),
+                localidad: this.state.localidad,
+                ci: this.state.localidad,
+                nacionalidad: this.state.nacionalidad,
+                telefono: this.state.telefono,
+                mail: this.state.mail,
+                departamento: this.state.departamento.value,
+                direccion: this.state.direccion,
+                contactos: this.state.contactos,
+                antecedentes: this.state.antecedentes
+            })
         })
         .then(() => console.log(this.state))
         //.then(() => this.props.onRouteChange('Inicio'));
     }
 
+    
+
     render(){
+        const options = [
+            { value: 'artigas', label: 'Artigas' },
+            { value: 'canelones', label: 'Canelones' },
+            { value: 'cerro largo', label: 'Cerro Largo' },
+            { value: 'colonia', label: 'Colonia' },
+            { value: 'durazno', label: 'Durazno' },
+            { value: 'flores', label: 'Flores' },
+            { value: 'florida', label: 'Florida' },
+            { value: 'lavalleja', label: 'Lavalleja' },
+            { value: 'maldonado', label: 'Maldonado' },
+            { value: 'montevideo', label: 'Montevideo' },
+            { value: 'paysandu', label: 'Paysandu' },
+            { value: 'rio negro', label: 'Rio Negro' },
+            { value: 'rivera', label: 'Rivera' },
+            { value: 'rocha', label: 'Rocha' },
+            { value: 'salto', label: 'Salto' },
+            { value: 'san jose', label: 'San Jose' },
+            { value: 'soriano', label: 'Soriano' },
+            { value: 'tacuarembo', label: 'Tacuarembo' },
+            { value: 'treinta y tres', label: 'Treinta y Tres' },
+        ];
         return (
             <article>
                 <main>
@@ -136,25 +168,27 @@ export default class AltaPaciente extends React.Component{
                                             type="text"
                                             placeholder="Nombre"
                                             name="altaNombre"
-                                            value={this.state.nombre}
+                                            checked={this.state.nombre}
                                             id="altaNombre" />
                                     </FormGroup>
                                     <FormGroup>
                                         <p className="text-center">Masculino: </p>
                                         <FormControl
-                                            onChange={this.onSexoChange}
                                             type="radio"
                                             name="gender"
-                                            value={this.state.sexo}
+                                            value="Masculino"
+                                            checked={this.state.sexo === 'Masculino'}
+                                            onChange={this.onSexoChange}
                                             id="sexo" />
                                         <p className="text-center">Femenino: </p>
                                         <FormControl
-                                            onChange={this.onSexoChange}
                                             type="radio"
                                             name="gender"
-                                            value={this.state.sexo}
+                                            value="Femenino"
+                                            checked={this.state.sexo === 'Femenino'}
+                                            onChange={this.onSexoChange}
                                             id="sexo" />
-                                        <p className="text-center">Otro: </p>
+                                        <p>Otro: </p>
                                         <FormControl
                                             onChange={this.onSexoChange}
                                             type="text"
@@ -173,15 +207,6 @@ export default class AltaPaciente extends React.Component{
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl
-                                            onChange={this.onLocalizacionChange}
-                                            type="text"
-                                            name="localizacion"
-                                            placeholder="Localizacion"
-                                            value={this.state.localizacion}
-                                            id="localizacion" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
                                             onChange={this.onCiChange}
                                             type="text"
                                             name="ci"
@@ -197,6 +222,35 @@ export default class AltaPaciente extends React.Component{
                                             placeholder="Nacionalidad"
                                             value={this.state.nacionalidad}
                                             id="nacionalidad" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Select
+                                            onChange={this.onDepartamentoChange}
+                                            type="text"
+                                            name="Departamento"
+                                            placeholder="Departamento"
+                                            value={this.state.departamento}
+                                            id="departamento" 
+                                            options={options}
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onLocalidadChange}
+                                            type="text"
+                                            name="localidad"
+                                            placeholder="Localidad"
+                                            value={this.state.localidad}
+                                            id="localidad" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={this.onDireccionChange}
+                                            type="textarea"
+                                            name="direccion"
+                                            placeholder="Direccion"
+                                            value={this.state.direccion}
+                                            id="direccion" />
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl
@@ -218,80 +272,6 @@ export default class AltaPaciente extends React.Component{
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl
-                                            onChange={this.onResidenciaChange}
-                                            type="textarea"
-                                            name="residencia"
-                                            placeholder="Lugar de Residencia"
-                                            value={this.state.lugarDeResidencia}
-                                            id="edad" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
-                                            onChange={this.onDireccionChange}
-                                            type="textarea"
-                                            name="direccion"
-                                            placeholder="Direccion"
-                                            value={this.state.direccion}
-                                            id="direccion" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
-                                            onChange={this.onCoordenadasChange}
-                                            type="number"
-                                            name="coordenadas"
-                                            placeholder="Coordenadas"
-                                            value={this.state.coordenadas}
-                                            id="coordenadas" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
-                                            onChange={this.onNombreFamiliarChange}
-                                            type="text"
-                                            name="nombreFamiliar"
-                                            placeholder="Nombre de Familiar de contacto"
-                                            value={this.state.nombreFamiliar}
-                                            id="nombreFamiliar" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
-                                            onChange={this.onTelefonoFamiliarChange}
-                                            type="text"
-                                            name="telefonoFamiliar"
-                                            placeholder="Telefono de Familiar de contacto"
-                                            value={this.state.telefonoFamiliar}
-                                            id="telefonoFamiliar" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Button 
-                                            onClick={this.toggleCollapseOnOff}
-                                            aria-controls="example-collapse-text"
-                                            aria-expanded={this.state.open}
-                                        >Add Familiar</Button>
-                                        <Collapse in={this.state.open}>
-                                            <div id="example-collapse-text">
-                                                <FormGroup>
-                                                    <FormControl
-                                                        onChange={this.onNombreFamiliar1Change}
-                                                        type="text"
-                                                        name="nombreFamiliar1"
-                                                        placeholder="Nombre de Familiar de contacto"
-                                                        value={this.state.nombreFamiliar1}
-                                                        id="nombreFamiliar1" />
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <FormControl
-                                                        onChange={this.onTelefonoFamiliar1Change}
-                                                        type="text"
-                                                        name="telefonoFamiliar1"
-                                                        placeholder="Telefono de Familiar de contacto"
-                                                        value={this.state.telefonoFamiliar1}
-                                                        id="telefonoFamiliar1" />
-                                                </FormGroup>.
-                                            </div>
-                                        </Collapse>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormControl
                                             onChange={this.onAntecedentesChange}
                                             type="textarea"
                                             name="antecedentes"
@@ -299,16 +279,63 @@ export default class AltaPaciente extends React.Component{
                                             value={this.state.antecedentes}
                                             id="antecedentes" />
                                     </FormGroup>
-                                    {/* Hablar con Jorge */}
-                                    {/* <FormGroup>
+                                    <FormGroup>
+                                        <p>Fecha de Ingreso del Paciente: </p>
                                         <FormControl
                                             onChange={this.onIngresoChange}
+                                            type="date"
+                                            name="fechaDeIngreso"
+                                            placeholder="Fecha de Ingreso del Paciente"
+                                            value={this.state.fechaDeIngreso}
+                                            id="fechaDeIngreso" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={(e) => this.onContactosChange(e, 0)}
                                             type="text"
-                                            name="ubicacion"
-                                            placeholder="Ubicacion"
-                                            value={this.state.ubicacion}
-                                            id="ubicacion" />
-                                    </FormGroup> */}
+                                            name="nombre"
+                                            placeholder="Nombre de Familiar de contacto"
+                                            value={this.state.contactos[0].nombre}
+                                            id="nombre" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <FormControl
+                                            onChange={(e) => this.onContactosChange(e,0)}
+                                            type="text"
+                                            name="telefono"
+                                            placeholder="Telefono de Familiar de contacto"
+                                            value={this.state.contactos[0].telefono}
+                                            id="telefono" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Button
+                                            onClick={this.toggleCollapseOnOff}
+                                            aria-controls="example-collapse-text"
+                                            aria-expanded={this.state.open}
+                                        >Agregar Familiar</Button>
+                                        <Collapse in={this.state.open}>
+                                            <div id="example-collapse-text">
+                                                <FormGroup>
+                                                    <FormControl
+                                                        onChange={(e) => this.onContactosChange(e, 1)}
+                                                        type="text"
+                                                        name="nombre"
+                                                        placeholder="Nombre de Familiar de contacto"
+                                                        value={this.state.contactos[1].nombre}
+                                                        id="nombre" />
+                                                </FormGroup>
+                                                <FormGroup>
+                                                    <FormControl
+                                                        onChange={(e) => this.onContactosChange(e, 1)}
+                                                        type="text"
+                                                        name="telefono"
+                                                        placeholder="Telefono de Familiar de contacto"
+                                                        value={this.state.contactos[1].telefono}
+                                                        id="telefono" />
+                                                </FormGroup>
+                                            </div>
+                                        </Collapse>
+                                    </FormGroup>
                                     <Button
                                         onClick={this.onSubmit}
                                         variant="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0">Agregar</Button>

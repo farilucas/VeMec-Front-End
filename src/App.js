@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Alta from './componentes/Alta/Alta';
 import AltaPaciente from './componentes/Alta/AltaPaciente';
+import ListarPacientes from './componentes/Listado/ListarPacientes';
 import Modificar from './componentes/Modificar/Modificar';
 import Navegacion from './componentes/Navigation/Navigation';
 import Panel from "./componentes/Panel/Panel";
@@ -63,6 +64,8 @@ class App extends Component {
             this.setState({pagina: 'alta', route});
         }else if(route === 'AltaPaciente'){
             this.setState({pagina: 'AltaPaciente', route});
+        } else if (route === 'ListarPacientes') {
+            this.setState({ pagina: 'ListarPacientes', route });
         } else if (route === 'Inicio') {
             this.setState({pagina: 'inicio', route});
         } else if (route === 'Modificar') {
@@ -99,6 +102,14 @@ class App extends Component {
                 currentComponent = (
                     <div>
                         <AltaPaciente onRouteChange={this.onRouteChange} />
+                    </div>
+                );
+                break;
+
+            case 'ListarPacientes':
+                currentComponent = (
+                    <div>
+                        <ListarPacientes onRouteChange={this.onRouteChange} />
                     </div>
                 );
                 break;

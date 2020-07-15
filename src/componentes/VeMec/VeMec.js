@@ -29,28 +29,11 @@ class Field extends React.PureComponent {
 class VeMec extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state={
-            open: false,
-            pacientes: [],
-            selectedPaciente: '',
-            isClearable: true,
-            isSearchable: true
-        }
-        this.toggleModalOn = this.toggleModalOn.bind(this);
-        this.toggleModalOff = this.toggleModalOff.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
         this.onModificar = this.onModificar.bind(this);
         this.onBaja = this.onBaja.bind(this);
         this.onDetalles = this.onDetalles.bind(this);
     }
 
-    toggleModalOn(){
-        this.setState({open: true})
-    }
-
-    toggleModalOff(){
-        this.setState({open: false})
-    }
 
     onModificar() {
         this.props.onRouteChange('Modificar', this.props.data.id);
@@ -62,24 +45,6 @@ class VeMec extends React.PureComponent {
 
     onDetalles() {
         this.props.onRouteChange('Detalles', this.props.data.id);
-    }
-
-    onAsignPaciente(event) {
-        event.preventDefault();
-        fetch(``, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                //id: this.state.selectedPaciente
-            })
-        }).catch((e) => console.log(e));
-    } 
-
-    onSelectChange(selectedOption) {
-        this.setState({ selectedPaciente: selectedOption.value })
     }
 
     render() {
@@ -125,44 +90,15 @@ class VeMec extends React.PureComponent {
                 </>
             );
         }
-
-        //let pacientes = this.state.pacientes.map(paciente => {value: paciente, label: `${paciente.nombre} [${paciente.documento}]`});
+        
         let hasBattery = true
         let color
         hasBattery ? color = "#FFDA94" : color = "light" 
-        const options = [{value:'john', label: 'John'}, {value:'coffee boy', label: 'Coffee boy'}, {value:'frederic', label:'Frederic'}, {value:'nikoni', label:'NikoNi'}]
         return (
             <Card style={{maxWidth: 600, backgroundColor: color}}>
                 <Card.Header>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
-                        <Button className={"ml-auto mr-2"} variant={"success"} onClick={this.toggleModalOn}>Asignar Paciente</Button>
-                        <Modal
-                            isOpen={this.state.open}
-                            size="lg"
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                        >
-                            <ModalHeader closebutton>
-                                Lista de Pacientes
-                            </ModalHeader>
-                            <ModalBody>
-                                <Select
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    isClearable={this.state.isClearable}
-                                    isSearchable={this.state.isSearchable}
-                                    name="paciente"
-                                    options={options}
-                                    value={{value: this.state.selectedPaciente, label: this.state.selectedPaciente}}
-                                    onChange={this.onSelectChange}
-                                />
-                                <Button size={"sm"} className={"ml-0 mt-1"} onClick={this.onAsignPaciente}>Confirmar</Button>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={this.toggleModalOff}>Close</Button>
-                            </ModalFooter>
-                        </Modal>
                         <Button onClick={this.onModificar} className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>
                         <Button variant={"danger"} size={"sm"} onClick={this.onBaja}><FontAwesomeIcon icon={faTrash}/></Button>
                     </div>
