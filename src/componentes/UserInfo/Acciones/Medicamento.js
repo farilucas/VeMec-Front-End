@@ -21,6 +21,8 @@ class Medicamento extends Component {
             internacion: '',
             defuncion:'',
             alta:'',
+            disableAlta:'',
+            disableDefuncion:'',
 
         };
         this.vemecs = this.vemecs.bind(this);
@@ -38,6 +40,31 @@ class Medicamento extends Component {
         this.setState({
             [name]: value
         });
+        
+        if(name.localeCompare("defuncion") === 0 ){
+            if(value.localeCompare("") !== 0){
+                this.setState({
+                    disableDefuncion: "disabled"
+                });
+            }
+            else{
+                this.setState({
+                    disableDefuncion: ""
+                });
+            }
+        }
+        if(name.localeCompare("alta") === 0 ){
+            if(value.localeCompare("") !== 0){
+                this.setState({
+                    disableAlta: "disabled"
+                });
+            }
+            else{
+                this.setState({
+                    disableAlta: ""
+                });
+            }
+        }
     }
 
 
@@ -95,6 +122,8 @@ class Medicamento extends Component {
             <option>{vemec.id}</option> 
             )
         })
+        let diseableDefunsion = this.state.disableDefuncion
+        let diseableAlta = this.state.disableAlta
         return (
             <div className="d-flex justify-content-center mt-5">
                 <Card style={{minWidth: 350}}>
@@ -186,24 +215,27 @@ class Medicamento extends Component {
                                 />
                                 
                             </Form.Group>
-                            <Form.Group controlId="defuncion">
-                                <Form.Label>Alta</Form.Label>
-                                
-                                <DatePicker
-                                    disabled
-                                    selected={this.state.alta}
-                                        onChange={(e) => {
-                                            this.setState({
-                                                alta: e
-                                            });
-                                            //setFieldValue('date', e);
-                                            //setFieldTouched('date');
-                                        }}
-                                        
-                                    
-                                />
-                                
-                            </Form.Group>
+                            <FormGroup>
+                                <Form.Label>Dia de alta</Form.Label>
+                                <FormControl
+                                    {...diseableAlta}
+                                        onChange={this.handleInputChange}
+                                        type="date"
+                                        name="alta"
+                                       
+                                        value={this.state.defuncion}
+                                        id="alta" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Form.Label>Dia de defunsion</Form.Label>
+                                <FormControl
+                                    {...diseableDefunsion}
+                                    onChange={this.handleInputChange}
+                                    type="date"
+                                    name="defunsion"
+                                    value={this.state.defuncion}
+                                    id="defuncion" />
+                            </FormGroup>
                         </Card.Body>
                         <Card.Footer>
                             <Button variant="primary" type="submit">Enviar</Button>
