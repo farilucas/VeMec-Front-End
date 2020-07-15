@@ -28,7 +28,7 @@ class Acciones extends React.Component{
                 <Tab eventKey="suministrarMedicamento" title="Suministrar Medicamento">
                     <Medicamento/>
                 </Tab>
-                <Tab eventKey="desentubar" title="Accion Medica">
+                <Tab eventKey="desentubar" title="Desentubar">
                     <p>voy a desentubar uwu</p>
                 </Tab>
                 <Tab eventKey="trasladar" title="Trasladar Paciente">

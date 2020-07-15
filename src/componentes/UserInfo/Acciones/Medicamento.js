@@ -5,6 +5,8 @@ import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Button from "react-bootstrap/Button";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 class Medicamento extends Component {
 
@@ -12,17 +14,22 @@ class Medicamento extends Component {
         super(props)
 
         this.state = {
-            id: '',
-            medicamento: '',
-            medico: '',
-            ubicacion: '',
+            paciente: this.props.paciente?.id,
+            riesgo: '',
+            detalles:'',
+            vemec: '',
+            internacion: '',
+            defuncion:'',
+            alta:'',
 
         };
-
+        this.vemecs = this.vemecs.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    
+    
     handleInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -47,6 +54,7 @@ class Medicamento extends Component {
         .then(() => this.props.onRouteChange('Inicio'))
         .catch(error => console.log('error============:', error));
         */
+       console.log(this.props)
        console.log(JSON.stringify(
         this.state))
     }
@@ -65,7 +73,28 @@ class Medicamento extends Component {
         );
     }
     */
-    render() {
+   vemecs() {
+       const vemecs = [{
+                id:"VEMEC1"
+            },
+            {
+                id:"VEMEC2"
+            },
+            {
+                id:"VEMEC3"
+            }
+        ]
+        return vemecs
+   }
+
+    render(
+        
+    ) {
+        let vemecs = this.vemecs().map(vemec => {
+            return (
+            <option>{vemec.id}</option> 
+            )
+        })
         return (
             <div className="d-flex justify-content-center mt-5">
                 <Card style={{minWidth: 350}}>
@@ -74,40 +103,107 @@ class Medicamento extends Component {
                     </Card.Header>
                     <Form onSubmit={this.handleSubmit}>
                         <Card.Body className="pb-1">
-                            <FormGroup controlId="id">
-                                <FormLabel>Id</FormLabel>
+                            <FormGroup controlId="nombre">
+                                <FormLabel>Nombre</FormLabel>
                                 <FormControl
                                     type="text"
                                     readOnly={true}
-                                    value={this.state.id}/>
+                                    value={this.props.paciente?.id}/>
                             </FormGroup>
-                            <FormGroup controlId="marca">
-                                <FormLabel>Medicamento</FormLabel>
+                            <FormGroup controlId="detalles">
+                                <FormLabel>Descripcion</FormLabel>
                                 <FormControl
-                                    name="medicamento"
-                                    type="text"
-                                    placeholder="Ingrese Medicamento"
-                                    value={this.state.marca}
+                                    name="detalles"
+                                    as="textarea" rows="3"
+                                    placeholder="Ingrese Descripcion"
+                                    value={this.state.modelo}
                                     onChange={this.handleInputChange}/>
                             </FormGroup>
-                            <FormGroup controlId="modelo">
-                                <FormLabel>Descricpion</FormLabel>
+                            <FormGroup controlId="medico">
+                                <FormLabel>Medico</FormLabel>
                                 <FormControl
                                     name="medico"
                                     type="text"
                                     placeholder="Ingrese Medico Tratante"
-                                    value={this.state.modelo}
+                                    value={this.state.medico}
                                     onChange={this.handleInputChange}/>
                             </FormGroup>
-                            <FormGroup controlId="ubicacion">
-                                <FormLabel>Ubicacion</FormLabel>
-                                <FormControl
-                                    name="ubicacion"
-                                    type="text"
-                                    placeholder="Ingrese Marca"
-                                    value={this.state.ubicacion}
-                                    onChange={this.handleInputChange}/>
+                            <FormGroup controlId="riesgo">
+                                <FormLabel>Nivel de Riesgo</FormLabel>
+                                <FormControl 
+                                    as="select"
+                                    name="riesgo"
+                                    onChange={this.handleInputChange}
+                                    value="Grave"
+                                >
+                                    <option>Bajo</option>
+                                    <option>Medio</option>
+                                    <option>Alto</option>
+                                    <option>Grave</option>
+                                    <option>Muy Grave</option>
+                                </FormControl>
                             </FormGroup>
+                            <FormGroup controlId="internacion">
+                                <FormLabel>Tipo de Internacion</FormLabel>
+                                <FormControl 
+                                    as="select"
+                                    name="internacion"
+                                    onChange={this.handleInputChange}
+                                    value="Hospital"
+                                >
+                                    
+                                    <option>Domicilio</option>
+                                    <option>Hospital</option>
+                                    <option>Campamento de Emergencia</option>
+
+                                </FormControl>
+                            </FormGroup>
+                            <FormGroup controlId="vemec">
+                                <FormLabel>Nivel de Riesgo</FormLabel>
+                                <FormControl 
+                                    as="select"
+                                    name="vemec"
+                                    onChange={this.handleInputChange}
+                                    value="VEMEC2"
+                                >
+                                    {vemecs}
+                                </FormControl>
+                            </FormGroup>
+                            <Form.Group controlId="defuncion">
+                                <Form.Label>Defuncion</Form.Label>
+                                
+                                <DatePicker
+                                    selected={this.state.defuncion}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                defuncion: e
+                                            });
+                                            //setFieldValue('date', e);
+                                            //setFieldTouched('date');
+                                        }}
+                                        
+                                    
+                                />
+                                
+                            </Form.Group>
+                            <Form.Group controlId="defuncion">
+                                <Form.Label>Alta</Form.Label>
+                                
+                                <DatePicker
+                                    disabled
+                                    selected={this.state.alta}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                alta: e
+                                            });
+                                            //setFieldValue('date', e);
+                                            //setFieldTouched('date');
+                                        }}
+                                        
+                                    
+                                />
+                                
+                            </Form.Group>
                         </Card.Body>
                         <Card.Footer>
                             <Button variant="primary" type="submit">Enviar</Button>
