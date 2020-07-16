@@ -7,7 +7,7 @@ import FormLabel from "react-bootstrap/FormLabel";
 import Button from "react-bootstrap/Button";
 
 
-class Medicamento extends Component {
+class HistoriaClinica extends Component {
 
     constructor(props) {
         super(props)
@@ -91,6 +91,7 @@ class Medicamento extends Component {
        console.log(this.props)
        console.log(JSON.stringify(
         this.state))
+        this.props.close()
     }
 
 
@@ -284,4 +285,4 @@ class Medicamento extends Component {
     }
 }
 
-export default Medicamento
+export default HistoriaClinica

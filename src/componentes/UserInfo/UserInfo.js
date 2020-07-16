@@ -81,18 +81,16 @@ class UserInfo extends React.Component{
               
             >
               <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Title></Modal.Title>
               </Modal.Header>
               <Modal.Body>
 
-                <Seleccion paciente = {pacienteDemo} vemec = {vemec}/>
+                <Seleccion paciente = {pacienteDemo} vemec = {vemec} close={this.handleClose}/>
               
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={this.handleClose}>Understood</Button>
+                
+                <Button variant="primary" onClick={this.handleClose}>Cerrar</Button>
               </Modal.Footer>
             </Modal>
           </div>

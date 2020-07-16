@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs,Tab,Container,Row,Col } from 'react-bootstrap';
-import AccionMedica from '../UserInfo/Medicamento'
+import AccionMedica from './AccionMedica'
 import ReactDOM from 'react-dom';
 import { PDFViewer } from '@react-pdf/renderer';
 import Historial from './HistorialPdf/pdf-generator'
@@ -44,6 +44,15 @@ class Seleccion extends React.Component{
                 internacion: "Hospital",
                 fechaDefuncion: "2020-07-17T12:39:02.381",
                 fechaAlta: null
+            },
+            {
+                timestamp: "2089-07-18T12:09:02.381",
+                medicoTratante: "Negrito Divino",
+                nivelDeRiesgo: "Grave",
+                detalles: "Se le recupero el ano lo suficente para que se lo vuelvan a romper.",
+                internacion: "Casa",
+                fechaDefuncion: null,
+                fechaAlta: "2089-07-16T02:39:02.381",
             }
 
         ]
@@ -51,9 +60,6 @@ class Seleccion extends React.Component{
 
             <Tabs defaultActiveKey="historiaClinica" transition={false} id="noanim-tab-example">
                 <Tab eventKey="historiaClinica" title="Historia Clinica" >
-                    <p>ola soy una historia clinicae</p>
-                   
-
                     <Container fluid>
                         <Row>
                         <Col>    
@@ -66,7 +72,7 @@ class Seleccion extends React.Component{
                 </Tab>
                 <Tab eventKey="accionMedica" title="Accion Medica">
                    
-                    <AccionMedica  paciente = {this.props.paciente}   vemec = {this.props.vemec}   />
+                    <AccionMedica  paciente = {this.props.paciente}   vemec = {this.props.vemec}  close={this.props.close} />
                 </Tab>
             </Tabs>
           
