@@ -1,5 +1,7 @@
 import React from 'react';
+import Pagination from "react-js-pagination";
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 import {
     Modal,
     ModalHeader,
@@ -13,35 +15,51 @@ class ListarPacientes extends React.Component{
         super(props);
         this.state = {
             pacientes: [],
-            open: false
+            open: false,
+            pageNumber: 0,
+            size: 20,
+            totalElements: 0,
+            totalPages: 0,
         }
         this.fetchData = this.fetchData.bind(this)
         this.toggleModalOnOff = this.toggleModalOnOff.bind(this)
     }
 
+    componentDidMount(){
+        this.fetchData()
+    }
 
     toggleModalOnOff() {
         this.setState({ open: !this.state.open })
     }
 
     async fetchData(){
-        await fetch('url', {
-            method: 'post',
+        let json = await fetch('http://localhost:8080/api/v1/pacientes', {
+            method: 'get',
             headers: {'Content-Type': 'application/json'}
         })
         .then(res => res.json())
-        .then(json => this.setState({pacientes: json}))
+        
+        this.setState({
+            pacientes: json.elements,
+            ...json.pageMetadata
+        });
+    }
+
+    onPageChange(page) {
+        //Page-1 porque las paginas empiezan en 0 en el API
+        this.setState({ page: page - 1 }, this.fetchData.bind(this));
     }
 
     render(){
         let pacientes = this.state.pacientes.map(paciente => {
             let dataPaciente = {...paciente}
-            return(
-                <div>
+            return(    
+                <tr key={dataPaciente.documento}>
                     <td>{dataPaciente.nombre}</td>
-                    <td>{dataPaciente.ci}</td>
+                    <td>{dataPaciente.documento}</td>
                     <td>
-                        <Button onClick={this.toggleModalOnOff}>Accion Medica</Button>
+                        <Button  onClick={this.toggleModalOnOff}>Accion Medica</Button>
                         <Modal
                             isOpen={this.state.open}
                             size='lg'
@@ -59,24 +77,34 @@ class ListarPacientes extends React.Component{
                             </ModalFooter>
                         </Modal>
                     </td>
-                </div>
+                </tr>
             )
         })
         return(
             <div>
-                <table className='table' style={{ backgroundColor: '#A7A7A7'}}>
+                <Table bordered variant='dark' className='text-center'>
                     <thead>
                         <tr>
-                            <th scope='col'>Nombre</th>
-                            <th scope='col'>Documento</th>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Accion Medica</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            {pacientes}
-                        </tr>
+                        {pacientes}
                     </tbody>
-                </table>
+                </Table>
+                <div className={"d-flex justify-content-center"}>
+                    <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={this.state.pageNumber + 1}
+                        itemsCountPerPage={this.state.size}
+                        totalItemsCount={this.state.totalElements}
+                        pageRangeDisplayed={3}
+                        onChange={this.onPageChange.bind(this)}
+                    />
+                </div>
             </div>
         );
     }

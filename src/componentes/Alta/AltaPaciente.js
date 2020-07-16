@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
+import Row from 'react-bootstrap/Row';
 import Collapse from "react-bootstrap/Collapse"
 import Button from "react-bootstrap/Button";
 import Select from 'react-select';
@@ -13,12 +14,12 @@ export default class AltaPaciente extends React.Component{
             nombre: '',
             sexo: '',
             edad: '',
-            fechaDeIngreso: '',
+            fechaIngreso: '',
             localidad: '',
-            ci:'',
+            documento:'',
             nacionalidad: '',
             telefono: '',
-            mail: '',
+            email: '',
             departamento: '',
             direccion: '',
             contactos: [
@@ -32,7 +33,6 @@ export default class AltaPaciente extends React.Component{
                 }
             ],
             antecedentes: '',
-            open: false
         }
 
         this.onNombreChange = this.onNombreChange.bind(this)
@@ -62,13 +62,13 @@ export default class AltaPaciente extends React.Component{
         this.setState({ edad: event.target.value })
     }
     onIngresoChange = (event) => {
-        this.setState({ fechaDeIngreso: event.target.value })
+        this.setState({ fechaIngreso: event.target.value })
     }
     onLocalidadChange = (event) => {
         this.setState({ localidad: event.target.value })
     }
     onCiChange = (event) => {
-        this.setState({ ci: event.target.value })
+        this.setState({ documento: event.target.value })
     }
     onNacionalidadChange = (event) => {
         this.setState({ nacionalidad: event.target.value })
@@ -77,7 +77,7 @@ export default class AltaPaciente extends React.Component{
         this.setState({ telefono: event.target.value })
     }
     onMailChange = (event) => {
-        this.setState({ mail: event.target.value })
+        this.setState({ email: event.target.value })
     }
     onDepartamentoChange = departamento => {
         this.setState({ departamento: departamento })
@@ -87,7 +87,6 @@ export default class AltaPaciente extends React.Component{
     }
     onContactosChange = (event, index) => {
         event.persist()
-
         this.setState(
             (prevState) => {
                 let contactos = prevState.contactos
@@ -105,19 +104,19 @@ export default class AltaPaciente extends React.Component{
 
     onSubmit = (event) =>{
         event.preventDefault()
-        fetch('', {
+        fetch('http://localhost:8080/api/v1/pacientes', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 nombre: this.state.nombre,
                 sexo: this.state.sexo,
                 edad: this.state.edad,
-                fechaDeIngreso: (new Date(this.state.fechaDeIngreso).toISOString()),
+                fechaIngreso: (new Date(this.state.fechaIngreso).toISOString()),
                 localidad: this.state.localidad,
-                ci: this.state.localidad,
+                documento: this.state.documento,
                 nacionalidad: this.state.nacionalidad,
                 telefono: this.state.telefono,
-                mail: this.state.mail,
+                email: this.state.email,
                 departamento: this.state.departamento.value,
                 direccion: this.state.direccion,
                 contactos: this.state.contactos,
@@ -155,8 +154,8 @@ export default class AltaPaciente extends React.Component{
         return (
             <article>
                 <main>
-                    <div className="column" >
-                        <Card className="form-group lg-col-1 border border-info" id="alta" style={{backgroundColor: 'lightgray'}}>
+                    <div className="column" style={{ width: '40%', margin: '0 auto'}}>
+                        <Card className="form-group lg-col-1 border border-info " id="alta" style={{backgroundColor: 'lightgray'}}>
                             <Card.Header className="text-center">
                                 <strong>Ingresar Paciente</strong>
                             </Card.Header>
@@ -171,30 +170,23 @@ export default class AltaPaciente extends React.Component{
                                             checked={this.state.nombre}
                                             id="altaNombre" />
                                     </FormGroup>
-                                    <FormGroup>
-                                        <p className="text-center">Masculino: </p>
+                                    <FormGroup as={Form.Row} className='d-flex justify-content-around'>
+                                        <Form.Label className="text-center">Masculino: 
                                         <FormControl
                                             type="radio"
                                             name="gender"
                                             value="Masculino"
                                             checked={this.state.sexo === 'Masculino'}
                                             onChange={this.onSexoChange}
-                                            id="sexo" />
-                                        <p className="text-center">Femenino: </p>
+                                            id="sexo" /> </Form.Label>
+                                        <Form.Label className="text-center">Femenino: 
                                         <FormControl
                                             type="radio"
                                             name="gender"
                                             value="Femenino"
                                             checked={this.state.sexo === 'Femenino'}
                                             onChange={this.onSexoChange}
-                                            id="sexo" />
-                                        <p>Otro: </p>
-                                        <FormControl
-                                            onChange={this.onSexoChange}
-                                            type="text"
-                                            name="gender"
-                                            value={this.state.sexo}
-                                            id="sexo" />
+                                            id="sexo" /></Form.Label>
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl
@@ -211,7 +203,7 @@ export default class AltaPaciente extends React.Component{
                                             type="text"
                                             name="ci"
                                             placeholder="CI"
-                                            value={this.state.ci}
+                                            value={this.state.documento}
                                             id="ci" />
                                     </FormGroup>
                                     <FormGroup>
@@ -267,7 +259,7 @@ export default class AltaPaciente extends React.Component{
                                             type="email"
                                             name="mail"
                                             placeholder="E-mail"
-                                            value={this.state.mail}
+                                            value={this.state.email}
                                             id="mail" />
                                     </FormGroup>
                                     <FormGroup>
@@ -284,10 +276,10 @@ export default class AltaPaciente extends React.Component{
                                         <FormControl
                                             onChange={this.onIngresoChange}
                                             type="date"
-                                            name="fechaDeIngreso"
+                                            name="fechaIngreso"
                                             placeholder="Fecha de Ingreso del Paciente"
-                                            value={this.state.fechaDeIngreso}
-                                            id="fechaDeIngreso" />
+                                            value={this.state.fechaIngreso}
+                                            id="fechaIngreso" />
                                     </FormGroup>
                                     <FormGroup>
                                         <FormControl

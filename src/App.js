@@ -6,7 +6,6 @@ import Modificar from './componentes/Modificar/Modificar';
 import Navegacion from './componentes/Navigation/Navigation';
 import Panel from "./componentes/Panel/Panel";
 import ListaEstados from "./componentes/ListaEstados/ListaEstados";
-import "bootstrap/dist/css/bootstrap.css";
 
 const inicialState = {
     VeMec: {
