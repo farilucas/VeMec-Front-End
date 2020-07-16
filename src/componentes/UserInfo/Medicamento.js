@@ -5,8 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Button from "react-bootstrap/Button";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
+
 
 class Medicamento extends Component {
 
@@ -15,12 +14,14 @@ class Medicamento extends Component {
 
         this.state = {
             paciente: this.props.paciente?.id,
-            riesgo: '',
-            detalles:'',
-            vemec: '',
-            internacion: '',
-            defuncion:'',
-            alta:'',
+            nombre:this.props.paciente?.nombre,
+            medico:this.props.paciente?.ficha[0]?.medicoTratante,
+            riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
+            detalles:this.props.paciente?.ficha[0]?.detalles,
+            vemec: this.props.vemec?.id,
+            internacion: this.props.paciente?.ficha[0]?.internacion,
+            defuncion:this.props.paciente?.ficha[0]?.fechaDefuncion,
+            alta:this.props.paciente?.ficha[0]?.fechaAlta,
             disableAlta:'',
             disableDefuncion:'',
 
@@ -44,24 +45,30 @@ class Medicamento extends Component {
         if(name.localeCompare("defuncion") === 0 ){
             if(value.localeCompare("") !== 0){
                 this.setState({
-                    disableDefuncion: "disabled"
+                    disableAlta: true
                 });
+                this.setState({
+                    alta:""
+                })
             }
             else{
                 this.setState({
-                    disableDefuncion: ""
+                    disableAlta: false
                 });
             }
         }
         if(name.localeCompare("alta") === 0 ){
             if(value.localeCompare("") !== 0){
                 this.setState({
-                    disableAlta: "disabled"
+                    disableDefuncion:true,
                 });
+                this.setState({
+                    defuncion:""
+                })
             }
             else{
                 this.setState({
-                    disableAlta: ""
+                    disableDefuncion: false
                 });
             }
         }
@@ -122,9 +129,74 @@ class Medicamento extends Component {
             <option>{vemec.id}</option> 
             )
         })
-        let diseableDefunsion = this.state.disableDefuncion
-        let diseableAlta = this.state.disableAlta
+        let alta;
+        let defuncion;
+        if(this.state.disableAlta){
+            //alert("oli")
+            alta=
+                <FormGroup>
+                    <Form.Label>Dia de alta</Form.Label>
+                    <FormControl
+                        disabled
+                        onChange={this.handleInputChange}
+                        type="date"
+                        name="alta"
+                        value={this.state.alta}
+                        id="alta" />
+                </FormGroup>
+        }
+        else{
+            //alert("oli2")
+            alta=
+                <FormGroup>
+                    <Form.Label>Dia de alta</Form.Label>
+                    <FormControl
+                        
+                        onChange={this.handleInputChange}
+                        type="date"
+                        name="alta"
+                        value={this.state.alta}
+                        id="alta" />
+                </FormGroup>
+        }
+
+        if(this.state.disableDefuncion){
+            defuncion= 
+            <FormGroup>
+            <Form.Label>Dia de defunsion</Form.Label>
+            <FormControl
+                disabled
+                onChange={this.handleInputChange}
+                type="date"
+                name="defuncion"
+                value={this.state.defuncion}
+                id="defuncion" 
+                
+                />
+                
+            </FormGroup>
+        }
+        else{
+            defuncion = 
+                    <FormGroup>
+                    <Form.Label>Dia de defunsion</Form.Label>
+                    <FormControl
+                    
+                        onChange={this.handleInputChange}
+                        type="date"
+                        name="defuncion"
+                        value={this.state.defuncion}
+                        id="defuncion" 
+                    
+                        />
+                    
+                    </FormGroup>
+        }
+
+        alert(this.state.vemec)
+        
         return (
+            
             <div className="d-flex justify-content-center mt-5">
                 <Card style={{minWidth: 350}}>
                     <Card.Header className="text-center">
@@ -137,7 +209,7 @@ class Medicamento extends Component {
                                 <FormControl
                                     type="text"
                                     readOnly={true}
-                                    value={this.props.paciente?.id}/>
+                                    value={this.props.paciente?.nombre}/>
                             </FormGroup>
                             <FormGroup controlId="detalles">
                                 <FormLabel>Descripcion</FormLabel>
@@ -145,7 +217,7 @@ class Medicamento extends Component {
                                     name="detalles"
                                     as="textarea" rows="3"
                                     placeholder="Ingrese Descripcion"
-                                    value={this.state.modelo}
+                                    value={this.state.detalles}
                                     onChange={this.handleInputChange}/>
                             </FormGroup>
                             <FormGroup controlId="medico">
@@ -163,7 +235,7 @@ class Medicamento extends Component {
                                     as="select"
                                     name="riesgo"
                                     onChange={this.handleInputChange}
-                                    value="Grave"
+                                    value={this.state.riesgo}
                                 >
                                     <option>Bajo</option>
                                     <option>Medio</option>
@@ -178,7 +250,7 @@ class Medicamento extends Component {
                                     as="select"
                                     name="internacion"
                                     onChange={this.handleInputChange}
-                                    value="Hospital"
+                                    value={this.state.internacion}
                                 >
                                     
                                     <option>Domicilio</option>
@@ -188,54 +260,19 @@ class Medicamento extends Component {
                                 </FormControl>
                             </FormGroup>
                             <FormGroup controlId="vemec">
-                                <FormLabel>Nivel de Riesgo</FormLabel>
+                                <FormLabel>Vemec Asociado</FormLabel>
                                 <FormControl 
                                     as="select"
                                     name="vemec"
                                     onChange={this.handleInputChange}
-                                    value="VEMEC2"
+                                    value={this.state.vemec}
                                 >
                                     {vemecs}
                                 </FormControl>
                             </FormGroup>
-                            <Form.Group controlId="defuncion">
-                                <Form.Label>Defuncion</Form.Label>
-                                
-                                <DatePicker
-                                    selected={this.state.defuncion}
-                                        onChange={(e) => {
-                                            this.setState({
-                                                defuncion: e
-                                            });
-                                            //setFieldValue('date', e);
-                                            //setFieldTouched('date');
-                                        }}
-                                        
-                                    
-                                />
-                                
-                            </Form.Group>
-                            <FormGroup>
-                                <Form.Label>Dia de alta</Form.Label>
-                                <FormControl
-                                    {...diseableAlta}
-                                        onChange={this.handleInputChange}
-                                        type="date"
-                                        name="alta"
-                                       
-                                        value={this.state.defuncion}
-                                        id="alta" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Form.Label>Dia de defunsion</Form.Label>
-                                <FormControl
-                                    {...diseableDefunsion}
-                                    onChange={this.handleInputChange}
-                                    type="date"
-                                    name="defunsion"
-                                    value={this.state.defuncion}
-                                    id="defuncion" />
-                            </FormGroup>
+                            {alta}
+                            {defuncion}
+                            
                         </Card.Body>
                         <Card.Footer>
                             <Button variant="primary" type="submit">Enviar</Button>

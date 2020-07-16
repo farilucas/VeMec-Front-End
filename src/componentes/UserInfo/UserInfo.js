@@ -23,6 +23,46 @@ class UserInfo extends React.Component{
     handleShow () {this.setState({show:true})};
     
     render(){
+      const pacienteDemo = 
+      {
+        nombre: "Martin Canal",
+        sexo: "Masculino",
+        edad: 69,
+        fechaIngreso: "2020-07-16T12:38:56.173",
+        antecedentes: "Robo a mano armada",
+        documento: "47681491",
+        nacionalidad: "Uruguaya",
+        telefono: "099 999 999",
+        email: "marty@mcfly.com",
+        departamento: "Maldonado",
+        localidad: "San Carlos",
+        direccion: "En algun contenedor por Maldonado Nuevo",
+        contactos: [
+            {
+                nombre: "Elcon Tacto",
+                telefono: "123"
+            },
+            {
+                nombre: "Elotro Pybe",
+                telefono: "123"
+            }
+        ],
+        ficha: [
+            {
+                timestamp: "2020-07-16T12:39:02.381",
+                medicoTratante: "Saah Sigod",
+                nivelDeRiesgo: "Alto",
+                detalles: "El paciente salio de su trabajo en la intendencia a bardear, y le metieron cuatro tiros, uno de ellos impacto en el testiculo izquierdo.",
+                internacion: "Hospital",
+                fechaDefuncion: null,
+                fechaAlta: null
+            }
+        ]
+    }
+    const vemec={
+      id:"VEMEC3",
+    }
+
         return(
 
             <div >
@@ -36,14 +76,17 @@ class UserInfo extends React.Component{
               onHide={this.handleClose}
               backdrop="static"
               keyboard={false}
-              style={{maWidth: "90% !important"}}
+              //style={{maWidth: "90% !important"}}
               size="xl"
+              
             >
               <Modal.Header closeButton>
                 <Modal.Title>Modal title</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <Seleccion/>
+
+                <Seleccion paciente = {pacienteDemo} vemec = {vemec}/>
+              
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>

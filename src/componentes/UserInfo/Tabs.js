@@ -1,6 +1,9 @@
 import React from 'react'
-import { Tabs,Tab } from 'react-bootstrap';
-import Acciones from '../UserInfo/Acciones'
+import { Tabs,Tab,Container,Row,Col } from 'react-bootstrap';
+import AccionMedica from '../UserInfo/Medicamento'
+import ReactDOM from 'react-dom';
+import { PDFViewer } from '@react-pdf/renderer';
+import Historial from './HistorialPdf/pdf-generator'
 class Seleccion extends React.Component{
 
     constructor(props) {
@@ -25,11 +28,23 @@ class Seleccion extends React.Component{
         return(
 
             <Tabs defaultActiveKey="historiaClinica" transition={false} id="noanim-tab-example">
-                <Tab eventKey="historiaClinica" title="Historia Clinica">
-                    <p>ola soy una historia clinica</p>
+                <Tab eventKey="historiaClinica" title="Historia Clinica" >
+                    <p>ola soy una historia clinicae</p>
+                   
+
+                    <Container fluid>
+                        <Row>
+                        <Col>    
+                            <PDFViewer width="100%" height="300px">
+                                <Historial />
+                            </PDFViewer>        
+                        </Col>
+                        </Row>
+                    </Container>
                 </Tab>
                 <Tab eventKey="accionMedica" title="Accion Medica">
-                    <Acciones/>
+                    {alert(this.props.vemec.id)}
+                    <AccionMedica  paciente = {this.props.paciente}   vemec = {this.props.vemec}   />
                 </Tab>
             </Tabs>
           

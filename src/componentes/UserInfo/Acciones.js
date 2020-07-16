@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs,Tab } from 'react-bootstrap';
-import Medicamento from './Acciones/Medicamento'
+import Medicamento from './Medicamento'
 class Acciones extends React.Component{
 
     constructor(props) {
@@ -26,7 +26,7 @@ class Acciones extends React.Component{
 
             <Tabs defaultActiveKey="suministrarMedicamento" transition={false} id="noanim-tab-example">
                 <Tab eventKey="suministrarMedicamento" title="Suministrar Medicamento">
-                    <Medicamento/>
+                    
                 </Tab>
                 <Tab eventKey="desentubar" title="Desentubar">
                     <p>voy a desentubar uwu</p>
