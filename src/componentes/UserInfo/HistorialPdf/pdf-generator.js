@@ -9,27 +9,72 @@ const styles = StyleSheet.create({
   },
   section: {
     margin: 10,
-    padding: 10,
+    padding: 40,
     flexGrow: 1
+  },
+  time:{
+    margin: 10,
+    fontSize: 22,
+    fontFamily: 'Helvetica',
+  },
+  text:{
+    margin: 10,
+    fontSize: 22,
+    fontFamily: 'Helvetica',
   }
 });
+const textStule = StyleSheet.create(
+  {
+    
+  margin: 10,
+  fontSize: 22,
+  fontFamily: 'Helvetica',
 
+  }
+);
 // Create Document Component
-const MyDocument = () => (
+function MyDocument(props){
+    console.log(props)
+
+  let ficha = props.ficha.map(ficha => {
+    let defuncion
+    let alta
+    if(ficha.fechaDefuncion != null){
+      defuncion = <Text style={styles.text}>Fecha Defuncion: {ficha?.fechaDefuncion}</Text>
+      
+    }
+    if(ficha.fechaAlta != null){
+      alta = <Text style={styles.text}>Fecha Defuncion: {ficha?.fechaAlta}</Text>
+      
+    }
+    return (
+    <>
+    <Text style={styles.time}>{ficha?.timestamp}</Text> 
+    <Text style={styles.text}>{ficha?.detalles}</Text>
+    <Text style={styles.text}>Medico Tratante: {ficha?.medicoTratante}</Text> 
+    <Text style={styles.text}>Nivel de Riesgo: {ficha?.nivelDeRiesgo}</Text>
+    <Text style={styles.text}>Internacion: {ficha?.internacion}</Text>
+    {alta}
+    {defuncion}
+    <Text style={styles.text}>--------------------------------------------------------------------</Text>
+    </>
+    )
+})
+  return(
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
+        {ficha}
+        
       </View>
     </Page>
   </Document>
-);
+)
+}
 
 function pdf(props){
-    return MyDocument()
+  
+    return MyDocument(props)
 }
 
 export default pdf;

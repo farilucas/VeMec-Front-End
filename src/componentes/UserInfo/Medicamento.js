@@ -193,7 +193,7 @@ class Medicamento extends Component {
                     </FormGroup>
         }
 
-        alert(this.state.vemec)
+      
         
         return (
             
