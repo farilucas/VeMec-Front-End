@@ -3,7 +3,6 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
-import Row from 'react-bootstrap/Row';
 import Collapse from "react-bootstrap/Collapse"
 import Button from "react-bootstrap/Button";
 import Select from 'react-select';
@@ -91,7 +90,8 @@ export default class AltaPaciente extends React.Component{
             (prevState) => {
                 let contactos = prevState.contactos
                 contactos[index][event.target.name] = event.target.value
-                return {contactos: contactos}
+                //return {contactos: contactos.splice(-1,1)}
+                return { contactos: contactos }
             }
         )
     }

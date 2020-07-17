@@ -10,8 +10,6 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
-import Select from 'react-select';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Field extends React.PureComponent {
     render() {
