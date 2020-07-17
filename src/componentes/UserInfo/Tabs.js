@@ -24,7 +24,20 @@ class Seleccion extends React.Component{
       this.setState({show:false})};
     handleShow () {this.setState({show:true})};
     
-   
+   async getFicha(){
+       /*let res = fetch('localhost:8080'+´/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha´  , {
+
+            method: 'get',
+            headers: { 'Content-Type': 'application/json' },
+             })
+        
+        if(res.status !== 200) {
+            alert("No se pudieron traer vemecs Libres");
+            return;
+        }
+        return res.json
+        */
+   }
     render(){
         const fakeFicha = [
             {

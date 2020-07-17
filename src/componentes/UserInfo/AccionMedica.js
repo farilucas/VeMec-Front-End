@@ -77,12 +77,20 @@ class HistoriaClinica extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-       /*let res = fetch('' + , {
+       /*let res = fetch('localhost:8080'+´/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha´  , {
 
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
-                //fechaDeIngreso: (new Date(this.state.fechaDeIngreso).toISOString())
+            
+            paciente: this.props.paciente?.id,
+            medicoTratante: this.state.medico,
+            nivelDeRiesgo: this.state.riesgo,
+            detalles:this.state.detalles,
+            internacion: this.state.internacion,
+            fechaDefuncion: (new Date(this.state.defuncion).toISOString()),
+            fechaAlta: (new Date(this.state.alta).toISOString()),
+                //fechaDeIngreso: (new Date(this.state.defuncion).toISOString())
             )
         })
         
@@ -112,7 +120,20 @@ class HistoriaClinica extends Component {
         );
     }
     */
-   vemecs() {
+   async vemecs() {
+       /*let res = fetch('localhost:8080'+´/api/v1/vemecs/libres´  , {
+
+            method: 'get',
+            headers: { 'Content-Type': 'application/json' },
+             })
+        
+        if(res.status !== 200) {
+            alert("No se pudieron traer vemecs Libres");
+            return;
+        }
+        vemecsLibres = res.json()
+        */
+            
        const vemecs = [{
                 id:"VEMEC1"
             },
