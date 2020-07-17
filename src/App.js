@@ -116,7 +116,7 @@ class App extends Component {
             
             <div className="App">
                 <Navegacion pagina={pagina} onRouteChange={this.onRouteChange}/>
-                <UserInfo paciente={[{id:1,nombre:"Martin Canal"}]} see={false}/>
+                <UserInfo see={false} button={true}/>
                 { currentComponent }
             </div>
         );

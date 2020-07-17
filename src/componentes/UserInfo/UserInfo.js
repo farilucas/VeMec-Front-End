@@ -62,14 +62,17 @@ class UserInfo extends React.Component{
     const vemec={
       id:"VEMEC3",
     }
-
+    let button; 
+    if(this.props.button){
+      button= <Button variant="primary" onClick={this.handleShow}>
+                Accion Medica
+              </Button>
+    }
         return(
 
             <div >
-
-            <Button variant="primary" onClick={this.handleShow}>
-              Launch static backdrop modal
-            </Button>
+              {button}
+            
       
             <Modal
               show={this.state.show}

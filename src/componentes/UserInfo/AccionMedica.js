@@ -75,19 +75,23 @@ class HistoriaClinica extends Component {
     }
 
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-       /* fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec, {
+       /*let res = fetch('' + , {
 
-            method: 'put',
+            method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
-                this.state
+                //fechaDeIngreso: (new Date(this.state.fechaDeIngreso).toISOString())
             )
         })
-        .then(() => this.props.onRouteChange('Inicio'))
-        .catch(error => console.log('error============:', error));
+        
+        if(res.status !== 200) {
+            alert("No se pudo ingresar accion");
+            return;
+        }
         */
+
        console.log(this.props)
        console.log(JSON.stringify(
         this.state))
