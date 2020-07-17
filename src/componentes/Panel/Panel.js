@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Sound from 'react-sound';
 
 
 class Panel extends React.Component {
@@ -169,6 +170,11 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
+                <Sound
+                    url={'https://www.youtube.com/watch?v=Gb2jGy76v0Y'}
+                    playStatus={Sound.status.PLAYING}
+                    volume={10}
+                />
             </div>
         );
     }
