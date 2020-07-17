@@ -102,14 +102,13 @@ export default class AltaPaciente extends React.Component{
         this.setState({ open: !this.state.open})
     }
 
-    onSubmit = (event) =>{
-        event.preventDefault()
+    async onSubmit(){
         let contactos = this.contactosVacios()
         if (this.state.nombre === '' || this.state.nacionalidad === '' || this.state.sexo === '' || this.state.edad === '' || this.state.fechaIngreso === '' || this.state.localidad === '' || this.state.documento === '' || this.state.telefono === '' || this.state.departamento === '' || this.state.direccion === '' || this.state.antecedentes === ''){
             alert('Hay campos sin rellenar')
         }
         else{
-            fetch('http://localhost:8080/api/v1/pacientes', {
+            let response = await fetch('http://localhost:8080/api/v1/pacientes', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -128,12 +127,14 @@ export default class AltaPaciente extends React.Component{
                     antecedentes: this.state.antecedentes
                 })
             })
-            .then(() => console.log(this.state))
+
+            if(response.status === 409){
+                alert("Paciente ya existente")
+            }
+
         }
 
-        
-
-        //.then(() => this.props.onRouteChange('Inicio'));
+        this.props.onRouteChange('Inicio')
     }
 
     contactosVacios(){
