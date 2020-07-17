@@ -170,11 +170,11 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-                <Sound
+                {/* <Sound
                     url={'https://www.youtube.com/watch?v=Gb2jGy76v0Y'}
                     playStatus={Sound.status.PLAYING}
                     volume={10}
-                />
+                /> */}
             </div>
         );
     }
