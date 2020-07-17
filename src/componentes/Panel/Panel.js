@@ -119,6 +119,7 @@ class Panel extends React.Component {
     }
 
     render() {
+        console.log('vemecs',this.state.vemecs)
         if(this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
                 <div className="d-flex justify-content-center">

@@ -13,17 +13,7 @@ class HistoriaClinica extends Component {
         super(props)
 
         this.state = {
-            paciente: this.props.paciente?.id,
-            nombre:this.props.paciente?.nombre,
-            medico:this.props.paciente?.ficha[0]?.medicoTratante,
-            riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
-            detalles:this.props.paciente?.ficha[0]?.detalles,
-            vemec: this.props.vemec?.id,
-            internacion: this.props.paciente?.ficha[0]?.internacion,
-            defuncion:this.props.paciente?.ficha[0]?.fechaDefuncion,
-            alta:this.props.paciente?.ficha[0]?.fechaAlta,
-            disableAlta:'',
-            disableDefuncion:'',
+            
 
         };
         this.vemecs = this.vemecs.bind(this);
@@ -77,7 +67,7 @@ class HistoriaClinica extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-       /*let res = fetch('localhost:8080'+´/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha´  , {
+       /*let res = fetch('localhost:8080'+`/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha`  , {
 
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -107,21 +97,35 @@ class HistoriaClinica extends Component {
     }
 
 
-   /* componentDidMount() {
-        fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec)
-        .then(response => response.json())
-        .then(data =>
+    async componentDidMount() {
+        if(this.props.paciente?.ficha != null){
             this.setState({
-                id: data.id,
-                marca: data.marca,
-                modelo: data.modelo,
-                ubicacion: data.ubicacion,
+            paciente: this.props.paciente?.id,
+            nombre:this.props.paciente?.nombre,
+            medico:this.props.paciente?.ficha[0]?.medicoTratante,
+            riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
+            detalles:this.props.paciente?.ficha[0]?.detalles,
+            vemec: this.props.vemec?.id,
+            internacion: this.props.paciente?.ficha[0]?.internacion,
+            defuncion:this.props.paciente?.ficha[0]?.fechaDefuncion,
+            alta:this.props.paciente?.ficha[0]?.fechaAlta,
+            disableAlta:'',
+            disableDefuncion:'',
+            vemecsL:'',
+            fetchVemecs:true
             })
-        );
-    }
-    */
-   async vemecs() {
-       /*let res = fetch('localhost:8080'+´/api/v1/vemecs/libres´  , {
+        }
+        else{
+            this.setState(
+                {
+                    disableAlta:'',
+                    disableDefuncion:'',
+                    vemecsL:'',
+                    fetchVemecs:true
+                }
+            )
+        }
+        let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
 
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
@@ -131,10 +135,30 @@ class HistoriaClinica extends Component {
             alert("No se pudieron traer vemecs Libres");
             return;
         }
-        vemecsLibres = res.json()
-        */
-            
-       const vemecs = [{
+        let vemecsLibres =  await res.json()
+        console.log(res.json)
+        
+        this.setState({vemecsL: vemecsLibres});
+        this.setState({fetchVemecs: false})
+        //this.vemecs()
+    }
+    
+   async vemecs() {
+      
+        let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
+
+            method: 'get',
+            headers: { 'Content-Type': 'application/json' },
+             })
+        
+        if(res.status !== 200) {
+            alert("No se pudieron traer vemecs Libres");
+            return;
+        }
+        let vemecsLibres = res.json()
+        
+        console.log('vemcs dentro del asynch',vemecsLibres)
+       let vemecs = [{
                 id:"VEMEC1"
             },
             {
@@ -144,17 +168,23 @@ class HistoriaClinica extends Component {
                 id:"VEMEC3"
             }
         ]
-        return vemecs
+        //console.log(vemecsL)
+        
+        return 
    }
 
     render(
         
     ) {
-        let vemecs = this.vemecs().map(vemec => {
+        console.log(this.state.vemecsL)
+        let vemecs;
+        if(!this.state.fetchVemecs){
+        vemecs = this.state.vemecsL?.map(vemec => {
             return (
             <option>{vemec.id}</option> 
             )
         })
+        }
         let alta;
         let defuncion;
         if(this.state.disableAlta){

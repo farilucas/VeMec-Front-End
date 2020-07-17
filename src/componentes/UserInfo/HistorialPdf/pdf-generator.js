@@ -56,8 +56,9 @@ function MyDocument(props){
     formatedDate = dt +'/' + month + '/'+ year + '-' + hour + ':' + minutes + ':' + seconds
     return formatedDate
   }
-
-  let ficha = props.ficha.map(ficha => {
+  let ficha
+  if(props.ficha != null){
+   ficha = props.ficha.map(ficha => {
     let defuncion
     let alta
     if(ficha.fechaDefuncion != null){
@@ -68,6 +69,7 @@ function MyDocument(props){
       alta = <Text style={styles.text}>Fecha Defuncion: {simpleDate(ficha?.fechaAlta)}</Text>
       
     }
+   
     return (
     <>
       <Page size="A4" style={styles.page}>
@@ -85,6 +87,19 @@ function MyDocument(props){
     </>
     )
 })
+  }
+
+  else{
+    ficha=
+    <>
+    <Page size="A4" style={styles.page}>
+      <View style={styles.section}>
+        <Text style={styles.text}>------------------------------------------------------------------</Text>
+      </View>
+    </Page>
+    </>
+    
+  }
   return(
   <Document>
     

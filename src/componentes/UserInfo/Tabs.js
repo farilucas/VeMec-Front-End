@@ -69,6 +69,7 @@ class Seleccion extends React.Component{
             }
 
         ]
+        console.log('paciente', this.props.paciente)
         return(
 
             <Tabs defaultActiveKey="historiaClinica" transition={false} id="noanim-tab-example">
@@ -77,7 +78,7 @@ class Seleccion extends React.Component{
                         <Row>
                         <Col>    
                             <PDFViewer width="100%" height="300px">
-                                <Historial test={"ola"} ficha = {fakeFicha} />
+                                <Historial test={"ola"} ficha = {this.props.paciente.ficha} />
                             </PDFViewer>        
                         </Col>
                         </Row>

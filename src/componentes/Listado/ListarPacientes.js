@@ -2,6 +2,7 @@ import React from 'react';
 import Pagination from "react-js-pagination";
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import UserInfo from '../UserInfo/UserInfo'
 import {
     Modal,
     ModalHeader,
@@ -59,23 +60,7 @@ class ListarPacientes extends React.Component{
                     <td>{dataPaciente.nombre}</td>
                     <td>{dataPaciente.documento}</td>
                     <td>
-                        <Button  onClick={this.toggleModalOnOff}>Accion Medica</Button>
-                        <Modal
-                            isOpen={this.state.open}
-                            size='lg'
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                        >
-                            <ModalHeader>
-                                Accion Medica
-                            </ModalHeader>
-                            <ModalBody>
-                                <span>Hola amigo de las cavernas</span>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={this.toggleModalOnOff}>Close</Button>
-                            </ModalFooter>
-                        </Modal>
+                    <UserInfo see={false} button={true} paciente= {dataPaciente}/>
                     </td>
                 </tr>
             )

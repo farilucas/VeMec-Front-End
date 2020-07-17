@@ -88,7 +88,7 @@ class UserInfo extends React.Component{
               </Modal.Header>
               <Modal.Body>
 
-                <Seleccion paciente = {pacienteDemo} vemec = {vemec} close={this.handleClose}/>
+                <Seleccion paciente = {this.props.paciente} vemec = {vemec} close={this.handleClose}/>
               
               </Modal.Body>
               <Modal.Footer>
