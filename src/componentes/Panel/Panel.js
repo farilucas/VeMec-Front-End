@@ -6,8 +6,10 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import Sound from 'react-sound';
 
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Toast from "react-bootstrap/Toast";
 
 class Panel extends React.Component {
     constructor(props) {
@@ -21,19 +23,21 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
-            pressureUnit: 'Pa'
+            pressureUnit: 'Pa',
+            open: true
         };
 
         this.fetchData = this.fetchData.bind(this);
         this.updateVeMecData = this.updateVeMecData.bind(this);
 
         this.isUpdating = false;
-
+        this.playSound = this.playSound.bind(this);
         this.intervalHandle = setInterval(this.updateVeMecData, 2000);
     }
 
     componentDidMount() {
         this.fetchData();
+        this.playSound()
     }
 
     onUnitSelect(event) {
@@ -118,6 +122,14 @@ class Panel extends React.Component {
         await this.fetchData();
     }
 
+    async playSound() {
+        let estado = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0))
+        if(estado){
+            let audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
+        return audio.play()
+        }
+    }
+
     render() {
         if(this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
@@ -143,6 +155,37 @@ class Panel extends React.Component {
 
         return (
             <div className={"m-5 d-flex flex-column"}>
+                <div
+                    aria-live="polite"
+                    aria-atomic="true"
+                    style={{
+                        position: 'relative',
+                    }}
+                >
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                        }}
+                    >
+                        <Toast
+                            onClose={() => this.setState({ open: false })}
+                            animation={true}
+                            show={this.state.open}
+                            delay={1000}
+                            autohide
+                        >
+                            <Toast.Header>
+                                VeMec en estado critico
+                            </Toast.Header>
+                            <Toast.Body>
+                                Atender el VeMec lo antes posible
+                                {this.playSound}
+                            </Toast.Body>
+                        </Toast>
+                    </div>
+                </div>
                 <Card className="align-self-start">
                     <Card.Body className="px-2 py-1">
                         <Form.Group>
@@ -170,11 +213,21 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-                {/* <Sound
-                    url={'https://www.youtube.com/watch?v=Gb2jGy76v0Y'}
-                    playStatus={Sound.status.PLAYING}
-                    volume={10}
-                /> */}
+                
+                {/* <Row>
+                    <Col xs={6}>
+                        <Toast onClose={() => open = false} show={open} delay={3000} autohide>
+                            <Toast.Header>
+                                <strong className="mr-auto">Bootstrap</strong>
+                                <small>11 mins ago</small>
+                            </Toast.Header>
+                            <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+                        </Toast>
+                    </Col>
+                    <Col xs={6}>
+                        <Button onClick={() => open = true}>Show Toast</Button>
+                    </Col>
+                </Row> */}
             </div>
         );
     }
