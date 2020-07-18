@@ -6,10 +6,9 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Toast from "react-bootstrap/Toast";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import Toast from "react-bootstrap/Toast";
 
 class Panel extends React.Component {
     constructor(props) {
@@ -37,7 +36,7 @@ class Panel extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        this.playSound()
+        this.playSound();
     }
 
     onUnitSelect(event) {
@@ -126,8 +125,26 @@ class Panel extends React.Component {
         let estado = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0))
         if(estado){
             let audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
-        return audio.play()
+            let display = <div>
+                {
+                    audio.play(),
+                    toast("i'm a toast", {
+                        // position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
+            </div>
+            
+            return display
         }
+    }
+
+    containter(){
+        return (<ToastContainer style={{ marginTop: '100px' }}/>)
     }
 
     render() {
@@ -155,7 +172,11 @@ class Panel extends React.Component {
 
         return (
             <div className={"m-5 d-flex flex-column"}>
-                <div
+                <div>
+                    {this.playSound}
+                    {this.containter()}
+                </div>
+                {/* <div
                     aria-live="polite"
                     aria-atomic="true"
                     style={{
@@ -163,11 +184,7 @@ class Panel extends React.Component {
                     }}
                 >
                     <div
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            right: 0,
-                        }}
+                        
                     >
                         <Toast
                             onClose={() => this.setState({ open: false })}
@@ -185,7 +202,7 @@ class Panel extends React.Component {
                             </Toast.Body>
                         </Toast>
                     </div>
-                </div>
+                </div> */}
                 <Card className="align-self-start">
                     <Card.Body className="px-2 py-1">
                         <Form.Group>
