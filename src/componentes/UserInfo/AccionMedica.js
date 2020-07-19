@@ -85,7 +85,7 @@ class HistoriaClinica extends Component {
         this.state.alta.localeCompare('') !== 0  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
         this.state.defuncion.localeCompare('') !== 0  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
         const data = {
-            timeStamp: time , 
+            timestamp: time , 
             medicoTratante: this.state.medico,
             nivelDeRiesgo: this.state.riesgo,
             detalles:this.state.detalles,
