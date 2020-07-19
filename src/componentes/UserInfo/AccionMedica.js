@@ -93,10 +93,10 @@ class HistoriaClinica extends Component {
             veMecId: this.state.vemec,
             fechaDefuncion: timeAlta,
             fechaAlta: timeDefuncion,
-                //fechaDeIngreso: (new Date(this.state.defuncion).toISOString())
+            
             }
         console.log(data)
-       let res = fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
+       let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -105,15 +105,14 @@ class HistoriaClinica extends Component {
             )
         })
         
+        console.log('estatus',res.status)
         if(res.status !== 200) {
             alert("No se pudo ingresar accion");
             return;
         }
         
 
-       console.log(this.props)
-       console.log(JSON.stringify(
-        this.state))
+       
         this.props.close()
     }
 

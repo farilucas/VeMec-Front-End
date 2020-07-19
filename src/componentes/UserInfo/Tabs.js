@@ -10,7 +10,8 @@ class Seleccion extends React.Component{
         super(props)
 
         this.state = {
-            show : props.see
+            show : props.see,
+            historia:''
 
         };
 
@@ -18,14 +19,16 @@ class Seleccion extends React.Component{
         this.handleShow = this.handleShow.bind(this);
     }
    // const [show, setShow] = useState(false);
-
+    componentDidMount(){
+        this.getFicha()
+    }
     handleClose() {
       //alert("ola")
       this.setState({show:false})};
     handleShow () {this.setState({show:true})};
     
    async getFicha(){
-       /*let res = fetch('localhost:8080'+´/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha´  , {
+       let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
@@ -35,41 +38,14 @@ class Seleccion extends React.Component{
             alert("No se pudieron traer vemecs Libres");
             return;
         }
-        return res.json
-        */
+        
+        let historia = await res.json()
+        console.log('ficha', historia)
+        this.setState({historia:historia})
+        
    }
     render(){
-        const fakeFicha = [
-            {
-                timestamp: "2020-07-16T12:39:02.381",
-                medicoTratante: "Saah Sigod",
-                nivelDeRiesgo: "Alto",
-                detalles: "El paciente salio de su trabajo en la intendencia a bardear, y le metieron cuatro tiros, uno de ellos impacto en el testiculo izquierdo.",
-                internacion: "Hospital",
-                fechaDefuncion: null,
-                fechaAlta: null
-            },
-            {
-                timestamp: "2020-07-18T12:39:02.381",
-                medicoTratante: "Notumbo",
-                nivelDeRiesgo: "Bajo",
-                detalles: "Le rompieron el culo.",
-                internacion: "Hospital",
-                fechaDefuncion: "2020-07-17T12:39:02.381",
-                fechaAlta: null
-            },
-            {
-                timestamp: "2089-07-18T12:09:02.381",
-                medicoTratante: "Negrito Divino",
-                nivelDeRiesgo: "Grave",
-                detalles: "Se le recupero el ano lo suficente para que se lo vuelvan a romper.",
-                internacion: "Casa",
-                fechaDefuncion: null,
-                fechaAlta: "2089-07-16T02:39:02.381",
-            }
-
-        ]
-        console.log('paciente', this.props.paciente)
+        
         return(
 
             <Tabs defaultActiveKey="historiaClinica" transition={false} id="noanim-tab-example">
@@ -77,9 +53,9 @@ class Seleccion extends React.Component{
                     <Container fluid>
                         <Row>
                         <Col>    
-                            <PDFViewer width="100%" height="300px">
-                                <Historial test={"ola"} ficha = {this.props.paciente.ficha} />
-                            </PDFViewer>        
+                        <PDFViewer width="100%" height="300px">
+                                <Historial test={"ola"} ficha = {this.state.historia.ficha} />
+                            </PDFViewer> 
                         </Col>
                         </Row>
                     </Container>
