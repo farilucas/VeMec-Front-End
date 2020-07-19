@@ -124,9 +124,11 @@ class Panel extends React.Component {
 
     async playSound() {
         let vemecsCriticos = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].critico))
-        let bpmBajo = this.state.vemecs.filter(vemec => (vemec.estados[0].bpm < 20))
-        let bateriaBaja = this.state.vemecs.filter(vemec => (vemec.estados[0].bateria < 20))
+        let bpmBajo = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].bpm < 20))
+        let bateriaBaja = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].bateria < 20))
         let noCriticos = this.state.vemecs.filter(vemec => !vemecsCriticos.includes(vemec));
+
+        console.log(this.state.vemecs)
 
         for(let veMec of noCriticos) {
             if(this.criticos.includes(veMec.id)) {
@@ -134,7 +136,7 @@ class Panel extends React.Component {
             }
         }
 
-        console.log(bateriaBaja)
+        // console.log(bateriaBaja)
 
         for(let i = 0; i < vemecsCriticos.length; ++i) {
             if(!this.criticos.includes(vemecsCriticos[i].id)) {
@@ -167,7 +169,7 @@ class Panel extends React.Component {
     }
 
     render() {
-        console.log('vemecs',this.state.vemecs)
+        // console.log('vemecs',this.state.vemecs)
         if(this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
                 <div className="d-flex justify-content-center">

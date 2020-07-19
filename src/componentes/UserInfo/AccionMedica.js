@@ -95,7 +95,6 @@ class HistoriaClinica extends Component {
             fechaAlta: timeDefuncion,
             
             }
-        console.log(data)
        let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
             method: 'post',
@@ -105,7 +104,6 @@ class HistoriaClinica extends Component {
             )
         })
         
-        console.log('estatus',res.status)
         if(res.status !== 200) {
             alert("No se pudo ingresar accion");
             return;
@@ -181,13 +179,8 @@ class HistoriaClinica extends Component {
 
     
     let vemecsLibres =  await res.json()
-    
-    console.log('state antes vemecs libres',this.state)
-    console.log('vemecs libres',vemecsLibres)
-    
     this.setState({vemecsL : vemecsLibres});
     this.setState({fetchVemecs : false})
-    console.log('sttate al final',this.state)
    }
 
     render(
@@ -196,7 +189,7 @@ class HistoriaClinica extends Component {
         let vemecs;
         
         if(!this.state.fetchVemecs ){
-        console.log('state',this.state.fetchVemecs)
+        // console.log('state',this.state.fetchVemecs)
         
         //this.setState({vemec:"vemec69"})
         if(this.state.vemecsL.length !== 0 && this.state.vemec.localeCompare('') === 0){
