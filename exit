@@ -1,0 +1,183 @@
+[33mcommit e6d7e4741230d84d780291409e6a48269eb44ee6[m[33m ([m[1;36mHEAD -> [m[1;32mFicha[m[33m, [m[1;31morigin/Ficha[m[33m)[m
+Merge: d3bb741 f030c7a
+Author: Federico Juarez <federico.juarez@utec.com>
+Date:   Sat Jul 18 22:00:06 2020 -0300
+
+    Merge branch 'Lucas2' into Ficha
+
+[33mcommit f030c7a4694a255c8adec6764cef5d9ecdb59840[m[33m ([m[1;31morigin/Lucas2[m[33m)[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Sat Jul 18 18:09:24 2020 -0300
+
+    better toast
+
+[33mcommit d3bb741862f9afbca13477382152b234d3b5bcad[m
+Author: Federico Juarez <federico.juarez@utec.com>
+Date:   Sat Jul 18 17:24:54 2020 -0300
+
+    Agregado graficos en ficha y reorganizado con Card
+
+[33mcommit 2efa219c9f7a37b579f7773acf919df36f6761e8[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Sat Jul 18 13:12:57 2020 -0300
+
+    added sound and toast, missing fixes
+
+[33mcommit 09a4d7e0ee0d2ff486a59ddb6cbaa9add30acbc8[m
+Author: Federico Juarez <federico.juarez@utec.com>
+Date:   Sat Jul 18 04:29:56 2020 -0300
+
+    Inicial
+
+[33mcommit 8678d4219f8c74c71838ca83ad7c1e4db694afdd[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Fri Jul 17 17:06:53 2020 -0300
+
+    fixed
+
+[33mcommit bd2bbda0cab0308c88f08dda62f74d9d7d089ae8[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Fri Jul 17 15:14:11 2020 -0300
+
+    some not pulled changes
+
+[33mcommit b3a1b9aa9d705aa14a6cee9d8fdbb8f8ee8df8d7[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Thu Jul 16 21:50:00 2020 -0300
+
+    endpoints working, waiting for frankestein
+
+[33mcommit 7604f02b2b610fffdb7cbe8513453bbe684586fc[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Thu Jul 16 18:14:35 2020 -0300
+
+    endpoints working, waiting for frankestein
+
+[33mcommit 6cb2535fe2c18dc68b9f865ceae8e515f25354f5[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Wed Jul 15 00:41:21 2020 -0300
+
+    added listarPacientes, fixed Alta, added beta sounds
+
+[33mcommit 1d2fd92cb4bd741399c2f0a212c10094513823c6[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Sat Jul 11 15:57:31 2020 -0300
+
+    added 1 more familiar
+
+[33mcommit 3d1d20f4ca6f8b4f7582c923c67e5e2e78adae51[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Thu Jul 9 22:46:30 2020 -0300
+
+    Work done
+
+[33mcommit 03ed2cd967b46717e7e00bbab86011bddd2d4e1a[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Thu Jul 9 17:14:11 2020 -0300
+
+    Alta Paciende hecho
+
+[33mcommit a0e338cea70ff57488397db6e09c4a779c507c16[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: tepanio <tatodarosa97@gmail.com>
+Date:   Wed Jul 1 20:55:23 2020 -0300
+
+    Revert "timeout en panel"
+    
+    This reverts commit 3616e6f1515f9db09c640378747f1bc16c51c6d5.
+    
+    Kill me
+
+[33mcommit d22dbfc1bf88a6d9905ae283f559698c69831173[m
+Author: tepanio <tatodarosa97@gmail.com>
+Date:   Wed Jul 1 20:49:31 2020 -0300
+
+    Tiranos temblad
+
+[33mcommit 3616e6f1515f9db09c640378747f1bc16c51c6d5[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Wed Jul 1 20:08:20 2020 -0300
+
+    timeout en panel
+
+[33mcommit 62b2e58ba8cb3f230660c96028ff84b9b5290fe5[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Tue Apr 28 01:24:26 2020 -0300
+
+    punto final
+
+[33mcommit b9eb8b4a915993c6eb94d7facd83ed285898e788[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Mon Apr 27 20:22:20 2020 -0300
+
+    Cambios esteticos mas que nada.
+
+[33mcommit 83a0a4018e9672fbd740e3054c982c2af1a42fbf[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Sun Apr 26 19:01:02 2020 -0300
+
+    ajustes visuales
+
+[33mcommit f9e47114a8d6f1c33d819e4c959e0b75347def4c[m
+Author: farilucas <lucas450045@gmail.com>
+Date:   Sat Apr 25 15:08:06 2020 -0300
+
+    cambios visuales
+
+[33mcommit b26d7fd0c16a132a38f1b31336acd334df2a1fc7[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Fri Apr 24 20:58:31 2020 -0300
+
+    Rename Alta
+
+[33mcommit c3f8fa122a8f83e59c4eb4637252665c5292964a[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Fri Apr 24 20:51:47 2020 -0300
+
+    Se agrego el manejo de las unidades de presion.
+
+[33mcommit ca9cb4ef344723d4b7c2b2e1861043403990301f[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Fri Apr 24 00:24:02 2020 -0300
+
+    Refactor magico
+
+[33mcommit 491095e25390769e84047180c9766b4c9d6ecd2f[m
+Merge: 08a3cc1 9038bef
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Wed Apr 22 18:20:30 2020 -0300
+
+    Merge branch 'listar-vemecs' into routing
+    
+    # Conflicts:
+    #       .gitignore
+    #       src/App.js
+
+[33mcommit 08a3cc14023600c5a103223a5aa24b29d2cbd0fe[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Wed Apr 22 18:18:43 2020 -0300
+
+    Init
+
+[33mcommit 9038bef9bd390b994c589a78f1109cc0cdd7a9f7[m
+Author: Jorge Fernandez <dissonantdev@gmail.com>
+Date:   Mon Apr 20 13:51:56 2020 -0300
+
+    Primer intento.
+
+[33mcommit 7e6bad09399dad85d296f80df52980a22f63a3de[m
+Author: farilucas <lucas450045gmail.com>
+Date:   Wed Apr 8 22:32:39 2020 -0300
+
+    agregando la base
+
+[33mcommit f0756cdf762d0a6ab0ba1832a01fa55c5af2a7a5[m
+Author: farilucas <lucas450045gmail.com>
+Date:   Wed Apr 8 21:02:17 2020 -0300
+
+    so it begins
+
+[33mcommit 73e1f4d55a1477fd77b697fd9fb0242ffb6b8fd9[m
+Author: farilucas <45861837+farilucas@users.noreply.github.com>
+Date:   Wed Apr 8 19:46:01 2020 -0300
+
+    Initial commit

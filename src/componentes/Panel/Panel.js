@@ -6,9 +6,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import Toast from "react-bootstrap/Toast";
+
 
 class Panel extends React.Component {
     constructor(props) {
@@ -22,21 +20,19 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
-            pressureUnit: 'Pa',
-            open: true
+            pressureUnit: 'Pa'
         };
 
         this.fetchData = this.fetchData.bind(this);
         this.updateVeMecData = this.updateVeMecData.bind(this);
 
         this.isUpdating = false;
-        this.playSound = this.playSound.bind(this);
+
         this.intervalHandle = setInterval(this.updateVeMecData, 2000);
     }
 
     componentDidMount() {
         this.fetchData();
-        this.playSound();
     }
 
     onUnitSelect(event) {
@@ -121,32 +117,6 @@ class Panel extends React.Component {
         await this.fetchData();
     }
 
-    async playSound() {
-        let estado = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0))
-        if(estado){
-            let audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
-            let display = <div>
-                {
-                    audio.play(),
-                    toast("i'm a toast", {
-                        // position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                }
-            </div>
-            
-            return display
-        }
-    }
-
-    containter(){
-        return (<ToastContainer style={{ marginTop: '100px' }}/>)
-    }
-
     render() {
         if(this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
@@ -172,37 +142,6 @@ class Panel extends React.Component {
 
         return (
             <div className={"m-5 d-flex flex-column"}>
-                <div>
-                    {this.playSound}
-                    {this.containter()}
-                </div>
-                {/* <div
-                    aria-live="polite"
-                    aria-atomic="true"
-                    style={{
-                        position: 'relative',
-                    }}
-                >
-                    <div
-                        
-                    >
-                        <Toast
-                            onClose={() => this.setState({ open: false })}
-                            animation={true}
-                            show={this.state.open}
-                            delay={1000}
-                            autohide
-                        >
-                            <Toast.Header>
-                                VeMec en estado critico
-                            </Toast.Header>
-                            <Toast.Body>
-                                Atender el VeMec lo antes posible
-                                {this.playSound}
-                            </Toast.Body>
-                        </Toast>
-                    </div>
-                </div> */}
                 <Card className="align-self-start">
                     <Card.Body className="px-2 py-1">
                         <Form.Group>
@@ -230,21 +169,6 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-                
-                {/* <Row>
-                    <Col xs={6}>
-                        <Toast onClose={() => open = false} show={open} delay={3000} autohide>
-                            <Toast.Header>
-                                <strong className="mr-auto">Bootstrap</strong>
-                                <small>11 mins ago</small>
-                            </Toast.Header>
-                            <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-                        </Toast>
-                    </Col>
-                    <Col xs={6}>
-                        <Button onClick={() => open = true}>Show Toast</Button>
-                    </Col>
-                </Row> */}
             </div>
         );
     }

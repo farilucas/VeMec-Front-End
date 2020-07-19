@@ -11,7 +11,6 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
-import Toast from "react-bootstrap/Toast";
 
 class Field extends React.PureComponent {
     render() {
@@ -29,11 +28,11 @@ class Field extends React.PureComponent {
 class VeMec extends React.PureComponent {
     constructor(props) {
         super(props);
+
         this.onModificar = this.onModificar.bind(this);
         this.onBaja = this.onBaja.bind(this);
         this.onDetalles = this.onDetalles.bind(this);
     }
-    
 
     onModificar() {
         this.props.onRouteChange('Modificar', this.props.data.id);
@@ -105,12 +104,8 @@ class VeMec extends React.PureComponent {
                 </>
             );
         }
-
-        let hasBattery = true
-        let color
-        hasBattery ? color = "#FFDA94" : color = "light" 
         return (
-            <Card style={{maxWidth: 600, backgroundColor: color}}>
+            <Card bg={"light"} style={{maxWidth: 600}}>
                 <Card.Header>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
