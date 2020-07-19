@@ -23,8 +23,9 @@ class Panel extends React.Component {
             totalPages: 0,
             isFetching: true,
             pressureUnit: 'Pa',
-            open: true
         };
+
+        this.criticos = [];
 
         this.fetchData = this.fetchData.bind(this);
         this.updateVeMecData = this.updateVeMecData.bind(this);
@@ -36,7 +37,7 @@ class Panel extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        this.playSound();
+        //this.playSound();
     }
 
     onUnitSelect(event) {
@@ -54,7 +55,7 @@ class Panel extends React.Component {
         this.setState({
             vemecs: json.elements,
             ...json.pageMetadata
-        });
+        }, this.playSound);
 
         let newGraphData = {};
         let fetches = [];
@@ -85,6 +86,7 @@ class Panel extends React.Component {
 
     onPageChange(page) {
         //Page-1 porque las paginas empiezan en 0 en el API
+        this.criticos.splice(0);
         this.setState({page: page-1}, this.fetchData.bind(this));
     }
 
@@ -122,28 +124,40 @@ class Panel extends React.Component {
     }
 
     async playSound() {
-        let estado = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0))
-        if(estado){
-            let audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
-            let display = <div>
-                {
-                    audio.play(),
-                    toast("i'm a toast", {
-                        // position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                }
-            </div>
-            
-            return display
+        let vemecsCriticos = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].critico))
+        let noCriticos = this.state.vemecs.filter(vemec => !vemecsCriticos.includes(vemec));
+        console.log("En playSound")
+
+
+        for(let veMec of noCriticos) {
+            if(this.criticos.includes(veMec.id)) {
+                this.criticos.splice(this.criticos.indexOf(veMec.id), 1);
+            }
         }
+
+        for(let i = 0; i < vemecsCriticos.length; ++i) {
+            if(!this.criticos.includes(vemecsCriticos[i].id)) {
+                let audio = new Audio('http://localhost:3000/WindowsExclamation.wav')
+
+                audio.play();
+                toast(`${vemecsCriticos[i].id} en estado critico.`, {
+                    // position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+                this.criticos.push(vemecsCriticos[i].id);
+                console.log(this.criticos);
+            }
+        }
+
+
     }
 
-    containter(){
+    container(){
         return (<ToastContainer style={{ marginTop: '100px' }}/>)
     }
 
@@ -165,44 +179,18 @@ class Panel extends React.Component {
 
         let vemecs = this.state.vemecs.map(vemec => {
             let veMecData = {...vemec};
+            
             veMecData.graph = this.state.graphData[vemec.id];
 
             return <VeMec data={veMecData} key={vemec.id} pressureUnit={this.state.pressureUnit} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
         })
 
+        //this.playSound()
         return (
             <div className={"m-5 d-flex flex-column"}>
                 <div>
-                    {this.playSound}
-                    {this.containter()}
+                    {this.container()}
                 </div>
-                {/* <div
-                    aria-live="polite"
-                    aria-atomic="true"
-                    style={{
-                        position: 'relative',
-                    }}
-                >
-                    <div
-                        
-                    >
-                        <Toast
-                            onClose={() => this.setState({ open: false })}
-                            animation={true}
-                            show={this.state.open}
-                            delay={1000}
-                            autohide
-                        >
-                            <Toast.Header>
-                                VeMec en estado critico
-                            </Toast.Header>
-                            <Toast.Body>
-                                Atender el VeMec lo antes posible
-                                {this.playSound}
-                            </Toast.Body>
-                        </Toast>
-                    </div>
-                </div> */}
                 <Card className="align-self-start">
                     <Card.Body className="px-2 py-1">
                         <Form.Group>
@@ -230,21 +218,6 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-                
-                {/* <Row>
-                    <Col xs={6}>
-                        <Toast onClose={() => open = false} show={open} delay={3000} autohide>
-                            <Toast.Header>
-                                <strong className="mr-auto">Bootstrap</strong>
-                                <small>11 mins ago</small>
-                            </Toast.Header>
-                            <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-                        </Toast>
-                    </Col>
-                    <Col xs={6}>
-                        <Button onClick={() => open = true}>Show Toast</Button>
-                    </Col>
-                </Row> */}
             </div>
         );
     }

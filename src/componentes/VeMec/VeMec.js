@@ -90,9 +90,13 @@ class VeMec extends React.PureComponent {
             );
         }
 
-        let hasBattery = true
+        // console.log(this.props.data.estados[0])
+
         let color
-        hasBattery ? color = "#FFDA94" : color = "light" 
+        if (this.props.data.estados && this.props.data.estados.length > 0)  {
+            this.props.data.estados[0].usandoBateria ? color = "#FFDA94" : color = "light";
+        }
+        
         return (
             <Card style={{maxWidth: 600, backgroundColor: color}}>
                 <Card.Header>
