@@ -10,7 +10,6 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
-import Toast from "react-bootstrap/Toast";
 
 class Field extends React.PureComponent {
     render() {
@@ -90,16 +89,18 @@ class VeMec extends React.PureComponent {
             );
         }
 
-        // console.log(this.props.data.estados[0])
-
-        let color
+        let color, color1
         if (this.props.data.estados && this.props.data.estados.length > 0)  {
             this.props.data.estados[0].usandoBateria ? color = "#FFDA94" : color = "light";
         }
         
+        if (this.props.data.estados && this.props.data.estados.length > 0) {
+            this.props.data.estados[0].bpm < 20 ? color1 = "#8C0000" : color1 = "light";
+        }
+
         return (
-            <Card style={{maxWidth: 600, backgroundColor: color}}>
-                <Card.Header>
+            <Card style={{ maxWidth: 600, backgroundColor: color, border: `2px solid ${color1}`}}>
+                <Card.Header style={{backgroundColor: color1, border: `2px solid ${color1}`}}>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
                         <Button onClick={this.onModificar} className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>
@@ -118,7 +119,7 @@ class VeMec extends React.PureComponent {
                         {estado}
                     </Container>
                 </Card.Body>
-                <Card.Footer className={"d-flex"}>
+                <Card.Footer className={"d-flex"} style={{ backgroundColor: color1 }}>
                     <Button onClick={this.onDetalles} variant={"info"} size={"sm"} className={"mx-auto"}>Ver Detalles</Button>
                 </Card.Footer>
             </Card>

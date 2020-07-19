@@ -37,7 +37,6 @@ class Panel extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        //this.playSound();
     }
 
     onUnitSelect(event) {
@@ -125,9 +124,9 @@ class Panel extends React.Component {
 
     async playSound() {
         let vemecsCriticos = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].critico))
+        let bpmBajo = this.state.vemecs.filter(vemec => (vemec.estados[0].bpm < 20))
+        let bateriaBaja = this.state.vemecs.filter(vemec => (vemec.estados[0].bateria < 20))
         let noCriticos = this.state.vemecs.filter(vemec => !vemecsCriticos.includes(vemec));
-        console.log("En playSound")
-
 
         for(let veMec of noCriticos) {
             if(this.criticos.includes(veMec.id)) {
@@ -135,13 +134,22 @@ class Panel extends React.Component {
             }
         }
 
+        console.log(bateriaBaja)
+
         for(let i = 0; i < vemecsCriticos.length; ++i) {
             if(!this.criticos.includes(vemecsCriticos[i].id)) {
-                let audio = new Audio('http://localhost:3000/WindowsExclamation.wav')
-
-                audio.play();
+                let audio, audio1
+                if (bpmBajo.length > 0){
+                    audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
+                    audio.play();
+                }
+                
+                if(bateriaBaja.length > 0){
+                    audio1 = new Audio('http://localhost:3000/WindowsHardwareRemove.wav')
+                    audio1.play();
+                }
+                
                 toast(`${vemecsCriticos[i].id} en estado critico.`, {
-                    // position: "bottom-right",
                     autoClose: 3000,
                     hideProgressBar: false,
                     pauseOnHover: true,
@@ -150,11 +158,8 @@ class Panel extends React.Component {
                 });
 
                 this.criticos.push(vemecsCriticos[i].id);
-                console.log(this.criticos);
             }
         }
-
-
     }
 
     container(){
