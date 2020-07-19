@@ -12,6 +12,9 @@ const Navigation = ({ onRouteChange, pagina }) => {
 
     //let alta = pagina === 'alta' ? "" : <p onClick={() => onRouteChange('Alta')} className="btn btn-primary">Dar de alta un VeMec</p>;
     let alta = <NavLink href="#" eventKey="alta" onClick={() => onRouteChange('Alta')}>Alta VeMec</NavLink>;
+    let altaPaciente = <NavLink href="#" eventKey="altaPaciente" onClick={() => onRouteChange('AltaPaciente')}>Alta Paciente</NavLink>;
+    let listadoPacientes = <NavLink href="#" eventKey="listadoPacientes" onClick={() => onRouteChange('ListarPacientes')}>Listar Pacientes</NavLink>;
+
 
     return (
         <Navbar bg="light" className={"navbar-custom"}>
@@ -20,6 +23,8 @@ const Navigation = ({ onRouteChange, pagina }) => {
                 <Nav variant="pills" activeKey={pagina}>
                     <NavItem>{inicio}</NavItem>
                     <NavItem>{alta}</NavItem>
+                    <NavItem>{altaPaciente}</NavItem>
+                    <NavItem>{listadoPacientes}</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
