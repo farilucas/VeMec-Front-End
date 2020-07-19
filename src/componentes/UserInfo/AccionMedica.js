@@ -33,12 +33,12 @@ class HistoriaClinica extends Component {
         });
         
         if(name.localeCompare("defuncion") === 0 ){
-            if(value.localeCompare("") !== 0){
+            if(value.localeCompare (null) !== 0){
                 this.setState({
                     disableAlta: true
                 });
                 this.setState({
-                    alta:""
+                    alta: null
                 })
             }
             else{
@@ -48,12 +48,12 @@ class HistoriaClinica extends Component {
             }
         }
         if(name.localeCompare("alta") === 0 ){
-            if(value.localeCompare("") !== 0){
+            if(value.localeCompare(null) !== 0){
                 this.setState({
                     disableDefuncion:true,
                 });
                 this.setState({
-                    defuncion:""
+                    defuncion: null
                 })
             }
             else{
@@ -67,20 +67,29 @@ class HistoriaClinica extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-       /*let res = fetch('localhost:8080'+`/api/v1/pacientes/{this.props.paciente.nacionalidad}/{this.props.paciente.documento}/ficha`  , {
+        const time = new Date().toISOString()
+        let timeDefuncion  
+        let timeAlta
+        this.state.alta !== null  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
+        this.state.defuncion !== null  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
+        const data = {
+            timeStamp: time ,
+            medicoTratante: this.state.medico,
+            nivelDeRiesgo: this.state.riesgo,
+            detalles:this.state.detalles,
+            tipoInternacion: this.state.internacion,
+            veMecId: 'VEMEC69',
+            fechaDefuncion: timeAlta,
+            fechaAlta: timeDefuncion,
+                //fechaDeIngreso: (new Date(this.state.defuncion).toISOString())
+            }
+        console.log(data)
+       let res = fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
-            
-            paciente: this.props.paciente?.id,
-            medicoTratante: this.state.medico,
-            nivelDeRiesgo: this.state.riesgo,
-            detalles:this.state.detalles,
-            internacion: this.state.internacion,
-            fechaDefuncion: (new Date(this.state.defuncion).toISOString()),
-            fechaAlta: (new Date(this.state.alta).toISOString()),
-                //fechaDeIngreso: (new Date(this.state.defuncion).toISOString())
+                data
             )
         })
         
@@ -88,7 +97,7 @@ class HistoriaClinica extends Component {
             alert("No se pudo ingresar accion");
             return;
         }
-        */
+        
 
        console.log(this.props)
        console.log(JSON.stringify(
@@ -98,17 +107,19 @@ class HistoriaClinica extends Component {
 
 
     async componentDidMount() {
+        let controlVemec;
+        this.props.paciente?.ficha == undefined ? controlVemec = true : controlVemec = false 
         if(this.props.paciente?.ficha != null){
             this.setState({
             paciente: this.props.paciente?.id,
             nombre:this.props.paciente?.nombre,
             medico:this.props.paciente?.ficha[0]?.medicoTratante,
             riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
-            detalles:this.props.paciente?.ficha[0]?.detalles,
-            vemec: this.props.vemec?.id,
+            detalles:'',
+            vemec: this.props.paciente?.ficha[0]?.veMecid,
             internacion: this.props.paciente?.ficha[0]?.internacion,
-            defuncion:this.props.paciente?.ficha[0]?.fechaDefuncion,
-            alta:this.props.paciente?.ficha[0]?.fechaAlta,
+            defuncion:'',
+            alta:'',
             disableAlta:'',
             disableDefuncion:'',
             vemecsL:'',
@@ -118,13 +129,23 @@ class HistoriaClinica extends Component {
         else{
             this.setState(
                 {
-                    disableAlta:'',
-                    disableDefuncion:'',
-                    vemecsL:'',
-                    fetchVemecs:true
+            paciente: this.props.paciente?.id,
+            nombre:this.props.paciente?.nombre,
+            medico:'',
+            riesgo: '',
+            detalles:'',
+            vemec: null,
+            internacion: '',
+            defuncion:  null,
+            alta: null,
+            disableAlta:'',
+            disableDefuncion:'',
+            vemecsL:'',
+            fetchVemecs:true
                 }
             )
         }
+        if(controlVemec === null){
         let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
 
             method: 'get',
@@ -136,11 +157,12 @@ class HistoriaClinica extends Component {
             return;
         }
         let vemecsLibres =  await res.json()
-        console.log(res.json)
+        console.log('vemecs libres',res.json)
         
         this.setState({vemecsL: vemecsLibres});
         this.setState({fetchVemecs: false})
-        //this.vemecs()
+        }
+        
     }
     
    async vemecs() {
@@ -178,13 +200,23 @@ class HistoriaClinica extends Component {
     ) {
         console.log(this.state.vemecsL)
         let vemecs;
-        if(!this.state.fetchVemecs){
+        //this.setState({vemec:"vemec69"})
+        if(!this.state.fetchVemecs ){
         vemecs = this.state.vemecsL?.map(vemec => {
             return (
             <option>{vemec.id}</option> 
             )
         })
         }
+
+        
+        if(this.state.vemec !== null){
+        vemecs = <>
+            <option>{this.state.vemec}</option>
+            <option>desentubar</option> 
+            </>
+        }
+
         let alta;
         let defuncion;
         if(this.state.disableAlta){
