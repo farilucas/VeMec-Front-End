@@ -6,7 +6,8 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class Panel extends React.Component {
     constructor(props) {
@@ -20,7 +21,8 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
-            pressureUnit: 'Pa'
+            pressureUnit: 'Pa',
+            filter:''
         };
 
         this.fetchData = this.fetchData.bind(this);
@@ -39,10 +41,24 @@ class Panel extends React.Component {
         this.setState({pressureUnit: event.target.value});
     }
 
+    onFilterSelect(event) {
+        let setFilter;
+        switch(event.target.value){
+            case "sin_filtro": setFilter = "";break;
+            case "domicilio": setFilter = "&filter=Domicilio";break;
+            case "campamento": setFilter = "&filter=Hospital";break;
+            case "intensivos": setFilter = "&filter=CampamentoDeEmergencia";break;
+            default: setFilter = "";
+        }
+        this.setState({
+            filter: setFilter
+        });
+    }
+
     async fetchData() {
         this.setState({isFetching: true});
 
-        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id`, {
+        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id${this.state.filter}`, {
             method: "get",
             headers: {"Content-Type": "application/json"},
         }).then(res => res.json());
@@ -142,18 +158,37 @@ class Panel extends React.Component {
 
         return (
             <div className={"m-5 d-flex flex-column"}>
-                <Card className="align-self-start">
-                    <Card.Body className="px-2 py-1">
-                        <Form.Group>
-                            <Form.Label>Unidad de Presion</Form.Label>
-                            <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
-                                <option value={"Pa"}>Pascal</option>
-                                <option value={"mmHg"}>Milimetros de Mercurio</option>
-                                <option value={"mbar"}>Milibar</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Card.Body>
-                </Card>
+                <Row>
+                    <Col>
+                        <Card className="align-self-start">
+                            <Card.Body className="px-2 py-1">
+                                <Form.Group>
+                                    <Form.Label>Unidad de Presion</Form.Label>
+                                    <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
+                                        <option value={"Pa"}>Pascal</option>
+                                        <option value={"mmHg"}>Milimetros de Mercurio</option>
+                                        <option value={"mbar"}>Milibar</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="align-self-start">
+                            <Card.Body className="px-2 py-1">
+                                <Form.Group>
+                                    <Form.Label>Filtro por Pacientes</Form.Label>
+                                    <Form.Control as="select" size="sm" onChange={this.onFilterSelect.bind(this)}>
+                                        <option value={"sin_filtro"}>Sin filtro</option>
+                                        <option value={"domicilio"}>Domicilio</option>
+                                        <option value={"campamento"}>Campamento de Emergencia</option>
+                                        <option value={"intensivos"}>Cuidados Intensivos</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
 
                 <CardDeck className="justify-content-center my-2">
                     {vemecs}
