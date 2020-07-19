@@ -13,7 +13,19 @@ class HistoriaClinica extends Component {
         super(props)
 
         this.state = {
-            
+            paciente: '',
+            nombre:'',
+            medico:'',
+            riesgo: '',
+            detalles:'',
+            vemec: '',
+            internacion: '',
+            defuncion:  '',
+            alta: '',
+            disableAlta:'',
+            disableDefuncion:'',
+            vemecsL:'',
+            fetchVemecs:true
 
         };
         this.vemecs = this.vemecs.bind(this);
@@ -33,12 +45,12 @@ class HistoriaClinica extends Component {
         });
         
         if(name.localeCompare("defuncion") === 0 ){
-            if(value.localeCompare (null) !== 0){
+            if(value.localeCompare ('') !== 0){
                 this.setState({
                     disableAlta: true
                 });
                 this.setState({
-                    alta: null
+                    alta: ''
                 })
             }
             else{
@@ -48,12 +60,12 @@ class HistoriaClinica extends Component {
             }
         }
         if(name.localeCompare("alta") === 0 ){
-            if(value.localeCompare(null) !== 0){
+            if(value.localeCompare('') !== 0){
                 this.setState({
                     disableDefuncion:true,
                 });
                 this.setState({
-                    defuncion: null
+                    defuncion: ''
                 })
             }
             else{
@@ -70,15 +82,15 @@ class HistoriaClinica extends Component {
         const time = new Date().toISOString()
         let timeDefuncion  
         let timeAlta
-        this.state.alta !== null  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
-        this.state.defuncion !== null  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
+        this.state.alta.localeCompare('') !== 0  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = ''
+        this.state.defuncion.localeCompare('') !== 0  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = ''
         const data = {
             timeStamp: time ,
             medicoTratante: this.state.medico,
             nivelDeRiesgo: this.state.riesgo,
             detalles:this.state.detalles,
             tipoInternacion: this.state.internacion,
-            veMecId: 'VEMEC69',
+            veMecId: this.state.vemec,
             fechaDefuncion: timeAlta,
             fechaAlta: timeDefuncion,
                 //fechaDeIngreso: (new Date(this.state.defuncion).toISOString())
@@ -106,116 +118,109 @@ class HistoriaClinica extends Component {
     }
 
 
-    async componentDidMount() {
-        let controlVemec;
-        this.props.paciente?.ficha == undefined ? controlVemec = true : controlVemec = false 
-        if(this.props.paciente?.ficha != null){
-            this.setState({
-            paciente: this.props.paciente?.id,
-            nombre:this.props.paciente?.nombre,
-            medico:this.props.paciente?.ficha[0]?.medicoTratante,
-            riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
-            detalles:'',
-            vemec: this.props.paciente?.ficha[0]?.veMecid,
-            internacion: this.props.paciente?.ficha[0]?.internacion,
-            defuncion:'',
-            alta:'',
-            disableAlta:'',
-            disableDefuncion:'',
-            vemecsL:'',
-            fetchVemecs:true
-            })
-        }
-        else{
-            this.setState(
-                {
-            paciente: this.props.paciente?.id,
-            nombre:this.props.paciente?.nombre,
-            medico:'',
-            riesgo: '',
-            detalles:'',
-            vemec: null,
-            internacion: '',
-            defuncion:  null,
-            alta: null,
-            disableAlta:'',
-            disableDefuncion:'',
-            vemecsL:'',
-            fetchVemecs:true
-                }
-            )
-        }
-        if(controlVemec === null){
-        let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
-
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-             })
+      componentDidMount() {
+        this.vemecs()
         
-        if(res.status !== 200) {
-            alert("No se pudieron traer vemecs Libres");
-            return;
-        }
-        let vemecsLibres =  await res.json()
-        console.log('vemecs libres',res.json)
-        
-        this.setState({vemecsL: vemecsLibres});
-        this.setState({fetchVemecs: false})
-        }
         
     }
     
    async vemecs() {
       
-        let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
+    let controlVemec;
+    this.props.paciente?.ficha === undefined ? controlVemec = true : controlVemec = false 
 
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-             })
+    if(this.props.paciente?.ficha !== null){
+       
+        this.setState({
+        paciente: this.props.paciente?.id,
+        nombre:this.props.paciente?.nombre,
+        medico:this.props.paciente?.ficha[0]?.medicoTratante,
+        riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
+        detalles:'',
+        vemec: this.props.paciente?.ficha[0]?.veMecId,
+        internacion: this.props.paciente?.ficha[0]?.internacion,
+        defuncion:'',
+        alta:'',
+        disableAlta:'',
+        disableDefuncion:'',
+        vemecsL:'',
+        fetchVemecs:true
+        })
+    }
+    else{
         
-        if(res.status !== 200) {
-            alert("No se pudieron traer vemecs Libres");
-            return;
-        }
-        let vemecsLibres = res.json()
-        
-        console.log('vemcs dentro del asynch',vemecsLibres)
-       let vemecs = [{
-                id:"VEMEC1"
-            },
+        this.setState(
             {
-                id:"VEMEC2"
-            },
-            {
-                id:"VEMEC3"
+        paciente: this.props.paciente?.id,
+        nombre:this.props.paciente?.nombre,
+        medico:'',
+        riesgo: '',
+        detalles:'',
+        //vemec: '',
+        vemec: "VEMEC33",
+        internacion: '',
+        defuncion:  '',
+        alta: '',
+        disableAlta:'',
+        disableDefuncion:'',
+        vemecsL:'',
+        fetchVemecs:true
             }
-        ]
-        //console.log(vemecsL)
-        
-        return 
+        )
+    }
+    
+    let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
+
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' },
+         })
+    
+    if(res.status !== 200) {
+        alert("No se pudieron traer vemecs Libres");
+        return;
+    }
+
+    
+    let vemecsLibres =  await res.json()
+    
+    console.log('state antes vemecs libres',this.state)
+    console.log('vemecs libres',vemecsLibres)
+    
+    this.setState({vemecsL : vemecsLibres});
+    this.setState({fetchVemecs : false})
+    console.log('sttate al final',this.state)
    }
 
     render(
         
     ) {
-        console.log(this.state.vemecsL)
         let vemecs;
-        //this.setState({vemec:"vemec69"})
+        
         if(!this.state.fetchVemecs ){
+        console.log('state',this.state.fetchVemecs)
+        
+        //this.setState({vemec:"vemec69"})
+        if(this.state.vemecsL.length !== 0 && this.state.vemec.localeCompare('') === 0){
+            
         vemecs = this.state.vemecsL?.map(vemec => {
             return (
             <option>{vemec.id}</option> 
             )
         })
+        
         }
+        
 
         
-        if(this.state.vemec !== null){
+        if(this.state.vemec.localeCompare('') !== 0){
         vemecs = <>
             <option>{this.state.vemec}</option>
             <option>desentubar</option> 
             </>
         }
+        
+
+    }
 
         let alta;
         let defuncion;
