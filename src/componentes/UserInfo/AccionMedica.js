@@ -89,25 +89,26 @@ class HistoriaClinica extends Component {
             medicoTratante: this.state.medico,
             nivelDeRiesgo: this.state.riesgo,
             detalles:this.state.detalles,
-            tipoInternacion: this.state.internacion,
+            internacion: this.state.internacion,
             veMecId: this.state.vemec,
             fechaDefuncion: timeAlta,
             fechaAlta: timeDefuncion,
             
             }
-       let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
+        console.log(data)
+    //    let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(
-                data
-            )
-        })
+    //         method: 'post',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(
+    //             data
+    //         )
+    //     })
         
-        if(res.status !== 200) {
-            alert("No se pudo ingresar accion");
-            return;
-        }
+    //     if(res.status !== 200) {
+    //         alert("No se pudo ingresar accion");
+    //         return;
+    //     }
         
 
        
@@ -154,7 +155,7 @@ class HistoriaClinica extends Component {
         riesgo: '',
         detalles:'',
         //vemec: '',
-        vemec: "VEMEC33",
+        vemec: '',
         internacion: '',
         defuncion:  '',
         alta: '',

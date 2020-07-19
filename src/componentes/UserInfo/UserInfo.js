@@ -62,7 +62,7 @@ class UserInfo extends React.Component{
     const vemec={
       id:"VEMEC3",
     }
-    console.log(this.props.paciente)
+    // console.log(this.props.paciente)
     let button; 
     if(this.props.button){
       button= <Button variant="primary" onClick={this.handleShow}>

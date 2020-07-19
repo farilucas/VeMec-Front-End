@@ -40,7 +40,7 @@ class Seleccion extends React.Component{
         }
         
         let historia = await res.json()
-        console.log('ficha', historia)
+        // console.log('ficha', historia)
         this.setState({historia:historia})
         
    }
