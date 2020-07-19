@@ -6,8 +6,9 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import Sound from 'react-sound';
-
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import Toast from "react-bootstrap/Toast";
 
 class Panel extends React.Component {
     constructor(props) {
@@ -21,19 +22,22 @@ class Panel extends React.Component {
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
-            pressureUnit: 'Pa'
+            pressureUnit: 'Pa',
         };
+
+        this.criticos = [];
 
         this.fetchData = this.fetchData.bind(this);
         this.updateVeMecData = this.updateVeMecData.bind(this);
 
         this.isUpdating = false;
-
+        this.playSound = this.playSound.bind(this);
         this.intervalHandle = setInterval(this.updateVeMecData, 2000);
     }
 
     componentDidMount() {
         this.fetchData();
+        //this.playSound();
     }
 
     onUnitSelect(event) {
@@ -51,7 +55,7 @@ class Panel extends React.Component {
         this.setState({
             vemecs: json.elements,
             ...json.pageMetadata
-        });
+        }, this.playSound);
 
         let newGraphData = {};
         let fetches = [];
@@ -82,6 +86,7 @@ class Panel extends React.Component {
 
     onPageChange(page) {
         //Page-1 porque las paginas empiezan en 0 en el API
+        this.criticos.splice(0);
         this.setState({page: page-1}, this.fetchData.bind(this));
     }
 
@@ -118,6 +123,44 @@ class Panel extends React.Component {
         await this.fetchData();
     }
 
+    async playSound() {
+        let vemecsCriticos = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].critico))
+        let noCriticos = this.state.vemecs.filter(vemec => !vemecsCriticos.includes(vemec));
+        console.log("En playSound")
+
+
+        for(let veMec of noCriticos) {
+            if(this.criticos.includes(veMec.id)) {
+                this.criticos.splice(this.criticos.indexOf(veMec.id), 1);
+            }
+        }
+
+        for(let i = 0; i < vemecsCriticos.length; ++i) {
+            if(!this.criticos.includes(vemecsCriticos[i].id)) {
+                let audio = new Audio('http://localhost:3000/WindowsExclamation.wav')
+
+                audio.play();
+                toast(`${vemecsCriticos[i].id} en estado critico.`, {
+                    // position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+                this.criticos.push(vemecsCriticos[i].id);
+                console.log(this.criticos);
+            }
+        }
+
+
+    }
+
+    container(){
+        return (<ToastContainer style={{ marginTop: '100px' }}/>)
+    }
+
     render() {
         console.log('vemecs',this.state.vemecs)
         if(this.state.vemecs.length === 0 && !this.state.isFetching) {
@@ -137,13 +180,18 @@ class Panel extends React.Component {
 
         let vemecs = this.state.vemecs.map(vemec => {
             let veMecData = {...vemec};
+            
             veMecData.graph = this.state.graphData[vemec.id];
 
             return <VeMec data={veMecData} key={vemec.id} pressureUnit={this.state.pressureUnit} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
         })
 
+        //this.playSound()
         return (
             <div className={"m-5 d-flex flex-column"}>
+                <div>
+                    {this.container()}
+                </div>
                 <Card className="align-self-start">
                     <Card.Body className="px-2 py-1">
                         <Form.Group>
@@ -171,11 +219,6 @@ class Panel extends React.Component {
                         onChange={this.onPageChange.bind(this)}
                     />
                 </div>
-                <Sound
-                    url={'https://www.youtube.com/watch?v=Gb2jGy76v0Y'}
-                    playStatus={Sound.status.PLAYING}
-                    volume={10}
-                />
             </div>
         );
     }

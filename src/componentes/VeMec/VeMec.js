@@ -10,6 +10,7 @@ import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {unit} from "mathjs";
 import Alert from "react-bootstrap/Alert";
+import Toast from "react-bootstrap/Toast";
 
 class Field extends React.PureComponent {
     render() {
@@ -31,7 +32,7 @@ class VeMec extends React.PureComponent {
         this.onBaja = this.onBaja.bind(this);
         this.onDetalles = this.onDetalles.bind(this);
     }
-
+    
 
     onModificar() {
         this.props.onRouteChange('Modificar', this.props.data.id);
@@ -88,10 +89,14 @@ class VeMec extends React.PureComponent {
                 </>
             );
         }
-        
-        let hasBattery = true
+
+        // console.log(this.props.data.estados[0])
+
         let color
-        hasBattery ? color = "#FFDA94" : color = "light" 
+        if (this.props.data.estados && this.props.data.estados.length > 0)  {
+            this.props.data.estados[0].usandoBateria ? color = "#FFDA94" : color = "light";
+        }
+        
         return (
             <Card style={{maxWidth: 600, backgroundColor: color}}>
                 <Card.Header>
