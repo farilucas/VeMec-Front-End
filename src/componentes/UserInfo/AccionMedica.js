@@ -119,7 +119,7 @@ class HistoriaClinica extends Component {
             
             fechaDefuncion: timeAlta,
             fechaAlta: timeDefuncion,
-            vemec: this.state.vemec,
+            veMecId: this.state.vemec,
             
             }
         }
@@ -127,7 +127,7 @@ class HistoriaClinica extends Component {
         console.log('datos enviados',JSON.stringify(
             data
         ))
-       /*
+       
         let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
              method: 'post',
@@ -145,7 +145,7 @@ class HistoriaClinica extends Component {
 
        
         this.props.close()
-         */
+         
     }
 
 
