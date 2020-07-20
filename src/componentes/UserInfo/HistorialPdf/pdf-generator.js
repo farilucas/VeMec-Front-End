@@ -79,6 +79,7 @@ function MyDocument(props){
         <Text style={styles.text}>Medico Tratante: {ficha?.medicoTratante}</Text> 
         <Text style={styles.text}>Nivel de Riesgo: {ficha?.nivelDeRiesgo}</Text>
         <Text style={styles.text}>Internacion: {ficha?.internacion}</Text>
+        
         {alta}
         {defuncion}
         <Text style={styles.text}>------------------------------------------------------------------</Text>
