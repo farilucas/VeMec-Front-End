@@ -11,6 +11,7 @@ class Grafica extends React.PureComponent {
     }
 
     componentDidMount() {
+        console.log('presiones',this.props.presionEntrada,this.props.presionSalida)
         let ctx = this.canvasRef.current.getContext("2d");
 
         this.chart = new Chart(ctx, {
@@ -80,7 +81,9 @@ class Grafica extends React.PureComponent {
     render() {
         
         return(
-            <canvas paint={this.canvasRef}/>
+            <>
+            </>
+            //<canvas paint={this.canvasRef}/>
         );
     }
 }
