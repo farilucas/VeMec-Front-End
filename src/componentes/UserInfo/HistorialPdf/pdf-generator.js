@@ -58,7 +58,7 @@ function MyDocument(props){
   }
   let ficha
   if(props.ficha != null){
-   ficha = props.ficha.map(ficha => {
+   ficha = props.ficha.map((ficha, index) => {
     let defuncion
     let alta
     if(ficha.fechaDefuncion != null){
@@ -72,8 +72,8 @@ function MyDocument(props){
    
     return (
     <>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
+      <Page key={index + index} size="A4" style={styles.page}>
+        <View key={index} style={styles.section}>
         <Text style={styles.time}>{simpleDate(ficha?.timestamp)}</Text> 
         <Text style={styles.text}>{ficha?.detalles}</Text>
         <Text style={styles.text}>Medico Tratante: {ficha?.medicoTratante}</Text> 
@@ -92,8 +92,8 @@ function MyDocument(props){
   else{
     ficha=
     <>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
+    <Page key={2} size="A4" style={styles.page}>
+      <View key={1} style={styles.section}>
         <Text style={styles.text}>------------------------------------------------------------------</Text>
       </View>
     </Page>
