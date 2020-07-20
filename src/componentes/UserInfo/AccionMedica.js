@@ -25,6 +25,8 @@ class HistoriaClinica extends Component {
             disableAlta:'',
             disableDefuncion:'',
             vemecsL:'',
+            vemecInicial:'',
+            seleccionVemec:false,
             fetchVemecs:true
 
         };
@@ -82,37 +84,68 @@ class HistoriaClinica extends Component {
         const time = new Date().toISOString()
         let timeDefuncion  
         let timeAlta
+        let internacion
+       
+        if(this.state.detalles.localeCompare('') === 0 || this.state.medico.localeCompare('') === 0){
+            alert('Hay campos sin rellenar')
+            return
+        }
+
         this.state.alta.localeCompare('') !== 0  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
         this.state.defuncion.localeCompare('') !== 0  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
-        const data = {
+        this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='CampamentoDeEmergencia' : internacion = this.state.internacion
+        let data
+
+        if(this.state.vemec.localeCompare('No asignar VeMec') === 0){
+        data = {
             timestamp: time , 
             medicoTratante: this.state.medico,
             nivelDeRiesgo: this.state.riesgo,
             detalles:this.state.detalles,
-            internacion: this.state.internacion,
-            veMecId: this.state.vemec,
+            internacion: internacion,
             fechaDefuncion: timeAlta,
-            fechaAlta: timeDefuncion,
+            fechaAlta: timeDefuncion
+            
             
             }
-        console.log(data)
-    //    let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
+        }
+        else{
+        data={
+            timestamp: time , 
+            medicoTratante: this.state.medico,
+            nivelDeRiesgo: this.state.riesgo,
+            detalles:this.state.detalles,
+            internacion: internacion,
+            
+            fechaDefuncion: timeAlta,
+            fechaAlta: timeDefuncion,
+            vemec: this.state.vemec,
+            
+            }
+        }
+       
+        console.log('datos enviados',JSON.stringify(
+            data
+        ))
+       /*
+        let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
-    //         method: 'post',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(
-    //             data
-    //         )
-    //     })
+             method: 'post',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify(
+                 data
+             )
+         })
         
-    //     if(res.status !== 200) {
-    //         alert("No se pudo ingresar accion");
-    //         return;
-    //     }
+         if(res.status !== 200) {
+             alert("No se pudo ingresar accion");
+             return;
+         }
         
 
        
         this.props.close()
+         */
     }
 
 
@@ -124,24 +157,28 @@ class HistoriaClinica extends Component {
     
    async vemecs() {
       
-    let controlVemec;
-    this.props.paciente?.ficha === undefined ? controlVemec = true : controlVemec = false 
+    let vemec;
+    let entubado;
+    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = '' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
+    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
 
     if(this.props.paciente?.ficha !== null){
        
         this.setState({
         paciente: this.props.paciente?.id,
         nombre:this.props.paciente?.nombre,
-        medico:this.props.paciente?.ficha[0]?.medicoTratante,
-        riesgo: this.props.paciente?.ficha[0]?.nivelDeRiesgo,
+        medico:this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.medicoTratante,
+        riesgo: this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.nivelDeRiesgo,
         detalles:'',
-        vemec: this.props.paciente?.ficha[0]?.veMecId,
-        internacion: this.props.paciente?.ficha[0]?.internacion,
+        vemec: vemec,
+        internacion: this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.internacion,
         defuncion:'',
         alta:'',
         disableAlta:'',
         disableDefuncion:'',
         vemecsL:'',
+        vemecInicial:vemec,
+        seleccionVemec:entubado,
         fetchVemecs:true
         })
     }
@@ -152,16 +189,16 @@ class HistoriaClinica extends Component {
         paciente: this.props.paciente?.id,
         nombre:this.props.paciente?.nombre,
         medico:'',
-        riesgo: '',
+        riesgo: 'Bajo',
         detalles:'',
-        //vemec: '',
-        vemec: '',
-        internacion: '',
+        vemec: vemec,
+        internacion: 'Hospital',
         defuncion:  '',
         alta: '',
         disableAlta:'',
         disableDefuncion:'',
         vemecsL:'',
+        seleccionVemec:entubado,
         fetchVemecs:true
             }
         )
@@ -190,24 +227,32 @@ class HistoriaClinica extends Component {
         let vemecs;
         
         if(!this.state.fetchVemecs ){
-        // console.log('state',this.state.fetchVemecs)
+         console.log('props',this.props)
+         console.log('state',this.state)
         
         //this.setState({vemec:"vemec69"})
-        if(this.state.vemecsL.length !== 0 && this.state.vemec.localeCompare('') === 0){
+        if(this.state.vemec === undefined){
+            this.setState({vemec:''})
+        }
+        if(this.state.vemecsL.length !== 0){
             
         vemecs = this.state.vemecsL?.map(vemec => {
             return (
             <option>{vemec.id}</option> 
             )
         })
+        vemecs.unshift(<option>No asignar VeMec</option>)
         
+        }
+        else if(this.state.seleccionVemec === true){
+            vemecs = <option>No hay Vemecs Libres</option>
         }
         
 
         
-        if(this.state.vemec.localeCompare('') !== 0){
+        if(this.state.vemec.localeCompare('') !== 0 && this.state.seleccionVemec === true){
         vemecs = <>
-            <option>{this.state.vemec}</option>
+            <option>{this.state.vemecInicial}</option>
             <option>desentubar</option> 
             </>
         }
