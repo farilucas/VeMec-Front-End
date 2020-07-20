@@ -4,6 +4,8 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Pagination from "react-js-pagination";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import {toast, ToastContainer} from 'react-toastify';
@@ -18,11 +20,12 @@ class Panel extends React.Component {
             vemecs: [],
             graphData: {},
             pageNumber: 0,
-            size: 3,
+            size: 9,
             totalElements: 0,
             totalPages: 0,
             isFetching: true,
             pressureUnit: 'Pa',
+            filter: ''
         };
 
         this.criticos = [];
@@ -43,12 +46,28 @@ class Panel extends React.Component {
         this.setState({pressureUnit: event.target.value});
     }
 
-    async fetchData() {
-        this.setState({isFetching: true});
+    onFilterSelect(event) {
+        this.setState({
+            filter: event.target.value
+        });
+        this.fetchData();
+    }
 
-        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id`, {
+    async fetchData() {
+        this.setState({ isFetching: true });
+
+        let filter;
+        switch (this.state.filter) {
+            case "sin_filtro": filter = ""; break;
+            case "domicilio": filter = "&filter=Domicilio"; break;
+            case "campamento": filter = "&filter=CampamentoDeEmergencia"; break;
+            case "hospital": filter = "&filter=Hospital"; break;
+            default: filter = "";
+        }
+
+        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id${filter}`, {
             method: "get",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
         }).then(res => res.json());
 
         this.setState({
@@ -125,6 +144,7 @@ class Panel extends React.Component {
     async playSound() {
         let vemecsCriticos = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].critico))
         let bpmBajo = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].bpm < 40))
+        let bpmAlto = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].bpm > 90))
         let bateriaBaja = this.state.vemecs.filter(vemec => (vemec.estados && vemec.estados.length > 0 && vemec.estados[0].bateria < 20))
         let noCriticos = this.state.vemecs.filter(vemec => !vemecsCriticos.includes(vemec));
 
@@ -134,18 +154,18 @@ class Panel extends React.Component {
             }
         }
 
-        // console.log(bateriaBaja)
-
         for(let i = 0; i < vemecsCriticos.length; ++i) {
             if(!this.criticos.includes(vemecsCriticos[i].id)) {
                 let audio, audio1
-                if (bpmBajo.length > 0){
+                if (bpmBajo.length > 0 || bpmAlto.length > 0){
                     audio = new Audio('http://localhost:3000/MicrosoftWindowsXPShutdownSound.mp3')
+                    audio.volume = 0.2;
                     audio.play();
                 }
                 
                 if(bateriaBaja.length > 0){
                     audio1 = new Audio('http://localhost:3000/WindowsHardwareRemove.wav')
+                    audio1.volume = 0.6
                     audio1.play();
                 }
                 
@@ -167,17 +187,42 @@ class Panel extends React.Component {
     }
 
     render() {
-        if(this.state.vemecs.length === 0 && !this.state.isFetching) {
+        if (this.state.vemecs.length === 0 && !this.state.isFetching) {
             return (
-                <div className="d-flex justify-content-center">
-                    <Card className="mt-5">
-                        <Card.Body className="">
-                            <Alert variant="danger" className="h2 m-0">No hay ventiladores registrados en el sistema.</Alert>
-                        </Card.Body>
-                        <Card.Footer className={"d-flex"}>
-                            <Button className={"mx-auto"} onClick={() => this.props.onRouteChange('Alta')} >Dar de Alta un VeMec</Button>
-                        </Card.Footer>
-                    </Card>
+                <div className={"m-5 d-flex flex-column"}>
+                    <div>
+                        {this.container()}
+                    </div>
+
+                    <Row>
+                        <Col>
+                            <Card className="align-self-start">
+                                <Card.Body className="px-2 py-1">
+                                    <Form.Group>
+                                        <Form.Label>Filtro por Pacientes</Form.Label>
+                                        <Form.Control as="select" size="sm" value={this.state.filter} onChange={this.onFilterSelect.bind(this)}>
+                                            <option value={""}>Sin filtro</option>
+                                            <option value={"domicilio"}>Domicilio</option>
+                                            <option value={"hospital"}>Hospital</option>
+                                            <option value={"campamento"}>Campamento de Emergencia</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Card className="mt-5">
+                                <Card.Body className="">
+                                    <Alert variant="danger" className="h2 m-0">No hay ventiladores registrados en el sistema.</Alert>
+                                </Card.Body>
+                                <Card.Footer className={"d-flex"}>
+                                    <Button className={"mx-auto"} onClick={() => this.props.onRouteChange('Alta')} >Dar de Alta un VeMec</Button>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>
             );
         }
@@ -195,20 +240,40 @@ class Panel extends React.Component {
                 <div>
                     {this.container()}
                 </div>
-                <Card className="align-self-start">
-                    <Card.Body className="px-2 py-1">
-                        <Form.Group>
-                            <Form.Label>Unidad de Presion</Form.Label>
-                            <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
-                                <option value={"Pa"}>Pascal</option>
-                                <option value={"mmHg"}>Milimetros de Mercurio</option>
-                                <option value={"mbar"}>Milibar</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Card.Body>
-                </Card>
+                
+                <Row>
+                    <Col>
+                        <Card className="align-self-start">
+                            <Card.Body className="px-2 py-1">
+                                <Form.Group>
+                                    <Form.Label>Unidad de Presion</Form.Label>
+                                    <Form.Control as="select" size="sm" onChange={this.onUnitSelect.bind(this)}>
+                                        <option value={"Pa"}>Pascal</option>
+                                        <option value={"mmHg"}>Milimetros de Mercurio</option>
+                                        <option value={"mbar"}>Milibar</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="align-self-start">
+                            <Card.Body className="px-2 py-1">
+                                <Form.Group>
+                                    <Form.Label>Filtro por Pacientes</Form.Label>
+                                    <Form.Control as="select" size="sm" value={this.state.filter} onChange={this.onFilterSelect.bind(this)}>
+                                        <option value={""}>Sin filtro</option>
+                                        <option value={"domicilio"}>Domicilio</option>
+                                        <option value={"hospital"}>Hospital</option>
+                                        <option value={"campamento"}>Campamento de Emergencia</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
 
-                <CardDeck className="justify-content-center my-2">
+                <CardDeck className="justify-content-center my-2 flex-wrap">
                     {vemecs}
                 </CardDeck>
                 <div className={"d-flex justify-content-center"}>

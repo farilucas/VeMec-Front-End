@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Grafica from "../Grafica/Grafica";
+import Grafica2 from "../Grafica/Grafica2";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog} from "@fortawesome/free-solid-svg-icons/faCog";
@@ -27,6 +28,7 @@ class Field extends React.PureComponent {
 class VeMec extends React.PureComponent {
     constructor(props) {
         super(props);
+
         this.onModificar = this.onModificar.bind(this);
         this.onBaja = this.onBaja.bind(this);
         this.onDetalles = this.onDetalles.bind(this);
@@ -48,15 +50,29 @@ class VeMec extends React.PureComponent {
     render() {
         let currentState = this.props.data.estados[0];
         let estado = <Alert variant="primary" className="h2 mt-3 mb-0 text-center">Este ventilador no tiene estados en el sistema.</Alert>;
-
-        if(currentState !== undefined) {
+        let currentUser = this.props.data.paciente;
+        let usuario = (<></>);
+        if (currentUser !== undefined) {
+            usuario = (
+                <>
+                    <Row>
+                        <Col><Field label={"Nombre"}> {currentUser.nombre} </Field></Col>
+                        <Col><Field label={"Edad"}> {currentUser.edad} </Field></Col>
+                        <Col><Field label={"Sexo"}> {currentUser.sexo} </Field></Col>
+                    </Row>
+                </>
+            );
+        }
+        if (currentState !== undefined) {
 
             let puntosPresionEntrada = [];
             let puntosPresionSalida = [];
+            let puntosBpm = [];
 
-            if(this.props.data.graph !== undefined) {
+            if (this.props.data.graph !== undefined) {
                 puntosPresionEntrada = this.props.data.graph.puntosPresionEntrada;
-                puntosPresionSalida = this.props.data.graph.puntosPresionSalida
+                puntosPresionSalida = this.props.data.graph.puntosPresionSalida;
+                puntosBpm = this.props.data.graph.puntosBpm;
             }
 
             estado = (
@@ -74,7 +90,7 @@ class VeMec extends React.PureComponent {
                     </Row>
                     <Row>
                         <Col><Field label={"Volumen de Gas Aportado (cc)"}>{currentState.volumenGasAportado}</Field></Col>
-                        <Col><Field label={"Frecuencia de Aporte (veces/minuto)"}>{currentState.frecuenciaDeAporte}</Field></Col>
+                        <Col><Field label={"Frecuencia de Aporte (v/m)"}>{currentState.frecuenciaDeAporte}</Field></Col>
                     </Row>
                     <Row>
                         <Col><Field label={"Porcentaje de Oxigeno (%)"}>{currentState.porcentajeOxigeno}</Field></Col>
@@ -84,7 +100,8 @@ class VeMec extends React.PureComponent {
                         <Col><Field label={"Temperatura de Entrada (°C)"}>{currentState.temperaturaSalida}</Field></Col>
                         <Col><Field label={"Temperatura de Salida (°C)"}>{currentState.temperaturaEntrada}</Field></Col>
                     </Row>
-                    <Grafica presionEntrada={puntosPresionEntrada} presionSalida={puntosPresionSalida} unit={this.props.pressureUnit}/>
+                    <Grafica presionEntrada={puntosPresionEntrada} presionSalida={puntosPresionSalida} unit={this.props.pressureUnit} />
+                    <Grafica2 bpm={puntosBpm} />
                 </>
             );
         }
@@ -95,11 +112,12 @@ class VeMec extends React.PureComponent {
         }
         
         if (this.props.data.estados && this.props.data.estados.length > 0) {
-            this.props.data.estados[0].bpm < 40 ? color1 = "#8C0000" : color1 = "light";
+            color1 = ((this.props.data.estados[0].bpm < 40 || this.props.data.estados[0].bpm > 90) ? "#8C0000" : "light");
         }
 
+
         return (
-            <Card style={{ maxWidth: 600, backgroundColor: color, border: `2px solid ${color1}`}}>
+            <Card style={{ maxWidth: 600, backgroundColor: color, border: `2px solid ${color1}`, flexBasis: "30%" }} className="mb-3">
                 <Card.Header style={{backgroundColor: color1, border: `2px solid ${color1}`}}>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
@@ -116,6 +134,7 @@ class VeMec extends React.PureComponent {
                         <Row>
                             <Col><Field label={"Ubicacion"}>{this.props.data.ubicacion}</Field></Col>
                         </Row>
+                        {usuario}
                         {estado}
                     </Container>
                 </Card.Body>

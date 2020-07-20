@@ -124,7 +124,7 @@ ficha.push(
       <Page key={ 999} size="A4" style={styles.page}>
       
         <View key={99} style={styles.section}>
-        <GraficaPresion/>
+        {/* <GraficaPresion/> */}
         
         <Text style={styles.text}>------------------------------------------------------------------</Text>
       
