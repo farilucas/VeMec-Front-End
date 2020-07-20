@@ -66,7 +66,7 @@ function MyDocument(props){
       
     }
     if(ficha.fechaAlta != null){
-      alta = <Text style={styles.text}>Fecha Defuncion: {simpleDate(ficha?.fechaAlta)}</Text>
+      alta = <Text style={styles.text}>Fecha Alta: {simpleDate(ficha?.fechaAlta)}</Text>
       
     }
    
