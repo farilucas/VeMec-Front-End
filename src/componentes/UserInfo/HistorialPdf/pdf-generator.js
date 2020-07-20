@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Canvas } from '@react-pdf/renderer';
 import GraficaPresion from './grafica'
 
 
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 22,
     fontFamily: 'Helvetica',
+  },
+  canvas:{
+    height: 400,
+    width : 400
   }
 });
 
@@ -81,6 +85,7 @@ function MyDocument(props){
     return formatedDate
   }
   let ficha
+
   if(props.ficha != null){
    ficha = props.ficha.map((ficha, index) => {
     let defuncion
@@ -107,6 +112,7 @@ function MyDocument(props){
         {alta}
         {defuncion}
         <Text style={styles.text}>------------------------------------------------------------------</Text>
+        
       </View>
     </Page>
     </>
@@ -114,7 +120,17 @@ function MyDocument(props){
 
 })
 ficha.push(
-  <GraficaPresion presionEntrada={fakeFetch.puntos.puntosPresionEntrada} presionSalida={fakeFetch.puntos.puntosPresionSalida} unit={'Pa'}/>
+      <>
+      <Page key={ 999} size="A4" style={styles.page}>
+      
+        <View key={99} style={styles.section}>
+        <GraficaPresion/>
+        
+        <Text style={styles.text}>------------------------------------------------------------------</Text>
+      
+      </View>
+    </Page>
+    </>
 )
   }
 
@@ -130,12 +146,15 @@ ficha.push(
     
   }
   return(
+    
+    
   <Document>
     
         {ficha}
         
       
   </Document>
+  
 )
 }
 

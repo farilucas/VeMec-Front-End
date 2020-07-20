@@ -3,12 +3,37 @@ import React from "react";
 import Chart from "chart.js";
 import "chartjs-adapter-date-fns";
 import {format} from "date-fns";
-
+import { Canvas , StyleSheet} from '@react-pdf/renderer';
 class Grafica extends React.PureComponent {
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
     }
+    styles = StyleSheet.create({
+        page: {
+          flexDirection: 'row',
+          //backgroundColor: '#E4E4E4'
+        },
+        section: {
+          margin: 10,
+          padding: 40,
+          flexGrow: 1
+        },
+        time:{
+          margin: 10,
+          fontSize: 30,
+          fontFamily: 'Helvetica',
+        },
+        text:{
+          margin: 10,
+          fontSize: 22,
+          fontFamily: 'Helvetica',
+        },
+        canvas:{
+          height: 400,
+          width : 400
+        }
+      });
 
     componentDidMount() {
         console.log('presiones',this.props.presionEntrada,this.props.presionSalida)
@@ -81,9 +106,8 @@ class Grafica extends React.PureComponent {
     render() {
         
         return(
-            <>
-            </>
-            //<canvas paint={this.canvasRef}/>
+            
+            <Canvas style={this.styles.canvas} paint={this.canvasRef}/>
         );
     }
 }
