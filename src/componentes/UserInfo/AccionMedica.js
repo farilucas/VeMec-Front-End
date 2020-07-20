@@ -116,7 +116,6 @@ class HistoriaClinica extends Component {
             nivelDeRiesgo: this.state.riesgo,
             detalles:this.state.detalles,
             internacion: internacion,
-            
             fechaDefuncion: timeAlta,
             fechaAlta: timeDefuncion,
             veMecId: this.state.vemec,
@@ -191,7 +190,7 @@ class HistoriaClinica extends Component {
         medico:'',
         riesgo: 'Bajo',
         detalles:'',
-        vemec: '',
+        vemec: 'No asignar VeMec',
         internacion: 'Hospital',
         defuncion:  '',
         alta: '',
