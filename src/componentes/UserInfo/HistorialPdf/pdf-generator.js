@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import GraficaPresion from './grafica'
 
 
 const styles = StyleSheet.create({
@@ -24,6 +25,29 @@ const styles = StyleSheet.create({
   }
 });
 
+const fakeFetch
+         ={
+            puntos: {
+                puntosPresionEntrada: [
+                    {
+                        x: "2020-07-20T02:36:00.187",
+                        y: 99
+                    }
+                ],
+                puntosPresionSalida: [
+                    {
+                        x: "2020-07-20T02:36:00.187",
+                        y: 99
+                    }
+                ],
+                puntosBpm: [
+                    {
+                        x: "2020-07-20T02:36:00.187",
+                        y: 99
+                    }
+                ]
+            }
+        }
 
 function MyDocument(props){
  
@@ -67,7 +91,7 @@ function MyDocument(props){
     }
     if(ficha.fechaAlta != null){
       alta = <Text style={styles.text}>Fecha Alta: {simpleDate(ficha?.fechaAlta)}</Text>
-      
+     
     }
    
     return (
@@ -87,7 +111,11 @@ function MyDocument(props){
     </Page>
     </>
     )
+
 })
+ficha.push(
+  <GraficaPresion presionEntrada={fakeFetch.puntos.puntosPresionEntrada} presionSalida={fakeFetch.puntos.puntosPresionSalida} unit={'Pa'}/>
+)
   }
 
   else{

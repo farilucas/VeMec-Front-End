@@ -78,30 +78,9 @@ class Grafica extends React.PureComponent {
     }
 
     render() {
-        fakeFetch ={
-            "puntos": {
-                "puntosPresionEntrada": [
-                    {
-                        "x": "2020-07-20T02:36:00.187",
-                        "y": 99
-                    }
-                ],
-                "puntosPresionSalida": [
-                    {
-                        "x": "2020-07-20T02:36:00.187",
-                        "y": 99
-                    }
-                ],
-                "puntosBpm": [
-                    {
-                        "x": "2020-07-20T02:36:00.187",
-                        "y": 99
-                    }
-                ]
-            }
-        }
+        
         return(
-            <canvas ref={this.canvasRef}/>
+            <canvas paint={this.canvasRef}/>
         );
     }
 }
