@@ -26,14 +26,9 @@ class FichaMedica extends React.Component {
         this.state = {
             isFetching: true,
             isError: false,
-            data: {
-                paciente: this.props.paciente
-            }
+            paciente: this.props.paciente,
+            data: undefined
         }
-    }
-    
-    componentDidMount(){
-        this.fetchData();
     }
 
     async fetchData(){
@@ -65,11 +60,11 @@ class FichaMedica extends React.Component {
         let paciente;
         let ficha;
 
-        if(this.state.data.paciente === undefined) {
+        if(this.state.paciente === undefined) {
             return (<div> No Existe Este Paciente </div>);
         } else {
-            paciente = this.state.data.paciente;
-            ficha = this.state.data.ficha;
+            paciente = this.state.paciente;
+            ficha = this.state.data;
         }
 
         return(
@@ -126,7 +121,7 @@ class FichaMedica extends React.Component {
                                     <Card key={index} className="mt-2">
                                         <Card.Header>
                                             <Row>
-                                                <Field label={log.timestamp}> {log.detalles} </Field>
+                                                <Field label={"Ficha N°" + (index + 1)}> {log.timestamp + " : " + log.detalles} </Field>
                                             </Row>
                                         </Card.Header>
                                         <Card.Body>
@@ -162,14 +157,16 @@ class FichaMedica extends React.Component {
                                                 </Row>
                                             }
                                         </Card.Body>
-                                        <Card.Footer>
-                                            <Row>
-                                                <Col><Grafica presionEntrada={ficha.puntos.puntosPresionEntrada} presionSalida={ficha.puntos.puntosPresionSalida} unit={this.props.pressureUnit}/></Col>
-                                                <Col><Grafica2 bpm={ficha.puntos.puntosBpm}/></Col>
-                                            </Row>
-                                        </Card.Footer>
                                     </Card>
                                 )}
+                                <Card className="mt-2">
+                                    <Card.Body>
+                                        <Row>
+                                            <Col><Grafica presionEntrada={ficha.puntos.puntosPresionEntrada} presionSalida={ficha.puntos.puntosPresionSalida} unit={this.props.pressureUnit}/></Col>
+                                            <Col><Grafica2 bpm={ficha.puntos.puntosBpm}/></Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
                             </Fragment>
                         )}
                     </Fragment>

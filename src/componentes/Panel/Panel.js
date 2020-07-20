@@ -53,6 +53,7 @@ class Panel extends React.Component {
         this.setState({
             filter: setFilter
         });
+        this.fetchData();
     }
 
     async fetchData() {
@@ -129,7 +130,6 @@ class Panel extends React.Component {
     async updateVeMecData() {
         if(this.isFetching)
             return;
-
         await this.fetchData();
     }
 
@@ -152,7 +152,6 @@ class Panel extends React.Component {
         let vemecs = this.state.vemecs.map(vemec => {
             let veMecData = {...vemec};
             veMecData.graph = this.state.graphData[vemec.id];
-
             return <VeMec data={veMecData} key={vemec.id} pressureUnit={this.state.pressureUnit} onBaja={this.onBaja.bind(this)} onRouteChange={this.props.onRouteChange}/>;
         })
 
@@ -189,7 +188,6 @@ class Panel extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-
                 <CardDeck className="justify-content-center my-2">
                     {vemecs}
                 </CardDeck>
