@@ -52,7 +52,7 @@ class ListarPacientes extends React.Component{
         let pacientes = this.state.pacientes.map(paciente => {
             let dataPaciente = {...paciente}
             
-            let tieneFicha = this.state.pacientes.filter(paciente => (paciente.ficha && paciente.ficha.length > 0 && paciente.ficha[0].veMecId !== ''))
+            let tieneFicha = this.state.pacientes.filter(paciente => (paciente.ficha && paciente.ficha.length > 0 && paciente.ficha[0].veMecId))
             let noFicha = this.state.pacientes.filter(paciente => !tieneFicha.includes(paciente))
             for (let paciente of noFicha) {
                 if (this.conFicha.includes(paciente.documento)) {

@@ -123,9 +123,9 @@ class HistoriaClinica extends Component {
             }
         }
        
-        console.log('datos enviados',JSON.stringify(
-            data
-        ))
+        // console.log('datos enviados',JSON.stringify(
+        //     data
+        // ))
        
         let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
@@ -226,8 +226,8 @@ class HistoriaClinica extends Component {
         let vemecs;
         
         if(!this.state.fetchVemecs ){
-         console.log('props',this.props)
-         console.log('state',this.state)
+        //  console.log('props',this.props)
+        //  console.log('state',this.state)
         
         //this.setState({vemec:"vemec69"})
         if(this.state.vemec === undefined){
