@@ -159,11 +159,11 @@ class HistoriaClinica extends Component {
       
     let vemec;
     let entubado;
-    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = '' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
-    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
+    
 
     if(this.props.paciente?.ficha !== null){
-       
+        this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = '' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
+        this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
         this.setState({
         paciente: this.props.paciente?.id,
         nombre:this.props.paciente?.nombre,
@@ -191,14 +191,14 @@ class HistoriaClinica extends Component {
         medico:'',
         riesgo: 'Bajo',
         detalles:'',
-        vemec: vemec,
+        vemec: '',
         internacion: 'Hospital',
         defuncion:  '',
         alta: '',
         disableAlta:'',
         disableDefuncion:'',
         vemecsL:'',
-        seleccionVemec:entubado,
+        seleccionVemec:false,
         fetchVemecs:true
             }
         )
