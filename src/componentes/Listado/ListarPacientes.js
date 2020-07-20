@@ -1,14 +1,7 @@
 import React from 'react';
 import Pagination from "react-js-pagination";
-import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import UserInfo from '../UserInfo/UserInfo'
-import {
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter
-} from 'reactstrap';
 
 
 class ListarPacientes extends React.Component{
@@ -22,6 +15,9 @@ class ListarPacientes extends React.Component{
             totalElements: 0,
             totalPages: 0,
         }
+
+        this.conFicha = []
+
         this.fetchData = this.fetchData.bind(this)
         this.toggleModalOnOff = this.toggleModalOnOff.bind(this)
     }
@@ -55,16 +51,37 @@ class ListarPacientes extends React.Component{
     render(){
         let pacientes = this.state.pacientes.map(paciente => {
             let dataPaciente = {...paciente}
+            
+            let tieneFicha = this.state.pacientes.filter(paciente => (paciente.ficha && paciente.ficha.length > 0 && paciente.ficha[0].veMecId !== ''))
+            let noFicha = this.state.pacientes.filter(paciente => !tieneFicha.includes(paciente))
+            for (let paciente of noFicha) {
+                if (this.conFicha.includes(paciente.documento)) {
+                    this.conFicha.splice(this.conFicha.indexOf(paciente.documento), 1);
+                }
+
+                
+            }
+            for (let i = 0; i < tieneFicha.length; i++) {
+                if (!this.conFicha.includes(tieneFicha[i].id)) {
+                    this.conFicha.push(tieneFicha[i].id);
+                }
+            }
+
             return(    
                 <tr key={dataPaciente.documento}>
                     <td>{dataPaciente.nombre}</td>
                     <td>{dataPaciente.documento}</td>
+                    {   tieneFicha.includes(paciente)
+                        ?<td>Entubado</td>
+                        :<td>No entubado</td>
+                    }
                     <td>
                     <UserInfo see={false} button={true} paciente= {dataPaciente}/>
                     </td>
                 </tr>
             )
         })
+        
         return(
             <div>
                 <Table bordered variant='dark' className='text-center'>
@@ -72,6 +89,7 @@ class ListarPacientes extends React.Component{
                         <tr>
                             <th>Nombre</th>
                             <th>Documento</th>
+                            <th>Situacion</th>
                             <th>Accion Medica</th>
                         </tr>
                     </thead>

@@ -62,7 +62,7 @@ class Seleccion extends React.Component{
                 </Tab>
                 <Tab eventKey="accionMedica" title="Accion Medica">
                    
-                    <AccionMedica  paciente = {this.props.paciente}   vemec = {this.props.vemec}  close={this.props.close} />
+                    <AccionMedica paciente = {this.props.paciente}   vemec = {this.props.vemec}  close={this.props.close} />
                 </Tab>
             </Tabs>
           

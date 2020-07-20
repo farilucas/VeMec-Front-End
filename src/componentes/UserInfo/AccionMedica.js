@@ -93,7 +93,7 @@ class HistoriaClinica extends Component {
 
         this.state.alta.localeCompare('') !== 0  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
         this.state.defuncion.localeCompare('') !== 0  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
-        this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='CampamentoDeEmergencia' : internacion = this.state.internacion
+        this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='Campamento De Emergencia' : internacion = this.state.internacion
         let data
 
         if(this.state.vemec.localeCompare('No asignar VeMec') === 0){
@@ -310,7 +310,7 @@ class HistoriaClinica extends Component {
         else{
             defuncion = 
                     <FormGroup>
-                    <Form.Label>Dia de defunsion</Form.Label>
+                    <Form.Label>Dia de defuncion</Form.Label>
                     <FormControl
                     
                         onChange={this.handleInputChange}

@@ -95,7 +95,7 @@ class VeMec extends React.PureComponent {
         }
         
         if (this.props.data.estados && this.props.data.estados.length > 0) {
-            this.props.data.estados[0].bpm < 20 ? color1 = "#8C0000" : color1 = "light";
+            this.props.data.estados[0].bpm < 40 ? color1 = "#8C0000" : color1 = "light";
         }
 
         return (
