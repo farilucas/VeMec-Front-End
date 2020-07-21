@@ -158,11 +158,11 @@ class HistoriaClinica extends Component {
       
     let vemec;
     let entubado;
-    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = 'No asignar VeMec' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
-    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
+    
 
     if(this.props.paciente?.ficha !== null){
-        
+        this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = 'No asignar VeMec' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
+    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
         this.setState({
         paciente: this.props.paciente?.id,
         nombre:this.props.paciente?.nombre,
