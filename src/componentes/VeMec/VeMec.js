@@ -79,6 +79,7 @@ class VeMec extends React.PureComponent {
                 <>
                     <Row>
                         <Col><Field label={"Timestamp"}>{(new Date(currentState.timestamp)).toLocaleString()}</Field></Col>
+                        <Col><Field label={"Bateria"}>{currentState.bateria}</Field></Col>
                     </Row>
                     <Row>
                         <Col><Field label={`Presion de Entrada (${this.props.pressureUnit})`}>{unit(currentState.presionEntrada, 'Pa').toNumber(this.props.pressureUnit).toFixed(4).replace(/[.,]0000$/, "")}</Field></Col>
@@ -106,19 +107,26 @@ class VeMec extends React.PureComponent {
             );
         }
 
-        let color, color1
+        let color, color1, border;
         if (this.props.data.estados && this.props.data.estados.length > 0)  {
-            this.props.data.estados[0].usandoBateria ? color = "#FFDA94" : color = "light";
+            this.props.data?.estados[0].usandoBateria ? color = "#FFDA94" : color = "#f7f7f7";
         }
         
         if (this.props.data.estados && this.props.data.estados.length > 0) {
-            color1 = ((this.props.data.estados[0].bpm < 40 || this.props.data.estados[0].bpm > 90) ? "#8C0000" : "light");
+            if(this.props.data?.estados[0].bpm < 40 || this.props.data?.estados[0].bpm > 90){
+                border= "2px solid #8C0000"
+                color1 = "#8C0000" 
+            }else{
+                border="2px solid #d8d8d8" 
+                color1 = "#f7f7f7"
+            }
         }
 
 
+
         return (
-            <Card style={{ maxWidth: 600, backgroundColor: color, border: `2px solid ${color1}`, flexBasis: "30%" }} className="mb-3">
-                <Card.Header style={{backgroundColor: color1, border: `2px solid ${color1}`}}>
+            <Card style={{ maxWidth: 600, backgroundColor: color, border: `${border}`, flexBasis: "30%" }} className="mb-3">
+                <Card.Header style={{ backgroundColor: color1}}>
                     <div className={"d-flex align-items-center"}>
                         {this.props.data.id}
                         <Button onClick={this.onModificar} className={"ml-auto mr-2"} variant={"primary"} size={"sm"}><FontAwesomeIcon icon={faCog}/></Button>

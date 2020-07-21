@@ -4,6 +4,7 @@ import AccionMedica from './AccionMedica'
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import Historial from './HistorialPdf/pdf-generator'
 import FichaMedica from '../FichaMedica/FichaMedica';
+import API_URL from "../../Api";
 class Seleccion extends React.Component{
 
     constructor(props) {
@@ -51,7 +52,7 @@ class Seleccion extends React.Component{
     handleShow () {this.setState({show:true})};
     
    async getFicha(){
-       let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
+       let res = await fetch(`${API_URL}/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
             method: 'get',
             headers: { 'Content-Type': 'application/json' },

@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import {unit} from "mathjs";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import API_URL from "../../Api";
 
 class ListaEstados extends React.Component {
     constructor(props) {
@@ -105,7 +106,7 @@ class ListaEstados extends React.Component {
     async fetchData() {
         this.setState({isFetching: true});
 
-        let json = await fetch(`http://localhost:8080/api/v1/vemecs/${this.props.id}/estados?page=${this.state.page}&size=${this.state.size}&sort=${this.state.sort}`, {
+        let json = await fetch(`${API_URL}/vemecs/${this.props.id}/estados?page=${this.state.page}&size=${this.state.size}&sort=${this.state.sort}`, {
             method: "get",
             headers: {"Content-Type": "application/json"},
         }).then(res => res.json());

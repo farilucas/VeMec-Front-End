@@ -5,7 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Button from "react-bootstrap/Button";
-
+import API_URL from "../../Api";
 
 class HistoriaClinica extends Component {
 
@@ -130,7 +130,7 @@ class HistoriaClinica extends Component {
              data
          ))
        */
-        let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
+        let res = await fetch(`${API_URL}/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
              method: 'post',
              headers: { 'Content-Type': 'application/json' },
@@ -207,7 +207,7 @@ class HistoriaClinica extends Component {
         )
     }
     
-    let res = await fetch('http://localhost:8080/api/v1/vemecs/libres' , {
+    let res = await fetch(`${API_URL}/vemecs/libres` , {
 
         method: 'get',
         headers: { 'Content-Type': 'application/json' },

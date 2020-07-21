@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup"; 
 import Button from "react-bootstrap/Button";
-
+import API_URL from "../../Api";
 
 class Alta extends React.Component{
     constructor(props){
@@ -38,7 +38,7 @@ class Alta extends React.Component{
 
     onSubmitAlta(event) {
         event.preventDefault();
-        fetch('http://localhost:8080/api/v1/vemecs/', {
+        fetch(`${API_URL}/vemecs/`, {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(

@@ -2,7 +2,7 @@ import React from 'react';
 import Pagination from "react-js-pagination";
 import Table from 'react-bootstrap/Table';
 import UserInfo from '../UserInfo/UserInfo'
-
+import API_URL from "../../Api";
 
 class ListarPacientes extends React.Component{
     constructor(props){
@@ -31,7 +31,7 @@ class ListarPacientes extends React.Component{
     }
 
     async fetchData(){
-        let json = await fetch('http://localhost:8080/api/v1/pacientes', {
+        let json = await fetch(`${API_URL}/pacientes`, {
             method: 'get',
             headers: {'Content-Type': 'application/json'}
         })
@@ -102,7 +102,7 @@ class ListarPacientes extends React.Component{
                         itemClass="page-item"
                         linkClass="page-link"
                         activePage={this.state.pageNumber + 1}
-                        itemsCountPerPage={this.state.size}
+                        itemsCountPerPage={20}
                         totalItemsCount={this.state.totalElements}
                         pageRangeDisplayed={3}
                         onChange={this.onPageChange.bind(this)}

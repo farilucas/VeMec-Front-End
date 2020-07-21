@@ -11,6 +11,7 @@ import Alert from "react-bootstrap/Alert";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import Toast from "react-bootstrap/Toast";
+import API_URL from "../../Api";
 
 class Panel extends React.Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class Panel extends React.Component {
             default: filter = "";
         }
 
-        let json = await fetch(`http://localhost:8080/api/v1/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id${filter}`, {
+        let json = await fetch(`${API_URL}/vemecs?page=${this.state.page}&size=${this.state.size}&sort=id${filter}`, {
             method: "get",
             headers: { "Content-Type": "application/json" },
         }).then(res => res.json());
@@ -81,7 +82,7 @@ class Panel extends React.Component {
         json.elements.forEach((vemec) => {
             //Para cada VeMec, se piden los datos para sus graficas
             //Esto no es optimo ni jodiendo, pero por ahora queda asi
-            let promise = fetch(`http://localhost:8080/api/v1/vemecs/${vemec.id}/grafica`, {
+            let promise = fetch(`${API_URL}/vemecs/${vemec.id}/grafica`, {
                 method: "get",
                 headers: {"Content-Type": "application/json"},
             })
@@ -120,7 +121,7 @@ class Panel extends React.Component {
 
     async onBaja(event, id) {
         event.preventDefault();
-        await fetch('http://localhost:8080/api/v1/vemecs/' + id, {
+        await fetch(`${API_URL}/vemecs/${id}`, {
             method: 'delete',
             headers: { 'Content-Type': 'application/json' },
         });

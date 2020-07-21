@@ -6,6 +6,7 @@ import FormGroup from "react-bootstrap/FormGroup";
 import Collapse from "react-bootstrap/Collapse"
 import Button from "react-bootstrap/Button";
 import Select from 'react-select';
+import API_URL from "../../Api";
 export default class AltaPaciente extends React.Component{
     constructor(props){
         super(props)
@@ -108,7 +109,7 @@ export default class AltaPaciente extends React.Component{
             alert('Hay campos sin rellenar')
         }
         else{
-            let response = await fetch('http://localhost:8080/api/v1/pacientes', {
+            let response = await fetch(`${API_URL}/pacientes`, {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

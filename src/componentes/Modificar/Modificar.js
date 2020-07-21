@@ -5,6 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Button from "react-bootstrap/Button";
+import API_URL from "../../Api";
 
 class Modificar extends Component {
 
@@ -36,7 +37,7 @@ class Modificar extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec, {
+        fetch(`${API_URL}/vemecs/${this.props.vemec}`, {
 
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
@@ -50,7 +51,7 @@ class Modificar extends Component {
 
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/v1/vemecs/' + this.props.vemec)
+        fetch(`${API_URL}/vemecs/${this.props.vemec}`)
         .then(response => response.json())
         .then(data =>
             this.setState({
