@@ -96,7 +96,7 @@ class HistoriaClinica extends Component {
         this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='CampamentoDeEmergencia' : internacion = this.state.internacion
         this.state.riesgo.localeCompare('Muy Grave') === 0 ? riesgo='MuyGrave' : riesgo = this.state.riesgo
         let data
-        console.log(this.state)
+        
         if(this.state.vemec.localeCompare('No asignar VeMec') === 0){
         data = {
             timestamp: time , 
@@ -124,10 +124,12 @@ class HistoriaClinica extends Component {
             }
         }
        
+         /*
+         console.log(this.state)
          console.log('datos enviados',JSON.stringify(
              data
          ))
-       
+       */
         let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
              method: 'post',
@@ -145,6 +147,7 @@ class HistoriaClinica extends Component {
 
        
         this.props.close()
+        this.props.onRouteChange('Inicio')
          
     }
 

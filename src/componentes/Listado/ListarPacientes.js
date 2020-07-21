@@ -76,7 +76,7 @@ class ListarPacientes extends React.Component{
                         :<td>No entubado</td>
                     }
                     <td>
-                    <UserInfo see={false} button={true} paciente= {dataPaciente}/>
+                    <UserInfo onRouteChange={this.props.onRouteChange} see={false} button={true} paciente= {dataPaciente}/>
                     </td>
                 </tr>
             )

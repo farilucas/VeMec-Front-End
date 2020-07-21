@@ -88,7 +88,7 @@ class UserInfo extends React.Component{
               </Modal.Header>
               <Modal.Body style={{backgroundColor: "lightgray"}}>
 
-                <Seleccion paciente = {this.props.paciente} vemec = {vemec} close={this.handleClose}/>
+                <Seleccion onRouteChange={this.props.onRouteChange} paciente = {this.props.paciente} vemec = {vemec} close={this.handleClose}/>
               
               </Modal.Body>
               <Modal.Footer>
