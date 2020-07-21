@@ -87,7 +87,7 @@ class Seleccion extends React.Component{
                     <div className="d-flex justify-content-center mt-3 flex-column align-items-center">
                         <Button className={"align-self-center mb-2"} onClick={this.generarImagenes}>Generar PDF</Button>
                         {this.state.dataPresion && this.state.dataBpm && this.state.dataPresion !== "data:," && this.state.dataBpm !== "data:," &&
-                            <PDFDownloadLink document={<Historial dataPresion={this.state.dataPresion} dataBpm={this.state.dataBpm} ficha={this.state.historia.ficha} />}
+                            <PDFDownloadLink document={< Historial dataPresion={this.state.dataPresion} dataBpm={this.state.dataBpm} ficha={this.state.historia.ficha} paciente={this.props.paciente} />}
                                 fileName={`reporte.pdf`}>
                                 Descargar PDF
                             </PDFDownloadLink>}

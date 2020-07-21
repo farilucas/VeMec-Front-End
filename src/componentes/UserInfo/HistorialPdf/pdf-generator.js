@@ -137,6 +137,7 @@ ficha.push(
     </Page>
     </>
 )
+
   }
 
   else{
@@ -150,11 +151,40 @@ ficha.push(
     </>
     
   }
+
+  let antecedentes
+  let datosIniciales
+  if(props.paciente.antecedentes !== null){
+    antecedentes =  <Text style={styles.text}>Antecendents:{props.paciente.antecedentes}</Text>
+  }
+  else(
+    antecedentes =  <Text style={styles.text}>Antecendents: no tiene</Text>
+  ) 
+
+  datosIniciales =
+    <Page key={9999999} size="A4" style={styles.page}>
+      <View key={99999} style={styles.section}>
+      <Text style={styles.text}>Nombre:{props.paciente.nombre}</Text>
+      <Text style={styles.text}>Sexo:{props.paciente.sexo}</Text>
+      <Text style={styles.text}>{simpleDate(props.paciente.fechaIngreso)}</Text>
+      {antecedentes} 
+      <Text style={styles.text}>Docuemento:{props.paciente.documento}</Text>
+      <Text style={styles.text}>Nacionalidad: {props.paciente.nacionalidad}</Text> 
+      <Text style={styles.text}>Telefono: {props.paciente.telefono}</Text>
+      <Text style={styles.text}>Email: {props.paciente.email}</Text>
+      <Text style={styles.text}>Departamento: {props.paciente.departamento}</Text>
+      <Text style={styles.text}>Localidad: {props.paciente.localidad}</Text>
+      <Text style={styles.text}>Direccion: {props.paciente.direccion}</Text>
+    
+      <Text style={styles.text}>------------------------------------------------------------------</Text>
+    
+    </View>
+  </Page>
   return(
     
     
   <Document>
-    
+        {datosIniciales}
         {ficha}
         
       

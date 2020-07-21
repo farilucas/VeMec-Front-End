@@ -93,9 +93,9 @@ class HistoriaClinica extends Component {
 
         this.state.alta.localeCompare('') !== 0  ? timeAlta = (new Date(this.state.alta).toISOString()) : timeAlta = null
         this.state.defuncion.localeCompare('') !== 0  ? timeDefuncion = (new Date(this.state.defuncion).toISOString()) : timeDefuncion = null
-        this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='Campamento De Emergencia' : internacion = this.state.internacion
+        this.state.internacion.localeCompare('Campamento de Emergencia') === 0 ? internacion='CampamentoDeEmergencia' : internacion = this.state.internacion
         let data
-
+        console.log(this.state)
         if(this.state.vemec.localeCompare('No asignar VeMec') === 0){
         data = {
             timestamp: time , 
@@ -123,9 +123,9 @@ class HistoriaClinica extends Component {
             }
         }
        
-        // console.log('datos enviados',JSON.stringify(
-        //     data
-        // ))
+         console.log('datos enviados',JSON.stringify(
+             data
+         ))
        
         let res = await fetch('http://localhost:8080'+ `/api/v1/pacientes/${this.props.paciente.nacionalidad}/${this.props.paciente.documento}/ficha`  , {
 
@@ -158,11 +158,11 @@ class HistoriaClinica extends Component {
       
     let vemec;
     let entubado;
-    
+    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = 'No asignar VeMec' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
+    this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
 
     if(this.props.paciente?.ficha !== null){
-        this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? vemec = '' : vemec = this.props.paciente.ficha[this.props.paciente?.ficha.length - 1]?.veMecId 
-        this.props.paciente?.ficha[this.props.paciente?.ficha.length - 1]?.veMecId === undefined ? entubado = false : entubado = true
+        
         this.setState({
         paciente: this.props.paciente?.id,
         nombre:this.props.paciente?.nombre,

@@ -76,7 +76,8 @@ class FichaMedica extends React.Component {
                                 </Row>
                             </Card.Header>
                             <Card.Body>
-                                {paciente.contactos.map((contacto, index) =>
+                                {
+                                paciente.contactos?.map((contacto, index) =>
                                     <Row key={index}>
                                         <Field label="Contacto"> {contacto.nombre} </Field>
                                         <Field label="Telefono"> {contacto.telefono} </Field><hr/>
@@ -102,7 +103,7 @@ class FichaMedica extends React.Component {
                                     <Card key={index} className="mt-4">
                                         <Card.Header>
                                             <Row>
-                                                <Field label={"Ficha N°" + (index + 1)}> {log.timestamp + " : " + log.detalles} </Field>
+                                                <Field label={"Ficha "}> {log.timestamp + " : " + log.detalles} </Field>
                                             </Row>
                                         </Card.Header>
                                         <Card.Body>
