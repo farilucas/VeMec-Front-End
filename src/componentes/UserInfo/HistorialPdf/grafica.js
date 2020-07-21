@@ -4,10 +4,12 @@ import Chart from "chart.js";
 import "chartjs-adapter-date-fns";
 import {format} from "date-fns";
 import { Canvas , StyleSheet} from '@react-pdf/renderer';
+import { Image as ImagePDF } from '@react-pdf/renderer' 
 class Grafica extends React.PureComponent {
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
+        // this.canvas = document.createElement('canvas');
     }
     styles = StyleSheet.create({
         page: {
@@ -37,7 +39,7 @@ class Grafica extends React.PureComponent {
 
     componentDidMount() {
         console.log('presiones',this.props.presionEntrada,this.props.presionSalida)
-        let ctx = this.canvasRef.current.getContext("2d");
+        let ctx = this.canvas.getContext("2d");//this.canvasRef.current.getContext("2d");
 
         this.chart = new Chart(ctx, {
             type: "line",
@@ -101,13 +103,15 @@ class Grafica extends React.PureComponent {
         this.chart.data.datasets[0].data = this.props.presionEntrada;
         this.chart.data.datasets[1].data = this.props.presionSalida;
         this.chart.update();
+        
+        
     }
 
     render() {
-        
+        console.log(this.canvas.toDataURL());
         return(
-            
-            <Canvas style={this.styles.canvas} paint={this.canvasRef}/>
+            <ImagePDF src={this.props.data} cache={false} style={{ width: 100, height: 100 }}/>
+            // <Image src={{ data: this.canvas.toDataURL('image/jpeg', 1.0).substr(21), format: 'jpeg'}} style={{width: 500, height: 500}}/>
         );
     }
 }

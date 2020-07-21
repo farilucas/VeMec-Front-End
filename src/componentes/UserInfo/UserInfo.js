@@ -82,12 +82,11 @@ class UserInfo extends React.Component{
               keyboard={false}
               //style={{maWidth: "90% !important"}}
               size="xl"
-              
             >
               <Modal.Header closeButton>
                 <Modal.Title></Modal.Title>
               </Modal.Header>
-              <Modal.Body>
+              <Modal.Body style={{backgroundColor: "lightgray"}}>
 
                 <Seleccion paciente = {this.props.paciente} vemec = {vemec} close={this.handleClose}/>
               

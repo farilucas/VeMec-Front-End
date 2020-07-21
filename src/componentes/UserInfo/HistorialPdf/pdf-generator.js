@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Canvas } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Canvas, Image } from '@react-pdf/renderer';
 import GraficaPresion from './grafica'
 
 
@@ -119,12 +119,17 @@ function MyDocument(props){
     )
 
 })
+
 ficha.push(
       <>
       <Page key={ 999} size="A4" style={styles.page}>
       
         <View key={99} style={styles.section}>
-        {/* <GraficaPresion/> */}
+        {/* <GraficaPresion presionEntrada={fakeFetch.puntos.puntosPresionEntrada} presionSalida={fakeFetch.puntos.puntosPresionSalida}/> */}
+        
+        <Image src={props.dataPresion} style={{ width: "100%" }}/>
+        <Image src={props.dataBpm} style={{ width: "100%"}} />
+        
         
         <Text style={styles.text}>------------------------------------------------------------------</Text>
       

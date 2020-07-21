@@ -7,7 +7,12 @@ import {format} from "date-fns";
 class Grafica extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.canvasRef = React.createRef();
+        if(props.canvasRef) {
+            this.canvasRef = props.canvasRef;   
+        }
+        else {
+            this.canvasRef = React.createRef();
+        }
     }
 
     componentDidMount() {
@@ -37,8 +42,8 @@ class Grafica extends React.PureComponent {
                     xAxes: [{
                         type: 'time',
                         time: {
-                            unit: "second",
-                            tooltipFormat: "dd-MM-yyyy HH:mm:ss SSS'ms'",
+                            unit: this.props.timeUnit || "second",
+                            tooltipFormat: this.props.tooltipFormat || "dd-MM-yyyy HH:mm:ss SSS'ms'",
                         },
                         ticks: {
                             callback(value, index, values) {
@@ -79,7 +84,9 @@ class Grafica extends React.PureComponent {
 
     render() {
         return(
-            <canvas ref={this.canvasRef}/>
+            <>
+                <canvas ref={this.canvasRef} />
+            </>
         );
     }
 }
